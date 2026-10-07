@@ -1,0 +1,287 @@
+---
+import SitemapControls from '../components/SitemapControls.astro';
+import SitemapNavigation from '../components/SitemapNavigation.astro';
+import { compiledSitemapScript } from '../sitemap-script';
+import { buildSitemapPartitions, globalIndexPath } from '../sitemap-partitions';
+import {
+  formatObservation,
+  kindLabels,
+  loadSitemap,
+  riskLabels,
+  sourceDefinitions,
+  sourceLabels,
+  statusDefinitions,
+  statusLabels,
+  type Kind,
+  type Risk,
+  type SitemapNode,
+  type Source,
+  type Status,
+} from '../sitemap';
+import '../styles/global.css';
+import '../styles/sitemap.css';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const sitemap = await loadSitemap();
+const nodes = sitemap?.nodes ?? [];
+const partitions = buildSitemapPartitions(nodes);
+const { views } = partitions;
+// Top-level anchors plus unowned navigation context only.
+const viewNodes = partitions.rootNodes;
+const viewIds = new Set(viewNodes.map((node) => node.id));
+const childrenOf = new Map<string, SitemapNode[]>();
+for (const node of viewNodes)
+  if (node.parentId && viewIds.has(node.parentId))
+    childrenOf.set(node.parentId, [
+      ...(childrenOf.get(node.parentId) ?? []),
+      node,
+    ]);
+const roots = viewNodes.filter(
+  (node) => node.parentId === null || !viewIds.has(node.parentId),
+);
+const globalIndexHref =
+  partitions.globalIndexParts.length > 0 ? globalIndexPath(1, base) : '';
+// Counts always describe the full dataset, not this navigation view.
+const countBy = <T extends string>(
+  labels: Record<T, string>,
+  pick: (node: SitemapNode) => T,
+  from: SitemapNode[] = nodes,
+) =>
+  (Object.keys(labels) as T[]).map((key) => ({
+    key,
+    label: labels[key],
+    count: from.filter((node) => pick(node) === key).length,
+  }));
+const pages = nodes.filter((node) => node.kind === 'page');
+const countGroups: {
+  title: string;
+  notes?: string[];
+  items: { key: string; label: string; count: number }[];
+}[] = [
+  {
+    title: 'Öğe türüne göre',
+    notes: [
+      'Sayfa, sekme ve bileşen sayıları ayrı gösterilir.',
+      'Sayfası olmayan bölümler bölüm olarak sayılır.',
+    ],
+    items: countBy<Kind>(kindLabels, (node) => node.kind).filter(
+      (item) => item.count > 0,
+    ),
+  },
+  {
+    title: 'Sayfalar gözlem kaynağına göre',
+    items: countBy<Source>(sourceLabels, (node) => node.source, pages),
+  },
+  {
+    title: 'Duruma göre',
+    items: countBy<Status>(statusLabels, (node) => node.status),
+  },
+  {
+    title: 'Gözlem kaynağına göre',
+    items: countBy<Source>(sourceLabels, (node) => node.source),
+  },
+  {
+    title: 'Risk türüne göre (hiçbiri çalıştırılmadı)',
+    items: countBy<Risk>(riskLabels, (node) => node.risk),
+  },
+];
+// Same explicit UTC convention as node observations; datetime stays raw.
+const lastUpdated =
+  sitemap && formatObservation({ observedAt: sitemap.lastUpdated })?.text;
+const inProgress = !sitemap || sitemap.auditPhase === 'in_progress';
+---
+
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Press Dashboard ve Desk ekranlarının okuma amaçlı incelenmiş haritası."
+    />
+    <meta name="theme-color" content="#18312e" />
+    <title>Press panel haritası — Press eğitim rehberi</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#panel-agaci">
+      Panel ağacına geç
+    </a>
+    <header class="wrap masthead">
+      <a class="button secondary" href={`${base}/`}>
+        Rehbere dön
+      </a>
+      {sitemap && (
+        <span class="edition">
+          Son güncelleme:{' '}
+          <time datetime={sitemap.lastUpdated}>{lastUpdated}</time>
+        </span>
+      )}
+    </header>
+    <main class="wrap sitemap">
+      <section class="sitemap-intro" aria-labelledby="sitemap-title">
+        {inProgress ? (
+          <p class="sitemap-phase">Tarama sürüyor</p>
+        ) : (
+          <p class="sitemap-phase">Belirtilen kapsam tamamlandı</p>
+        )}
+        <h1 id="sitemap-title">Press panel haritası</h1>
+        <p class="sitemap-lead">
+          {inProgress
+            ? `Press panelinde bağlantı ya da kaynakta keşfedilen yollar burada listelenir. Henüz açılmayanlar “${statusLabels.discovered}” durumuyla açıkça işaretlenir. Liste tarama ilerledikçe güncellenir.`
+            : 'Aşağıda yazılı kapsamın taraması bitti. Bu, kapsam dışındaki dinamik kayıtların açıldığı ya da yazma işlemlerinin denendiği anlamına gelmez.'}
+        </p>
+        {globalIndexHref && (
+          <p>
+            <a class="sitemap-link" href={globalIndexHref} data-global-index>
+              Tüm sayfa ve bölümlerin listesi
+            </a>
+          </p>
+        )}
+        <aside class="status sitemap-notice" aria-label="İnceleme sınırları">
+          <p>İnceleme, işlev testi değildir.</p>
+          <p>Press bağlantıları oturum açmayı gerektirir.</p>
+          <p>
+            Hiçbir kaydetme, değiştirme veya silme işlemi çalıştırılmadı. Yazma
+            ve yıkıcı eylemler yalnızca görüldükleri için listelenir.
+          </p>
+        </aside>
+      </section>
+
+      <section
+        class="sitemap-section"
+        id="panel-agaci"
+        aria-labelledby="agac-baslik"
+      >
+        <h2 id="agac-baslik">Panel ağacı</h2>
+        {roots.length > 0 ? (
+          <>
+            <p>
+              Her satırda durum ve gözlem kaynağı görünür. Gözlem kaynağı,
+              öğenin nereden okunduğunu söyler:
+            </p>
+            <dl class="sitemap-definitions">
+              {(Object.keys(sourceDefinitions) as Source[]).map((source) => (
+                <div>
+                  <dt>{sourceLabels[source]}</dt>
+                  <dd>{sourceDefinitions[source]}</dd>
+                </div>
+              ))}
+            </dl>
+            <p>
+              Bu görünüm yalnızca üst düzey modül ve bölümleri ve bunların
+              gezinme bağlamını gösterir; tüm sekmeler ve alt sayfalar burada
+              görünmez. Alt sayfalar, alanlar, eylemler ve notlar “Bileşenleri
+              incele” bağlantısıyla açılan ayrıntı sayfalarındadır.
+            </p>
+            <SitemapControls
+              nodes={viewNodes}
+              scope="Arama yalnızca bu görünümdeki üst düzey öğelerin adını, türünü, kaynağını, durumunu, yüzeyini ve yolunu okur; alt sayfaları, liste parçalarını ve bileşen ayrıntılarını aramaz."
+            />
+            <ul class="sitemap-tree" data-sitemap>
+              {roots.map((node) => (
+                <SitemapNavigation
+                  node={node}
+                  childrenOf={childrenOf}
+                  anchorIds={views.anchorIds}
+                  base={base}
+                />
+              ))}
+            </ul>
+          </>
+        ) : (
+          <p>Henüz harita öğesi yok. Tarama sürüyor.</p>
+        )}
+      </section>
+
+      <section class="sitemap-section" aria-labelledby="kapsam">
+        <h2 id="kapsam">Tarama kapsamı</h2>
+        {sitemap ? (
+          <details class="sitemap-coverage" data-coverage-details>
+            <summary>Tarama kapsamı, kapsam dışı ve öğe sayıları</summary>
+            <ul>
+              {sitemap.coverageScope.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+            <h3>Kapsam dışı</h3>
+            <ul>
+              {sitemap.exclusions.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+            <h3>Öğe sayıları</h3>
+            <p>
+              Toplam {nodes.length} öğe kaydedildi. Her öğe bir ekran değildir;
+              sekme, alan ve eylemler de öğe olarak sayılır. Toplam Press ekranı
+              sayısı bilinmediği için yüzde verilmez. Bu sayılar tüm veriyi
+              kapsar; yukarıdaki ağaç yalnızca üst düzey bölümleri gösterir.
+            </p>
+            {countGroups.map((group) => (
+              <>
+                <p class="sitemap-count-title">{group.title}</p>
+                {group.notes?.map((note) => (
+                  <p>{note}</p>
+                ))}
+                <dl class="sitemap-counts" aria-label={group.title}>
+                  {group.items.map((item) => (
+                    <div>
+                      <dt>{item.label}:</dt>
+                      <dd>{item.count}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </>
+            ))}
+            <p>
+              <a
+                class="sitemap-link sitemap-download"
+                href={`${base}/press-sitemap.json`}
+                download
+              >
+                İncelenmiş kayıtları JSON olarak indir
+              </a>
+            </p>
+            <p>
+              Dosya yalnızca bu bağlantıyla indirilir. Kayıtlar tarama
+              kapsamıyla sınırlıdır ve öğelerin işlevi doğrulanmamıştır.
+            </p>
+          </details>
+        ) : (
+          <p>
+            Henüz yayımlanmış tarama verisi yok. İncelenmiş veri eklendiğinde
+            harita burada görünecek.
+          </p>
+        )}
+      </section>
+
+      <section class="sitemap-section" aria-labelledby="tanimlar">
+        <h2 id="tanimlar">Durumların anlamı</h2>
+        <dl class="sitemap-definitions">
+          {(Object.keys(statusDefinitions) as Status[]).map((status) => (
+            <div>
+              <dt>
+                <span class="sitemap-status" data-status={status}>
+                  {statusLabels[status]}
+                </span>
+              </dt>
+              <dd>{statusDefinitions[status]}</dd>
+            </div>
+          ))}
+        </dl>
+        <h3>İşlev testi</h3>
+        <p>
+          “İncelendi” yalnızca öğenin kaydedilen gözlem kaynağında okunduğunu
+          belirtir. Bir düğmenin ya da formun çalıştığını göstermez; bunun için
+          ayrı işlev testi gerekir ve her öğede “İşlev testi” satırında yazar.
+        </p>
+      </section>
+    </main>
+    <footer class="wrap">
+      <p>
+        Kayıt değerleri, e-posta, iletişim bilgisi, tutar, anahtar ve müşteri
+        tanımlayıcıları yayımlanmaz.
+      </p>
+    </footer>
+    <script is:inline type="module" set:html={compiledSitemapScript} />
+  </body>
+</html>

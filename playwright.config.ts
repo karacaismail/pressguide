@@ -26,5 +26,6 @@ export default defineConfig({
     command: 'npm run build && node scripts/serve.mjs',
     url: 'http://127.0.0.1:47321/pressguide/',
     reuseExistingServer: !process.env.CI,
+    timeout: 300_000,
   },
 });

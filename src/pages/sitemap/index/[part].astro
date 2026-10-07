@@ -1,0 +1,22 @@
+---
+import SitemapIndexPage from '../../../components/SitemapIndexPage.astro';
+import { buildSitemapPartitions } from '../../../sitemap-partitions';
+import { loadSitemap } from '../../../sitemap';
+
+export async function getStaticPaths() {
+  const sitemap = await loadSitemap();
+  const { views, globalIndexParts } = buildSitemapPartitions(
+    sitemap?.nodes ?? [],
+  );
+  if (views.anchors.some((anchor) => encodeURIComponent(anchor.id) === 'index'))
+    throw new Error('sitemap anchor id "index" collides with the global index');
+  return globalIndexParts.map((index) => ({
+    params: { part: String(index.part) },
+    props: { part: index.part },
+  }));
+}
+
+const { part } = Astro.props as { part: number };
+---
+
+<SitemapIndexPage ownerId={null} part={part} />

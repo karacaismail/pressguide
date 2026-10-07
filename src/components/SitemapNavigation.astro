@@ -1,0 +1,83 @@
+---
+import { detailPath } from '../sitemap-views';
+import {
+  kindLabels,
+  sourceLabels,
+  statusLabels,
+  surfaceLabels,
+  type SitemapNode,
+} from '../sitemap';
+const {
+  node,
+  childrenOf,
+  anchorIds,
+  base,
+  placeholder = false,
+} = Astro.props as {
+  node: SitemapNode;
+  /** Children within the current view only. */
+  childrenOf: Map<string, SitemapNode[]>;
+  anchorIds: Set<string>;
+  base: string;
+  /** Other anchor on a detail view: link only, no subtree. */
+  placeholder?: boolean;
+};
+const children = placeholder ? [] : (childrenOf.get(node.id) ?? []);
+const isAnchor = anchorIds.has(node.id);
+// Non-visible paths only; visible summary and body text is indexed client-side.
+const search = [node.routeTemplate, node.livePath].filter(Boolean).join(' ');
+---
+
+<li
+  class="sitemap-item"
+  data-node-id={node.id}
+  data-kind={node.kind}
+  data-surface={node.surface}
+  data-status={node.status}
+  data-source={node.source}
+  data-search={search}
+>
+  <details class="sitemap-node" data-sitemap-node>
+    <summary>
+      <span class="sitemap-label">{node.label}</span>
+      <span class="sitemap-status" data-status={node.status}>
+        {statusLabels[node.status]}
+      </span>
+      <span class="sitemap-source" data-source={node.source}>
+        {sourceLabels[node.source]}
+      </span>
+    </summary>
+    <div class="sitemap-body">
+      <p data-search-text>
+        {kindLabels[node.kind]}, {surfaceLabels[node.surface]}
+      </p>
+      {isAnchor && (
+        <a
+          class="sitemap-link"
+          href={detailPath(node.id, base)}
+          data-page-detail={node.id}
+          aria-label={`Bileşenleri incele: ${node.label}`}
+        >
+          Bileşenleri incele
+        </a>
+      )}
+      {children.length > 0 && (
+        <>
+          <p class="sitemap-filtered-children" hidden>
+            Alt öğeler süzüldü.
+          </p>
+          <ul class="sitemap-tree">
+            {children.map((child) => (
+              <Astro.self
+                node={child}
+                childrenOf={childrenOf}
+                anchorIds={anchorIds}
+                base={base}
+              />
+            ))}
+          </ul>
+        </>
+      )}
+    </div>
+  </details>
+</li>

@@ -1,0 +1,171 @@
+---
+import SitemapBranch from './SitemapBranch.astro';
+import SitemapControls from './SitemapControls.astro';
+import SitemapPagination from './SitemapPagination.astro';
+import { compiledSitemapScript } from '../sitemap-script';
+import { detailPath } from '../sitemap-views';
+import {
+  buildSitemapPartitions,
+  childIndexPath,
+  metadataPath,
+} from '../sitemap-partitions';
+import {
+  kindLabels,
+  loadSitemap,
+  sourceDefinitions,
+  sourceLabels,
+  type SitemapNode,
+  type Source,
+} from '../sitemap';
+import '../styles/global.css';
+import '../styles/sitemap.css';
+const { anchorId, part } = Astro.props as { anchorId: string; part: number };
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const sitemap = await loadSitemap();
+const partitions = buildSitemapPartitions(sitemap?.nodes ?? []);
+const { views } = partitions;
+const current = partitions.metadataFor(anchorId, part);
+const anchor = current.anchor;
+const viewNodes = current.nodes;
+const childrenOf = new Map<string, SitemapNode[]>();
+for (const node of viewNodes)
+  if (node.parentId && node.id !== anchorId)
+    childrenOf.set(node.parentId, [
+      ...(childrenOf.get(node.parentId) ?? []),
+      node,
+    ]);
+const breadcrumbs = views.breadcrumbsFor(anchorId);
+const childParts = partitions.childrenFor(anchorId);
+const mapHref = `${base}/sitemap/`;
+const partText =
+  current.totalParts > 1 ? ` (parça ${part} / ${current.totalParts})` : '';
+---
+
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content={`Press panel haritası: ${anchor.label} bileşenleri${partText}.`}
+    />
+    <meta name="theme-color" content="#18312e" />
+    <title>
+      {anchor.label}
+      {partText} — Press panel haritası
+    </title>
+  </head>
+  <body>
+    <a class="skip-link" href="#panel-agaci">
+      Bileşen ağacına geç
+    </a>
+    <header class="wrap masthead">
+      <a class="button secondary" href={`${base}/`}>
+        Rehbere dön
+      </a>
+    </header>
+    <main class="wrap sitemap">
+      <nav class="sitemap-breadcrumbs" aria-label="Konum">
+        <ol>
+          <li>
+            <a class="sitemap-link" href={mapHref}>
+              Press panel haritası
+            </a>
+          </li>
+          {breadcrumbs.map((crumb) => (
+            <li>
+              {views.anchorIds.has(crumb.id) ? (
+                <a class="sitemap-link" href={detailPath(crumb.id, base)}>
+                  {crumb.label}
+                </a>
+              ) : (
+                <span>{crumb.label}</span>
+              )}
+            </li>
+          ))}
+          <li aria-current="page">{anchor.label}</li>
+        </ol>
+      </nav>
+
+      <section class="sitemap-intro" aria-labelledby="sitemap-title">
+        <p class="sitemap-phase">{kindLabels[anchor.kind]}</p>
+        <h1 id="sitemap-title">{anchor.label}</h1>
+        <aside class="status sitemap-notice" aria-label="İnceleme sınırları">
+          <p>İnceleme, işlev testi değildir.</p>
+          <p>Press bağlantıları oturum açmayı gerektirir.</p>
+          <p>
+            Hiçbir kaydetme, değiştirme veya silme işlemi çalıştırılmadı. Yazma
+            ve yıkıcı eylemler yalnızca görüldükleri için listelenir.
+          </p>
+        </aside>
+        <p>
+          Her satırda durum ve gözlem kaynağı görünür. Gözlem kaynağı, öğenin
+          nereden okunduğunu söyler:
+        </p>
+        <dl class="sitemap-definitions">
+          {(Object.keys(sourceDefinitions) as Source[]).map((source) => (
+            <div>
+              <dt>{sourceLabels[source]}</dt>
+              <dd>{sourceDefinitions[source]}</dd>
+            </div>
+          ))}
+        </dl>
+        {childParts.length > 0 && (
+          <p>
+            <a
+              class="sitemap-link"
+              href={childIndexPath(anchorId, 1, base)}
+              data-child-index={anchorId}
+            >
+              Alt sayfa ve bölümleri listele
+            </a>
+          </p>
+        )}
+      </section>
+
+      <section
+        class="sitemap-section"
+        id="panel-agaci"
+        aria-labelledby="agac-baslik"
+      >
+        <h2 id="agac-baslik">Bileşenler{partText}</h2>
+        <p>
+          Bu parça yalnızca bu öğeye ait bileşenlerin bir bölümünü tam
+          ayrıntıyla gösterir. Üst öğeler yalnızca konum için kısaca gösterilir
+          ve kendi ayrıntılarına bağlanır. Kendi ayrıntı sayfası olan alt öğeler
+          ayrı listededir.
+        </p>
+        <SitemapPagination
+          part={part}
+          totalParts={current.totalParts}
+          hrefFor={(target: number) => metadataPath(anchorId, target, base)}
+          label="Bileşen parçaları"
+        />
+        <SitemapControls
+          nodes={viewNodes}
+          scope={`Arama yalnızca bu parçada${partText} gösterilen öğeleri okur; bu öğenin diğer parçalarını ve diğer sayfaların bileşenlerini aramaz.`}
+        />
+        <ul class="sitemap-tree" data-sitemap>
+          <SitemapBranch
+            node={anchor}
+            byId={views.byId}
+            childrenOf={childrenOf}
+            anchorIds={views.anchorIds}
+            anchorId={anchorId}
+            base={base}
+            primaryIds={current.primaryIds}
+            homeById={partitions.homeById}
+          />
+        </ul>
+      </section>
+    </main>
+    <footer class="wrap">
+      <p>
+        Kayıt değerleri, e-posta, iletişim bilgisi, tutar, anahtar ve müşteri
+        tanımlayıcıları yayımlanmaz.
+      </p>
+    </footer>
+    <script is:inline type="module" set:html={compiledSitemapScript} />
+  </body>
+</html>

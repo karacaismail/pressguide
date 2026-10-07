@@ -1,0 +1,83 @@
+---
+import {
+  sourceLabels,
+  statusLabels,
+  surfaceLabels,
+  type SitemapNode,
+  type Source,
+  type Status,
+  type Surface,
+} from '../sitemap';
+const { nodes, scope } = Astro.props as {
+  /** Nodes rendered in this view only, never the full dataset. */
+  nodes: SitemapNode[];
+  /** Truthful description of the text the search reads in this view. */
+  scope: string;
+};
+const present = <T extends string>(
+  labels: Record<T, string>,
+  pick: (node: SitemapNode) => T,
+) =>
+  (Object.keys(labels) as T[])
+    .filter((key) => nodes.some((node) => pick(node) === key))
+    .map((key) => ({ key, label: labels[key] }));
+const groups = [
+  {
+    filter: 'source',
+    legend: 'Gözlem kaynağı',
+    items: present<Source>(sourceLabels, (node) => node.source),
+  },
+  {
+    filter: 'surface',
+    legend: 'Yüzey',
+    items: present<Surface>(surfaceLabels, (node) => node.surface),
+  },
+  {
+    filter: 'status',
+    legend: 'Durum',
+    items: present<Status>(statusLabels, (node) => node.status),
+  },
+].filter((group) => group.items.length > 1);
+---
+
+<div class="sitemap-controls" role="search" data-sitemap-controls hidden>
+  <label for="sitemap-search">Bu görünümde ara</label>
+  <p class="sitemap-scope" id="sitemap-search-scope">
+    {scope}
+  </p>
+  <input
+    id="sitemap-search"
+    type="search"
+    autocomplete="off"
+    spellcheck="false"
+    aria-describedby="sitemap-search-scope"
+  />
+  {groups.map((group) => (
+    <fieldset>
+      <legend>{group.legend}</legend>
+      {group.items.map((item) => (
+        <button
+          class="button secondary"
+          type="button"
+          data-filter={group.filter}
+          value={item.key}
+          aria-pressed="false"
+        >
+          {item.label}
+        </button>
+      ))}
+    </fieldset>
+  ))}
+  <p class="sitemap-count" role="status" data-sitemap-count>
+    Bu görünümde {nodes.length} öğe.
+  </p>
+  <p class="sitemap-empty" data-sitemap-empty hidden>
+    Eşleşen öğe bulunamadı.
+  </p>
+</div>
+<noscript>
+  <p>
+    Arama ve süzme için JavaScript gerekir. Bu görünümdeki öğeler açılır-kapanır
+    başlıklarla okunabilir.
+  </p>
+</noscript>

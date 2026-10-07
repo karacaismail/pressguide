@@ -1,0 +1,296 @@
+/* Press panel haritası. Page-only; tokens come from tokens.css. */
+.sitemap {
+  padding-bottom: var(--space-section);
+  overflow-wrap: break-word;
+}
+.sitemap-intro {
+  padding-block: var(--space-lg) var(--space-xl);
+}
+.sitemap-phase {
+  display: inline-block;
+  margin-bottom: var(--space-lg);
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-control);
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+  font-weight: 700;
+}
+.sitemap-lead {
+  max-width: var(--measure-lead);
+  margin-top: var(--space-lg);
+  font-size: var(--text-lead);
+}
+.sitemap-notice {
+  margin-top: var(--space-xl);
+}
+.sitemap-section {
+  padding-block: var(--space-xl);
+  border-top: var(--line-functional);
+}
+.sitemap-section h3 {
+  margin-block: var(--space-lg) var(--space-sm);
+}
+.sitemap code {
+  font-family: var(--font-mono);
+  font-size: var(--text-body);
+  overflow-wrap: anywhere;
+}
+.sitemap dl {
+  margin: 0;
+}
+.sitemap dd {
+  margin: 0;
+}
+/* Long coverage stays in a native disclosure below the tree. */
+.sitemap-coverage > summary {
+  display: list-item;
+  min-block-size: var(--target-size);
+  padding-block: var(--space-xs);
+  font-weight: 700;
+  cursor: pointer;
+}
+.sitemap-count-title {
+  margin-top: var(--space-md);
+  font-weight: 700;
+}
+.sitemap-counts {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(min(100%, var(--measure-count-column)), 1fr)
+  );
+  gap: var(--space-xs) var(--space-lg);
+}
+.sitemap-counts div,
+.sitemap-meta div {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: var(--space-xs);
+  min-width: 0;
+}
+.sitemap-counts dt,
+.sitemap-meta dt {
+  color: var(--color-muted);
+}
+.sitemap-download,
+.sitemap-link {
+  display: inline-block;
+  max-inline-size: 100%;
+  min-inline-size: var(--target-size);
+  min-block-size: var(--target-size);
+  padding-block: var(--space-sm);
+  overflow-wrap: anywhere;
+}
+.sitemap-download {
+  margin-top: var(--space-md);
+}
+/* Static detail and breadcrumb links are standalone targets too. */
+a[data-page-detail],
+main nav a {
+  display: inline-flex;
+  align-items: center;
+  max-inline-size: 100%;
+  min-inline-size: var(--target-size);
+  min-block-size: var(--target-size);
+  overflow-wrap: anywhere;
+}
+main nav ol {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 var(--space-sm);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.sitemap-filtered-children {
+  color: var(--color-muted);
+}
+.sitemap-filtered-children[hidden] {
+  display: none;
+}
+
+/* Search and filters appear only once the enhancement module runs. */
+.sitemap-controls {
+  display: grid;
+  gap: var(--space-sm);
+  margin-block: var(--space-md) var(--space-lg);
+}
+.sitemap-controls[hidden] {
+  display: none;
+}
+.sitemap-controls p {
+  margin: 0;
+}
+.sitemap-controls label,
+.sitemap-controls legend {
+  font-weight: 700;
+}
+.sitemap-controls input {
+  width: 100%;
+  min-height: var(--target-size);
+  padding: var(--control-padding);
+  border: var(--line-field);
+  border-radius: var(--radius-control);
+  background: var(--color-surface);
+  color: var(--color-ink);
+}
+.sitemap-controls fieldset {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.sitemap-controls legend {
+  padding: 0;
+  margin-bottom: var(--space-xs);
+}
+.sitemap-controls .button {
+  padding-inline: var(--space-md);
+}
+.sitemap-controls .button[aria-pressed='true'] {
+  background: var(--color-accent);
+  color: var(--color-surface);
+}
+.sitemap-controls .button[aria-pressed='true']::before {
+  content: '✓';
+  content: '✓' / '';
+}
+.sitemap-count {
+  color: var(--color-muted);
+}
+.sitemap-empty {
+  color: var(--color-caution);
+  font-weight: 700;
+}
+
+/* Tree: spacing and one functional rule per level carry the hierarchy. */
+.sitemap-tree {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.sitemap-tree li + li {
+  margin-top: 0;
+}
+.sitemap-tree .sitemap-tree {
+  /* Stem runs through the marker centre; 0.5px is half the 1px line. */
+  margin-inline-start: calc(var(--tree-marker-size) / 2 - 0.5px);
+  padding-inline-start: var(--tree-indent);
+  border-inline-start: var(--line-functional);
+}
+/* Bounded indentation: from the sixth level on, children stay aligned. */
+.sitemap-tree
+  .sitemap-tree
+  .sitemap-tree
+  .sitemap-tree
+  .sitemap-tree
+  .sitemap-tree {
+  margin-inline-start: 0;
+  padding-inline-start: 0;
+  border-inline-start: 0;
+}
+.sitemap-node > summary {
+  display: grid;
+  grid-template-columns: var(--tree-marker-size) minmax(0, 1fr);
+  column-gap: var(--space-xs);
+  align-items: baseline;
+  min-height: var(--target-size);
+  padding-block: var(--space-xs);
+  list-style: none;
+  cursor: pointer;
+}
+.sitemap-node > summary::-webkit-details-marker {
+  display: none;
+}
+.sitemap-node > summary::before {
+  content: '▸';
+  content: '▸' / '';
+  color: var(--color-accent);
+  text-align: center;
+}
+.sitemap-node[open] > summary::before {
+  transform: rotate(90deg);
+}
+.sitemap-label {
+  font-weight: 700;
+  min-width: 0;
+}
+.sitemap-node > summary .sitemap-status,
+.sitemap-node > summary .sitemap-source {
+  grid-column: 2;
+  justify-self: start;
+}
+/* Source stays readable while the disclosure is collapsed. */
+.sitemap-source {
+  color: var(--color-muted);
+  font-size: var(--text-body);
+}
+.sitemap-item[data-context] > details > summary .sitemap-label {
+  color: var(--color-muted);
+  font-weight: 400;
+}
+.sitemap-body > :not(.sitemap-tree) {
+  margin-inline-start: calc(var(--tree-marker-size) + var(--space-xs));
+}
+.sitemap-body > :last-child {
+  margin-bottom: var(--space-sm);
+}
+.sitemap-notes {
+  margin-block: var(--space-xs) 0;
+  padding-inline-start: var(--space-lg);
+}
+.sitemap-notes li + li {
+  margin-top: var(--space-xs);
+}
+.sitemap-status {
+  display: inline-block;
+  padding-inline: var(--space-xs);
+  border-radius: var(--radius-control);
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+}
+.sitemap-status[data-status='plan_blocked'],
+.sitemap-status[data-status='permission_blocked'] {
+  background: var(--color-caution-soft);
+  color: var(--color-caution);
+}
+.sitemap-status[data-status='error'] {
+  background: var(--color-caution-soft);
+  color: var(--color-annotation);
+}
+.sitemap-status[data-status='discovered'],
+.sitemap-status[data-status='not_applicable'] {
+  background: none;
+  color: var(--color-muted);
+  padding-inline: 0;
+}
+[data-risk='write'] {
+  color: var(--color-caution);
+  font-weight: 700;
+}
+[data-risk='destructive'] {
+  color: var(--color-annotation);
+  font-weight: 700;
+}
+.sitemap-definitions {
+  display: grid;
+  gap: var(--space-md);
+}
+.sitemap-definitions dt {
+  font-weight: 700;
+}
+@media (hover: hover) {
+  .sitemap-node > summary:hover .sitemap-label {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .sitemap-node > summary::before {
+    transition: transform var(--motion-duration-short) ease;
+  }
+}
