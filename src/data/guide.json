@@ -1,7 +1,7 @@
 {
   "title": "Press Eğitim Rehberi",
   "subtitle": "Uygulama kaynağından çalışan eğitim sitesine: açıklamalı ekranlar ve doğrulama adımları.",
-  "updated": "7 Ekim 2026 · 12:10 Europe/Istanbul",
+  "updated": "7 Ekim 2026 12:16 · Europe/Istanbul",
   "liveStatus": "KURULUM DEVAM EDİYOR — egitimxv1 sitesi henüz oluşturulmadı. bench-0027 ve deploy-0027-000001 hazırlandı. kpktsdsd9n build: clone, bağımlılık kontrolü ve paketleme başarılı; Upload Build Context başarısız (agent HTTP 500). Agent temel ping yanıtı pong. Eski Press upload protokolü ile bildirilen yeni agent commit’i arasında uyuşmazlık güçlü biçimde destekleniyor; sunucuda doğrulama ve düzeltme bekleniyor.",
   "steps": [
     {
@@ -1104,6 +1104,509 @@
           }
         ]
       }
+    },
+    {
+      "id": "live-agent-pong",
+      "title": "Agent temel bağlantısı: pong",
+      "summary": "Server → app → Ping → Ping Agent işlemi pong yanıtı verdi. Temel erişim çalışıyor; build protokolü ayrıca doğrulanmalı.",
+      "actions": [
+        "Server → app → Ping → Ping Agent işlemi pong yanıtı verdi. Temel erişim çalışıyor; build protokolü ayrıca doğrulanmalı."
+      ],
+      "notes": [
+        "Bu ekran belirli bir anın kanıtıdır; başarılı site kurulumu anlamına gelmez."
+      ],
+      "verification": "Server → app → Ping → Ping Agent işlemi pong yanıtı verdi. Temel erişim çalışıyor; build protokolü ayrıca doğrulanmalı.",
+      "status": "live",
+      "screenshot": {
+        "src": "evidence/live-agent-pong.jpg",
+        "alt": "Agent temel bağlantısı: pong — canlı oturum, 7 Ekim 2026",
+        "width": 1295,
+        "height": 1135,
+        "annotations": [
+          {
+            "x": 65,
+            "y": 18,
+            "targetX": 31,
+            "targetY": 10.5,
+            "label": "Agent ping yanıtı: pong"
+          }
+        ]
+      }
+    },
+    {
+      "id": "live-agent-version",
+      "title": "Agent commit kimliği",
+      "summary": "Server → Actions → Show Agent Version: 2a412bc2b1292176f0b6c8ea51240d743981f283. Bu repo HEAD bilgisidir; çalışan process kodu ayrıca SSH ile doğrulanmalı.",
+      "actions": [
+        "Server → Actions → Show Agent Version: 2a412bc2b1292176f0b6c8ea51240d743981f283. Bu repo HEAD bilgisidir; çalışan process kodu ayrıca SSH ile doğrulanmalı."
+      ],
+      "notes": [
+        "Pinned agent kodunda eski upload route bulunmuyor. Eski Press protokolü ile uyumsuzluk güçlü bir çıkarım; gerçek process sürümü ve proxy logu ayrıca doğrulanmalı."
+      ],
+      "verification": "Server → Actions → Show Agent Version: 2a412bc2b1292176f0b6c8ea51240d743981f283. Bu repo HEAD bilgisidir; çalışan process kodu ayrıca SSH ile doğrulanmalı.",
+      "status": "live",
+      "screenshot": {
+        "src": "evidence/live-agent-version.jpg",
+        "alt": "Agent commit kimliği — canlı oturum, 7 Ekim 2026",
+        "width": 1295,
+        "height": 1135,
+        "annotations": [
+          {
+            "x": 67,
+            "y": 18,
+            "targetX": 43,
+            "targetY": 10.5,
+            "label": "Agent commit kimliği"
+          }
+        ]
+      }
+    },
+    {
+      "id": "live-press-version",
+      "title": "Press yönetim uygulamasının sürümü",
+      "summary": "Help → About: Press 0.7.0 (develop), yönetim Framework 15.101.5 (version-15). Bu yönetim paneli sürümü; hedef eğitim grubunun Frappe v16 sürümünden ayrıdır.",
+      "actions": [
+        "Help → About: Press 0.7.0 (develop), yönetim Framework 15.101.5 (version-15). Bu yönetim paneli sürümü; hedef eğitim grubunun Frappe v16 sürümünden ayrıdır."
+      ],
+      "notes": [
+        "Bu ekran belirli bir anın kanıtıdır; başarılı site kurulumu anlamına gelmez."
+      ],
+      "verification": "Help → About: Press 0.7.0 (develop), yönetim Framework 15.101.5 (version-15). Bu yönetim paneli sürümü; hedef eğitim grubunun Frappe v16 sürümünden ayrıdır.",
+      "status": "live",
+      "screenshot": {
+        "src": "evidence/live-press-version.jpg",
+        "alt": "Press yönetim uygulamasının sürümü — canlı oturum, 7 Ekim 2026",
+        "width": 1295,
+        "height": 1135,
+        "annotations": [
+          {
+            "x": 67,
+            "y": 58,
+            "targetX": 38,
+            "targetY": 43,
+            "label": "Yönetim paneli: Press 0.7.0"
+          }
+        ]
+      }
+    },
+    {
+      "id": "live-current-failure",
+      "title": "Yeni eğitim build genel sonucu: Failure",
+      "summary": "kpktsdsd9n build genel durumu Failure. Bu kırpım clone satırlarını gösterir; Upload hatasının ayrıntısı bir sonraki kanıttadır.",
+      "actions": [
+        "kpktsdsd9n build genel durumu Failure. Bu kırpım clone satırlarını gösterir; Upload hatasının ayrıntısı bir sonraki kanıttadır."
+      ],
+      "notes": [
+        "Bu ekran belirli bir anın kanıtıdır; başarılı site kurulumu anlamına gelmez."
+      ],
+      "verification": "kpktsdsd9n build genel durumu Failure. Bu kırpım clone satırlarını gösterir; Upload hatasının ayrıntısı bir sonraki kanıttadır.",
+      "status": "live",
+      "screenshot": {
+        "src": "evidence/live-upload-failure.jpg",
+        "alt": "Yeni eğitim build genel sonucu: Failure — canlı oturum, 7 Ekim 2026",
+        "width": 1295,
+        "height": 1060,
+        "annotations": [
+          {
+            "x": 61,
+            "y": 11,
+            "targetX": 23,
+            "targetY": 6.8,
+            "label": "Genel build durumu: Failure"
+          }
+        ]
+      }
+    },
+    {
+      "id": "live-upload-row",
+      "title": "Build paketinin yüklenmesi başarısız",
+      "summary": "Build Steps satır 8: Stage Upload, Step Build Context, Status Failure. Beş clone, Pre-build ve Package satırları Success.",
+      "actions": [
+        "Build kaydında Build Steps → 8. Upload / Build Context satırını aç."
+      ],
+      "notes": [
+        "Bu ekran belirli bir anın kanıtıdır; başarılı site kurulumu anlamına gelmez."
+      ],
+      "verification": "Build Steps satır 8: Stage Upload, Step Build Context, Status Failure. Beş clone, Pre-build ve Package satırları Success.",
+      "status": "live",
+      "screenshot": {
+        "src": "evidence/live-upload-row.jpg",
+        "alt": "Build paketinin yüklenmesi başarısız — canlı oturum, 7 Ekim 2026",
+        "width": 1158,
+        "height": 1135,
+        "annotations": [
+          {
+            "x": 78,
+            "y": 80,
+            "targetX": 63,
+            "targetY": 58.5,
+            "label": "Upload Build Context: Failure"
+          }
+        ]
+      }
+    },
+    {
+      "id": "live-agent-http500",
+      "title": "HTTP 500: agent upload yanıtı",
+      "summary": "Error Log qu5n7pv6pk: POST builder/upload/kpktsdsd9n yanıtı HTTP 500; yanıt JSON olarak çözümlenemedi.",
+      "actions": [
+        "Build → Error Log → Deploy Candidate Build Exception kaydını aç; response ve path satırlarını oku."
+      ],
+      "notes": [
+        "BufferedReader hatası traceback değişkenlerinin yazdırılmasında oluşuyor; birincil HTTP 500 hatasıyla karıştırma."
+      ],
+      "verification": "Error Log qu5n7pv6pk: POST builder/upload/kpktsdsd9n yanıtı HTTP 500; yanıt JSON olarak çözümlenemedi.",
+      "status": "live",
+      "screenshot": {
+        "src": "evidence/live-agent-http500.jpg",
+        "alt": "HTTP 500: agent upload yanıtı — canlı oturum, 7 Ekim 2026",
+        "width": 1158,
+        "height": 1135,
+        "annotations": [
+          {
+            "x": 78,
+            "y": 19,
+            "targetX": 38,
+            "targetY": 18.5,
+            "label": "Agent yanıtı: HTTP 500"
+          }
+        ]
+      }
+    },
+    {
+      "id": "live-previous-build-detail",
+      "title": "Eski build Pre-build aşamasında durmuş",
+      "summary": "Eski rgv1 grubunda Pre-build Failure gözlendi. Güncel egitimxv1 build’i bu aşamayı geçti; iki hatayı karıştırma.",
+      "actions": [
+        "Eski rgv1 grubunda Pre-build Failure gözlendi. Güncel egitimxv1 build’i bu aşamayı geçti; iki hatayı karıştırma."
+      ],
+      "notes": [
+        "Bu ekran belirli bir anın kanıtıdır; başarılı site kurulumu anlamına gelmez."
+      ],
+      "verification": "Eski rgv1 grubunda Pre-build Failure gözlendi. Güncel egitimxv1 build’i bu aşamayı geçti; iki hatayı karıştırma.",
+      "status": "live",
+      "screenshot": {
+        "src": "evidence/live-build-details.jpg",
+        "alt": "Eski build Pre-build aşamasında durmuş — canlı oturum, 7 Ekim 2026",
+        "width": 1295,
+        "height": 1135,
+        "annotations": [
+          {
+            "x": 74,
+            "y": 61,
+            "targetX": 62,
+            "targetY": 80.5,
+            "label": "Eski Pre-build: Failure"
+          }
+        ]
+      }
+    },
+    {
+      "id": "live-previous-candidate-count",
+      "title": "Eski candidate build sayısı",
+      "summary": "deploy-0026-000001 eski candidate kaydında iki build bağlantısı bulunuyor. Yeni candidate deploy-0027-000001 ayrı kayıttır.",
+      "actions": [
+        "deploy-0026-000001 eski candidate kaydında iki build bağlantısı bulunuyor. Yeni candidate deploy-0027-000001 ayrı kayıttır."
+      ],
+      "notes": [
+        "Bu ekran belirli bir anın kanıtıdır; başarılı site kurulumu anlamına gelmez."
+      ],
+      "verification": "deploy-0026-000001 eski candidate kaydında iki build bağlantısı bulunuyor. Yeni candidate deploy-0027-000001 ayrı kayıttır.",
+      "status": "live",
+      "screenshot": {
+        "src": "evidence/live-candidate-header.jpg",
+        "alt": "Eski candidate build sayısı — canlı oturum, 7 Ekim 2026",
+        "width": 769,
+        "height": 269,
+        "annotations": [
+          {
+            "x": 78,
+            "y": 72,
+            "targetX": 52,
+            "targetY": 93,
+            "label": "Eski candidate: iki build"
+          }
+        ]
+      }
+    },
+    {
+      "id": "live-previous-candidates",
+      "title": "Eski candidate liste görünümü",
+      "summary": "Eski rgv1 candidate listesi deploy-0026-000001 kaydını gösteriyor; build/site başarısını göstermez.",
+      "actions": [
+        "Eski rgv1 candidate listesi deploy-0026-000001 kaydını gösteriyor; build/site başarısını göstermez."
+      ],
+      "notes": [
+        "Bu ekran belirli bir anın kanıtıdır; başarılı site kurulumu anlamına gelmez."
+      ],
+      "verification": "Eski rgv1 candidate listesi deploy-0026-000001 kaydını gösteriyor; build/site başarısını göstermez.",
+      "status": "live",
+      "screenshot": {
+        "src": "evidence/live-candidates.jpg",
+        "alt": "Eski candidate liste görünümü — canlı oturum, 7 Ekim 2026",
+        "width": 1295,
+        "height": 1135,
+        "annotations": [
+          {
+            "x": 71,
+            "y": 35,
+            "targetX": 69,
+            "targetY": 20.3,
+            "label": "Eski candidate kaydı"
+          }
+        ]
+      }
+    },
+    {
+      "id": "live-candidate-menu",
+      "title": "Release Group candidate menüsü",
+      "summary": "Kaydedilmiş grupta Actions → Create Deploy Candidate seçeneği görünür. egitimxv1 için aynı işlem deploy-0027-000001 kaydını üretti.",
+      "actions": [
+        "Kaydedilmiş grupta Actions → Create Deploy Candidate seçeneği görünür. egitimxv1 için aynı işlem deploy-0027-000001 kaydını üretti."
+      ],
+      "notes": [
+        "Bu ekran belirli bir anın kanıtıdır; başarılı site kurulumu anlamına gelmez."
+      ],
+      "verification": "Kaydedilmiş grupta Actions → Create Deploy Candidate seçeneği görünür. egitimxv1 için aynı işlem deploy-0027-000001 kaydını üretti.",
+      "status": "live",
+      "screenshot": {
+        "src": "evidence/live-create-candidate.jpg",
+        "alt": "Release Group candidate menüsü — canlı oturum, 7 Ekim 2026",
+        "width": 1295,
+        "height": 1135,
+        "annotations": [
+          {
+            "x": 65,
+            "y": 48,
+            "targetX": 83,
+            "targetY": 10,
+            "label": "Actions → Create Deploy Candidate"
+          }
+        ]
+      }
+    },
+    {
+      "id": "live-group-list",
+      "title": "Mevcut grupları ayırt et",
+      "summary": "Release Group listesinde önceki eğitim denemesi ve çalışan geniş uygulama grubu ayrıdır. Eğitim için yeni egitimxv1 / bench-0027 kaydı oluşturuldu.",
+      "actions": [
+        "Release Group listesinde önceki eğitim denemesi ve çalışan geniş uygulama grubu ayrıdır. Eğitim için yeni egitimxv1 / bench-0027 kaydı oluşturuldu."
+      ],
+      "notes": [
+        "Bu ekran belirli bir anın kanıtıdır; başarılı site kurulumu anlamına gelmez."
+      ],
+      "verification": "Release Group listesinde önceki eğitim denemesi ve çalışan geniş uygulama grubu ayrıdır. Eğitim için yeni egitimxv1 / bench-0027 kaydı oluşturuldu.",
+      "status": "live",
+      "screenshot": {
+        "src": "evidence/live-groups.jpg",
+        "alt": "Mevcut grupları ayırt et — canlı oturum, 7 Ekim 2026",
+        "width": 695,
+        "height": 1100,
+        "annotations": [
+          {
+            "x": 79,
+            "y": 81,
+            "targetX": 40,
+            "targetY": 92.5,
+            "label": "Önceki eğitim grubu kaydı"
+          }
+        ]
+      }
+    },
+    {
+      "id": "live-draft-runtime",
+      "title": "Taslak formda runtime alanları",
+      "summary": "Yeni grup taslağında Dependencies tablosu boştu. Kaydetme sonrası runtime alanları oluştu; live-runtime adımına bak.",
+      "actions": [
+        "Yeni grup taslağında Dependencies tablosu boştu. Kaydetme sonrası runtime alanları oluştu; live-runtime adımına bak."
+      ],
+      "notes": [
+        "Bu ekran belirli bir anın kanıtıdır; başarılı site kurulumu anlamına gelmez."
+      ],
+      "verification": "Yeni grup taslağında Dependencies tablosu boştu. Kaydetme sonrası runtime alanları oluştu; live-runtime adımına bak.",
+      "status": "live",
+      "screenshot": {
+        "src": "evidence/live-new-dependencies.jpg",
+        "alt": "Taslak formda runtime alanları — canlı oturum, 7 Ekim 2026",
+        "width": 1295,
+        "height": 1135,
+        "annotations": [
+          {
+            "x": 75,
+            "y": 30,
+            "targetX": 50,
+            "targetY": 27.5,
+            "label": "Taslak runtime alanları boş"
+          }
+        ]
+      }
+    },
+    {
+      "id": "live-site-form-initial",
+      "title": "Site formunun ilk görünümü",
+      "summary": "Sites → New Site ilk ekranında framework sürüm seçenekleri görünmedi. Dedicated server seçimiyle de ayrıca kontrol edildi; site oluşturulmadı.",
+      "actions": [
+        "Sites → New Site ilk ekranında framework sürüm seçenekleri görünmedi. Dedicated server seçimiyle de ayrıca kontrol edildi; site oluşturulmadı."
+      ],
+      "notes": [
+        "Bu ekran belirli bir anın kanıtıdır; başarılı site kurulumu anlamına gelmez."
+      ],
+      "verification": "Sites → New Site ilk ekranında framework sürüm seçenekleri görünmedi. Dedicated server seçimiyle de ayrıca kontrol edildi; site oluşturulmadı.",
+      "status": "live",
+      "screenshot": {
+        "src": "evidence/live-new-site.jpg",
+        "alt": "Site formunun ilk görünümü — canlı oturum, 7 Ekim 2026",
+        "width": 1295,
+        "height": 1135,
+        "annotations": [
+          {
+            "x": 62,
+            "y": 29,
+            "targetX": 31,
+            "targetY": 16.5,
+            "label": "Dedicated server seçimi"
+          }
+        ]
+      }
+    },
+    {
+      "id": "live-old-rgv1",
+      "title": "Eski grup kimliği: rgv1",
+      "summary": "Bu kaydın Title alanı rgv1. Kullanıcı tarafından seçilen yeni ad egitimxv1; eski kayıt yeniden adlandırılmadı.",
+      "actions": [
+        "Bu kaydın Title alanı rgv1. Kullanıcı tarafından seçilen yeni ad egitimxv1; eski kayıt yeniden adlandırılmadı."
+      ],
+      "notes": [
+        "Bu ekran belirli bir anın kanıtıdır; başarılı site kurulumu anlamına gelmez."
+      ],
+      "verification": "Bu kaydın Title alanı rgv1. Kullanıcı tarafından seçilen yeni ad egitimxv1; eski kayıt yeniden adlandırılmadı.",
+      "status": "live",
+      "screenshot": {
+        "src": "evidence/live-rgv1.jpg",
+        "alt": "Eski grup kimliği: rgv1 — canlı oturum, 7 Ekim 2026",
+        "width": 695,
+        "height": 1100,
+        "annotations": [
+          {
+            "x": 68,
+            "y": 36,
+            "targetX": 27,
+            "targetY": 42,
+            "label": "Eski grup adı: rgv1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "live-site-header",
+      "title": "Sites ekranında ödeme uyarısı",
+      "summary": "Sites başlığındaki ödeme yöntemi uyarısı görüldü. Bu görevde ödeme yöntemi eklenmedi; build agent hatasının nedeni bu uyarı olarak kabul edilmedi.",
+      "actions": [
+        "Sites başlığındaki ödeme yöntemi uyarısı görüldü. Bu görevde ödeme yöntemi eklenmedi; build agent hatasının nedeni bu uyarı olarak kabul edilmedi."
+      ],
+      "notes": [
+        "Bu ekran belirli bir anın kanıtıdır; başarılı site kurulumu anlamına gelmez."
+      ],
+      "verification": "Sites başlığındaki ödeme yöntemi uyarısı görüldü. Bu görevde ödeme yöntemi eklenmedi; build agent hatasının nedeni bu uyarı olarak kabul edilmedi.",
+      "status": "live",
+      "screenshot": {
+        "src": "evidence/live-sites-header.jpg",
+        "alt": "Sites ekranında ödeme uyarısı — canlı oturum, 7 Ekim 2026",
+        "width": 769,
+        "height": 177,
+        "annotations": [
+          {
+            "x": 70,
+            "y": 69,
+            "targetX": 58,
+            "targetY": 41,
+            "label": "Dashboard ödeme yöntemi uyarısı"
+          }
+        ]
+      }
+    },
+    {
+      "id": "live-no-error-at-preparing",
+      "title": "Preparing sırasında hata filtresi boştu",
+      "summary": "Build → Error Log bağlantısındaki reference_name=kpktsdsd9n filtresi o anda eşleşen kayıt bulmadı. Daha sonra Failure olduğunda qu5n7pv6pk kaydı oluştu.",
+      "actions": [
+        "Build → Error Log bağlantısındaki reference_name=kpktsdsd9n filtresi o anda eşleşen kayıt bulmadı. Daha sonra Failure olduğunda qu5n7pv6pk kaydı oluştu."
+      ],
+      "notes": [
+        "Bu ekran belirli bir anın kanıtıdır; başarılı site kurulumu anlamına gelmez."
+      ],
+      "verification": "Build → Error Log bağlantısındaki reference_name=kpktsdsd9n filtresi o anda eşleşen kayıt bulmadı. Daha sonra Failure olduğunda qu5n7pv6pk kaydı oluştu.",
+      "status": "live",
+      "screenshot": {
+        "src": "evidence/live-build-no-error.jpg",
+        "alt": "Preparing sırasında hata filtresi boştu — canlı oturum, 7 Ekim 2026",
+        "width": 1295,
+        "height": 1135,
+        "annotations": [
+          {
+            "x": 79,
+            "y": 39,
+            "targetX": 58,
+            "targetY": 55,
+            "label": "O anda filtreye uyan hata kaydı yok"
+          }
+        ]
+      }
+    },
+    {
+      "id": "live-no-job-at-preparing",
+      "title": "Preparing sırasında Agent Job filtresi",
+      "summary": "Build → Agent Job bağlantısındaki reference_name=kpktsdsd9n filtresi o anda boştu. Bu, sistemde hiç Agent Job olmadığı anlamına gelmez.",
+      "actions": [
+        "Build → Agent Job bağlantısındaki reference_name=kpktsdsd9n filtresi o anda boştu. Bu, sistemde hiç Agent Job olmadığı anlamına gelmez."
+      ],
+      "notes": [
+        "Bu ekran belirli bir anın kanıtıdır; başarılı site kurulumu anlamına gelmez."
+      ],
+      "verification": "Build → Agent Job bağlantısındaki reference_name=kpktsdsd9n filtresi o anda boştu. Bu, sistemde hiç Agent Job olmadığı anlamına gelmez.",
+      "status": "live",
+      "screenshot": {
+        "src": "evidence/live-build-no-agent-job.jpg",
+        "alt": "Preparing sırasında Agent Job filtresi — canlı oturum, 7 Ekim 2026",
+        "width": 1295,
+        "height": 1135,
+        "annotations": [
+          {
+            "x": 79,
+            "y": 39,
+            "targetX": 58,
+            "targetY": 55,
+            "label": "Filtreye uyan Agent Job yok"
+          }
+        ]
+      }
+    },
+    {
+      "id": "hata-tanisi",
+      "title": "Build hatasında nereye bakılır?",
+      "summary": "Preparing veya Failure durumunda uygulama listesine dönmeden önce build aşamasını ve ilgili logu belirle. Bu kurulumda iki farklı hata ayrı kanıtlarla bulundu.",
+      "status": "live",
+      "actions": [
+        "Release Group → Deploy Candidate → Deploy Candidate Build kaydını aç. Grup, candidate, build kimliğini ve zaman damgasını kaydet; egitimxv1 için bench-0027 / deploy-0027-000001 / kpktsdsd9n.",
+        "Build Steps tablosunda ilk Failure satırını bul. Sonraki Pending satırlar çoğunlukla henüz başlamamış adımlardır; ayrı hata sanma.",
+        "Run Validations → Pre-build Failure ise satırı açıp Output alanını oku. Required app not found çıktısında istenen bağımlılığı gerçek App/Source ve uyumlu branch ile ekle. Eski educator denemesinde eksik app erpnext idi.",
+        "Upload → Build Context Failure ise build Connections → Error Log bağlantısını aç. Deploy Candidate Build Exception kaydında request method, path ve response koduna bak. Güncel kanıt qu5n7pv6pk: POST builder/upload/kpktsdsd9n → HTTP 500.",
+        "Traceback sonunda JSONDecodeError varsa daha önceki response satırını oku. HTTP 500 birincil hata; JSONDecodeError yanıtın JSON olarak çözümlenemediğini belirtir. BufferedReader cannot pickle ise traceback değişkenini yazdırırken oluşmuş ikincil hatadır.",
+        "Server List → ilgili Build Server → Ping → Ping Agent ile bağlantıyı kontrol et. pong, temel bağlantıyı doğrular; upload veya build protokolünün doğru olduğunu kanıtlamaz.",
+        "Aynı Server → Actions → Show Agent Version ile agent commit’ini; Help → About ile yönetim paneli Frappe/Press sürümünü kaydet. Hedef grubun v16 uygulama sürümlerini yönetim panelinin v15 Framework sürümüyle karıştırma.",
+        "Clone, bağımlılık kontrolü ve paketleme Success iken agent POST 500 veriyorsa Hüseyin Cengiz agent/proxy traceback’ini, gerçek çalışan process kodunu ve Press commit’ini sunucuda inceler. Repo HEAD bilgisi çalışan process sürümünü tek başına kanıtlamaz.",
+        "Preparing sırasında Error Log veya Agent Job filtreleri boş olabilir. Bu kurulumda üç upload denemesi ve aradaki toplam 600 saniye bekleme Preparing süresini açıkladı. Kayıt oluşmadan tekrar build başlatma.",
+        "Agent Job, RQ Job ve Error Log filtrelerinin kapsamını kontrol et. No matching records yalnız seçili filtrede kayıt olmadığını söyler; sistemde hiçbir iş veya hata yok demek değildir. Scheduler Active de build endpoint sağlığını kanıtlamaz.",
+        "Uyumlu sürüm çifti ve geri dönüş planı doğrulandıktan sonra düzeltmeyi uygula; ardından tek build ile clone → validation → package → upload → image build/push Success akışını doğrula. Sonra deploy/Bench ve en son egitimxv1 sitesinin HTTPS, giriş ve app ekranlarını doğrula."
+      ],
+      "notes": [
+        "Bildirilen agent commit’inin pinned kaynak kodunda eski upload endpoint’i yok. Eski Press–yeni agent protokol uyuşmazlığı güçlü bir çıkarımdır; agent/proxy logu ve gerçek process sürümüyle tamamlanmalıdır.",
+        "Press Settings → Branch global bir ayardır. Use for Build kutusu endpoint oluşturmaz. Update Agent veya Ansible düğmesine rastgele basma; servis etkisi ve geri dönüş planı incelenmeli.",
+        "Sadece upload endpoint’ini içeren eski bir commit seçmek yeterli değildir: build endpoint’inin filename/Dockerfile sözleşmesi de uyumlu olmalı. Bu yüzden doğrulanmamış SHA’yı branch alanına yazmak çözüm değildir.",
+        "Secret içerebilen tam traceback, agent tokenları, config veya özel anahtarlar public rehbere aktarılmaz. Buradaki ekranlar görünür veri incelemesinden geçirildi.",
+        "Teknik düzeltme sahibi Hüseyin Cengiz. DNS gerekirse kayıt gereksinimini Hüseyin Cengiz hazırlar, GoDaddy uygulamasını Asistan Hüseyin yapar."
+      ],
+      "verification": "Hatanın ilk başarısız aşaması, esas HTTP/log mesajı ve sürüm kanıtları ayrı kaydedildi. Sunucu düzeltmesi, başarılı build/deploy ve çalışan site henüz doğrulanmadı."
     }
   ],
   "questions": [
@@ -1126,6 +1629,10 @@
     {
       "question": "Hazırlanıyor yazması çalıştığı anlamına gelir mi?",
       "answer": "Hayır. Build, Deploy, Bench ve Site sonuçları ayrı kontrol edilir. Son paylaşılan Preparing ekranı başarı kanıtı değildir."
+    },
+    {
+      "question": "Build Failure veya uzun Preparing durumunda ilk nereye bakarım?",
+      "answer": "Build Steps içindeki ilk Failure satırı → satır Output → build Connections/Error Log. Upload hatasında method/path/HTTP response; ardından Server Ping Agent ve Show Agent Version. Adım adım tanı için “Build hatasında nereye bakılır?” bölümünü izle."
     }
   ],
   "sources": [
@@ -1156,6 +1663,18 @@
     {
       "label": "LMS v16 bağımlılıkları",
       "url": "https://github.com/frappe/lms/blob/version-16/lms/hooks.py"
+    },
+    {
+      "label": "Bildirilen agent commit’i: builder route’ları",
+      "url": "https://github.com/frappe/agent/blob/2a412bc2b1292176f0b6c8ea51240d743981f283/agent/web.py"
+    },
+    {
+      "label": "Agent sürüm bilgisinin kaynağı",
+      "url": "https://github.com/frappe/agent/blob/2a412bc2b1292176f0b6c8ea51240d743981f283/agent/server.py#L1018"
+    },
+    {
+      "label": "Agent güncellemesinde branch ve upstream sözleşmesi",
+      "url": "https://github.com/frappe/agent/blob/2a412bc2b1292176f0b6c8ea51240d743981f283/agent/server.py#L873"
     }
   ]
 }

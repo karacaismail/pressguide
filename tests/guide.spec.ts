@@ -76,6 +76,39 @@ test('critical reading journey works at every viewport without shrinking text', 
   const documentGeometry = await page.evaluate(() => ({
     viewport: innerWidth,
     width: document.documentElement.scrollWidth,
+    textOverflow: (() => {
+      const walker = document.createTreeWalker(
+        document.body,
+        NodeFilter.SHOW_TEXT,
+      );
+      const offenders: {
+        parent: string;
+        className: string;
+        text: string;
+        right: number;
+        wrap: string;
+      }[] = [];
+      while (walker.nextNode()) {
+        const text = walker.currentNode;
+        const parent = text.parentElement;
+        if (!text.textContent?.trim() || !parent?.getClientRects().length)
+          continue;
+        const range = document.createRange();
+        range.selectNodeContents(text);
+        const right = Math.max(
+          ...Array.from(range.getClientRects(), (rect) => rect.right),
+        );
+        if (right > innerWidth + 0.1)
+          offenders.push({
+            parent: parent.tagName,
+            className: parent.className,
+            text: text.textContent,
+            right,
+            wrap: getComputedStyle(parent).overflowWrap,
+          });
+      }
+      return offenders;
+    })(),
     overflowing: [...document.querySelectorAll('body *')]
       .filter(
         (element) => element.getBoundingClientRect().right > innerWidth + 0.1,

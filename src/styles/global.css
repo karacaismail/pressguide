@@ -194,6 +194,7 @@ svg.icon {
 .step-summary {
   margin-top: var(--space-lg);
   font-size: var(--text-lead);
+  overflow-wrap: break-word;
 }
 .step-content {
   margin-top: var(--space-xl);
@@ -267,6 +268,11 @@ svg.icon {
 figcaption {
   margin-top: var(--space-md);
   color: var(--color-muted);
+  overflow-wrap: break-word;
+}
+.status p,
+.faq details p {
+  overflow-wrap: break-word;
 }
 .faq {
   padding-block: var(--space-section);

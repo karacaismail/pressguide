@@ -1,6 +1,6 @@
 # Press kullanım rehberi
 
-Güncelleme: 7 Ekim 2026 · 12:10 Europe/Istanbul
+Güncelleme: 7 Ekim 2026 12:16 · Europe/Istanbul
 
 KURULUM DEVAM EDİYOR — egitimxv1 sitesi henüz oluşturulmadı. bench-0027 ve deploy-0027-000001 hazırlandı. kpktsdsd9n build: clone, bağımlılık kontrolü ve paketleme başarılı; Upload Build Context başarısız (agent HTTP 500). Agent temel ping yanıtı pong. Eski Press upload protokolü ile bildirilen yeni agent commit’i arasında uyuşmazlık güçlü biçimde destekleniyor; sunucuda doğrulama ve düzeltme bekleniyor.
 
@@ -564,6 +564,272 @@ Doğrulama: New Bench ekranında framework version seçenekleri görünmedi. Des
 
 Açıklamalı ekran: [görsel ve oklar](https://karacaismail.github.io/pressguide/steps/live-dashboard-empty/)
 
+## 34. Agent temel bağlantısı: pong
+
+Server → app → Ping → Ping Agent işlemi pong yanıtı verdi. Temel erişim çalışıyor; build protokolü ayrıca doğrulanmalı.
+
+1. Server → app → Ping → Ping Agent işlemi pong yanıtı verdi. Temel erişim çalışıyor; build protokolü ayrıca doğrulanmalı.
+
+Somut notlar:
+
+- Bu ekran belirli bir anın kanıtıdır; başarılı site kurulumu anlamına gelmez.
+
+Doğrulama: Server → app → Ping → Ping Agent işlemi pong yanıtı verdi. Temel erişim çalışıyor; build protokolü ayrıca doğrulanmalı.
+
+Açıklamalı ekran: [görsel ve oklar](https://karacaismail.github.io/pressguide/steps/live-agent-pong/)
+
+## 35. Agent commit kimliği
+
+Server → Actions → Show Agent Version: 2a412bc2b1292176f0b6c8ea51240d743981f283. Bu repo HEAD bilgisidir; çalışan process kodu ayrıca SSH ile doğrulanmalı.
+
+1. Server → Actions → Show Agent Version: 2a412bc2b1292176f0b6c8ea51240d743981f283. Bu repo HEAD bilgisidir; çalışan process kodu ayrıca SSH ile doğrulanmalı.
+
+Somut notlar:
+
+- Pinned agent kodunda eski upload route bulunmuyor. Eski Press protokolü ile uyumsuzluk güçlü bir çıkarım; gerçek process sürümü ve proxy logu ayrıca doğrulanmalı.
+
+Doğrulama: Server → Actions → Show Agent Version: 2a412bc2b1292176f0b6c8ea51240d743981f283. Bu repo HEAD bilgisidir; çalışan process kodu ayrıca SSH ile doğrulanmalı.
+
+Açıklamalı ekran: [görsel ve oklar](https://karacaismail.github.io/pressguide/steps/live-agent-version/)
+
+## 36. Press yönetim uygulamasının sürümü
+
+Help → About: Press 0.7.0 (develop), yönetim Framework 15.101.5 (version-15). Bu yönetim paneli sürümü; hedef eğitim grubunun Frappe v16 sürümünden ayrıdır.
+
+1. Help → About: Press 0.7.0 (develop), yönetim Framework 15.101.5 (version-15). Bu yönetim paneli sürümü; hedef eğitim grubunun Frappe v16 sürümünden ayrıdır.
+
+Somut notlar:
+
+- Bu ekran belirli bir anın kanıtıdır; başarılı site kurulumu anlamına gelmez.
+
+Doğrulama: Help → About: Press 0.7.0 (develop), yönetim Framework 15.101.5 (version-15). Bu yönetim paneli sürümü; hedef eğitim grubunun Frappe v16 sürümünden ayrıdır.
+
+Açıklamalı ekran: [görsel ve oklar](https://karacaismail.github.io/pressguide/steps/live-press-version/)
+
+## 37. Yeni eğitim build genel sonucu: Failure
+
+kpktsdsd9n build genel durumu Failure. Bu kırpım clone satırlarını gösterir; Upload hatasının ayrıntısı bir sonraki kanıttadır.
+
+1. kpktsdsd9n build genel durumu Failure. Bu kırpım clone satırlarını gösterir; Upload hatasının ayrıntısı bir sonraki kanıttadır.
+
+Somut notlar:
+
+- Bu ekran belirli bir anın kanıtıdır; başarılı site kurulumu anlamına gelmez.
+
+Doğrulama: kpktsdsd9n build genel durumu Failure. Bu kırpım clone satırlarını gösterir; Upload hatasının ayrıntısı bir sonraki kanıttadır.
+
+Açıklamalı ekran: [görsel ve oklar](https://karacaismail.github.io/pressguide/steps/live-current-failure/)
+
+## 38. Build paketinin yüklenmesi başarısız
+
+Build Steps satır 8: Stage Upload, Step Build Context, Status Failure. Beş clone, Pre-build ve Package satırları Success.
+
+1. Build kaydında Build Steps → 8. Upload / Build Context satırını aç.
+
+Somut notlar:
+
+- Bu ekran belirli bir anın kanıtıdır; başarılı site kurulumu anlamına gelmez.
+
+Doğrulama: Build Steps satır 8: Stage Upload, Step Build Context, Status Failure. Beş clone, Pre-build ve Package satırları Success.
+
+Açıklamalı ekran: [görsel ve oklar](https://karacaismail.github.io/pressguide/steps/live-upload-row/)
+
+## 39. HTTP 500: agent upload yanıtı
+
+Error Log qu5n7pv6pk: POST builder/upload/kpktsdsd9n yanıtı HTTP 500; yanıt JSON olarak çözümlenemedi.
+
+1. Build → Error Log → Deploy Candidate Build Exception kaydını aç; response ve path satırlarını oku.
+
+Somut notlar:
+
+- BufferedReader hatası traceback değişkenlerinin yazdırılmasında oluşuyor; birincil HTTP 500 hatasıyla karıştırma.
+
+Doğrulama: Error Log qu5n7pv6pk: POST builder/upload/kpktsdsd9n yanıtı HTTP 500; yanıt JSON olarak çözümlenemedi.
+
+Açıklamalı ekran: [görsel ve oklar](https://karacaismail.github.io/pressguide/steps/live-agent-http500/)
+
+## 40. Eski build Pre-build aşamasında durmuş
+
+Eski rgv1 grubunda Pre-build Failure gözlendi. Güncel egitimxv1 build’i bu aşamayı geçti; iki hatayı karıştırma.
+
+1. Eski rgv1 grubunda Pre-build Failure gözlendi. Güncel egitimxv1 build’i bu aşamayı geçti; iki hatayı karıştırma.
+
+Somut notlar:
+
+- Bu ekran belirli bir anın kanıtıdır; başarılı site kurulumu anlamına gelmez.
+
+Doğrulama: Eski rgv1 grubunda Pre-build Failure gözlendi. Güncel egitimxv1 build’i bu aşamayı geçti; iki hatayı karıştırma.
+
+Açıklamalı ekran: [görsel ve oklar](https://karacaismail.github.io/pressguide/steps/live-previous-build-detail/)
+
+## 41. Eski candidate build sayısı
+
+deploy-0026-000001 eski candidate kaydında iki build bağlantısı bulunuyor. Yeni candidate deploy-0027-000001 ayrı kayıttır.
+
+1. deploy-0026-000001 eski candidate kaydında iki build bağlantısı bulunuyor. Yeni candidate deploy-0027-000001 ayrı kayıttır.
+
+Somut notlar:
+
+- Bu ekran belirli bir anın kanıtıdır; başarılı site kurulumu anlamına gelmez.
+
+Doğrulama: deploy-0026-000001 eski candidate kaydında iki build bağlantısı bulunuyor. Yeni candidate deploy-0027-000001 ayrı kayıttır.
+
+Açıklamalı ekran: [görsel ve oklar](https://karacaismail.github.io/pressguide/steps/live-previous-candidate-count/)
+
+## 42. Eski candidate liste görünümü
+
+Eski rgv1 candidate listesi deploy-0026-000001 kaydını gösteriyor; build/site başarısını göstermez.
+
+1. Eski rgv1 candidate listesi deploy-0026-000001 kaydını gösteriyor; build/site başarısını göstermez.
+
+Somut notlar:
+
+- Bu ekran belirli bir anın kanıtıdır; başarılı site kurulumu anlamına gelmez.
+
+Doğrulama: Eski rgv1 candidate listesi deploy-0026-000001 kaydını gösteriyor; build/site başarısını göstermez.
+
+Açıklamalı ekran: [görsel ve oklar](https://karacaismail.github.io/pressguide/steps/live-previous-candidates/)
+
+## 43. Release Group candidate menüsü
+
+Kaydedilmiş grupta Actions → Create Deploy Candidate seçeneği görünür. egitimxv1 için aynı işlem deploy-0027-000001 kaydını üretti.
+
+1. Kaydedilmiş grupta Actions → Create Deploy Candidate seçeneği görünür. egitimxv1 için aynı işlem deploy-0027-000001 kaydını üretti.
+
+Somut notlar:
+
+- Bu ekran belirli bir anın kanıtıdır; başarılı site kurulumu anlamına gelmez.
+
+Doğrulama: Kaydedilmiş grupta Actions → Create Deploy Candidate seçeneği görünür. egitimxv1 için aynı işlem deploy-0027-000001 kaydını üretti.
+
+Açıklamalı ekran: [görsel ve oklar](https://karacaismail.github.io/pressguide/steps/live-candidate-menu/)
+
+## 44. Mevcut grupları ayırt et
+
+Release Group listesinde önceki eğitim denemesi ve çalışan geniş uygulama grubu ayrıdır. Eğitim için yeni egitimxv1 / bench-0027 kaydı oluşturuldu.
+
+1. Release Group listesinde önceki eğitim denemesi ve çalışan geniş uygulama grubu ayrıdır. Eğitim için yeni egitimxv1 / bench-0027 kaydı oluşturuldu.
+
+Somut notlar:
+
+- Bu ekran belirli bir anın kanıtıdır; başarılı site kurulumu anlamına gelmez.
+
+Doğrulama: Release Group listesinde önceki eğitim denemesi ve çalışan geniş uygulama grubu ayrıdır. Eğitim için yeni egitimxv1 / bench-0027 kaydı oluşturuldu.
+
+Açıklamalı ekran: [görsel ve oklar](https://karacaismail.github.io/pressguide/steps/live-group-list/)
+
+## 45. Taslak formda runtime alanları
+
+Yeni grup taslağında Dependencies tablosu boştu. Kaydetme sonrası runtime alanları oluştu; live-runtime adımına bak.
+
+1. Yeni grup taslağında Dependencies tablosu boştu. Kaydetme sonrası runtime alanları oluştu; live-runtime adımına bak.
+
+Somut notlar:
+
+- Bu ekran belirli bir anın kanıtıdır; başarılı site kurulumu anlamına gelmez.
+
+Doğrulama: Yeni grup taslağında Dependencies tablosu boştu. Kaydetme sonrası runtime alanları oluştu; live-runtime adımına bak.
+
+Açıklamalı ekran: [görsel ve oklar](https://karacaismail.github.io/pressguide/steps/live-draft-runtime/)
+
+## 46. Site formunun ilk görünümü
+
+Sites → New Site ilk ekranında framework sürüm seçenekleri görünmedi. Dedicated server seçimiyle de ayrıca kontrol edildi; site oluşturulmadı.
+
+1. Sites → New Site ilk ekranında framework sürüm seçenekleri görünmedi. Dedicated server seçimiyle de ayrıca kontrol edildi; site oluşturulmadı.
+
+Somut notlar:
+
+- Bu ekran belirli bir anın kanıtıdır; başarılı site kurulumu anlamına gelmez.
+
+Doğrulama: Sites → New Site ilk ekranında framework sürüm seçenekleri görünmedi. Dedicated server seçimiyle de ayrıca kontrol edildi; site oluşturulmadı.
+
+Açıklamalı ekran: [görsel ve oklar](https://karacaismail.github.io/pressguide/steps/live-site-form-initial/)
+
+## 47. Eski grup kimliği: rgv1
+
+Bu kaydın Title alanı rgv1. Kullanıcı tarafından seçilen yeni ad egitimxv1; eski kayıt yeniden adlandırılmadı.
+
+1. Bu kaydın Title alanı rgv1. Kullanıcı tarafından seçilen yeni ad egitimxv1; eski kayıt yeniden adlandırılmadı.
+
+Somut notlar:
+
+- Bu ekran belirli bir anın kanıtıdır; başarılı site kurulumu anlamına gelmez.
+
+Doğrulama: Bu kaydın Title alanı rgv1. Kullanıcı tarafından seçilen yeni ad egitimxv1; eski kayıt yeniden adlandırılmadı.
+
+Açıklamalı ekran: [görsel ve oklar](https://karacaismail.github.io/pressguide/steps/live-old-rgv1/)
+
+## 48. Sites ekranında ödeme uyarısı
+
+Sites başlığındaki ödeme yöntemi uyarısı görüldü. Bu görevde ödeme yöntemi eklenmedi; build agent hatasının nedeni bu uyarı olarak kabul edilmedi.
+
+1. Sites başlığındaki ödeme yöntemi uyarısı görüldü. Bu görevde ödeme yöntemi eklenmedi; build agent hatasının nedeni bu uyarı olarak kabul edilmedi.
+
+Somut notlar:
+
+- Bu ekran belirli bir anın kanıtıdır; başarılı site kurulumu anlamına gelmez.
+
+Doğrulama: Sites başlığındaki ödeme yöntemi uyarısı görüldü. Bu görevde ödeme yöntemi eklenmedi; build agent hatasının nedeni bu uyarı olarak kabul edilmedi.
+
+Açıklamalı ekran: [görsel ve oklar](https://karacaismail.github.io/pressguide/steps/live-site-header/)
+
+## 49. Preparing sırasında hata filtresi boştu
+
+Build → Error Log bağlantısındaki reference_name=kpktsdsd9n filtresi o anda eşleşen kayıt bulmadı. Daha sonra Failure olduğunda qu5n7pv6pk kaydı oluştu.
+
+1. Build → Error Log bağlantısındaki reference_name=kpktsdsd9n filtresi o anda eşleşen kayıt bulmadı. Daha sonra Failure olduğunda qu5n7pv6pk kaydı oluştu.
+
+Somut notlar:
+
+- Bu ekran belirli bir anın kanıtıdır; başarılı site kurulumu anlamına gelmez.
+
+Doğrulama: Build → Error Log bağlantısındaki reference_name=kpktsdsd9n filtresi o anda eşleşen kayıt bulmadı. Daha sonra Failure olduğunda qu5n7pv6pk kaydı oluştu.
+
+Açıklamalı ekran: [görsel ve oklar](https://karacaismail.github.io/pressguide/steps/live-no-error-at-preparing/)
+
+## 50. Preparing sırasında Agent Job filtresi
+
+Build → Agent Job bağlantısındaki reference_name=kpktsdsd9n filtresi o anda boştu. Bu, sistemde hiç Agent Job olmadığı anlamına gelmez.
+
+1. Build → Agent Job bağlantısındaki reference_name=kpktsdsd9n filtresi o anda boştu. Bu, sistemde hiç Agent Job olmadığı anlamına gelmez.
+
+Somut notlar:
+
+- Bu ekran belirli bir anın kanıtıdır; başarılı site kurulumu anlamına gelmez.
+
+Doğrulama: Build → Agent Job bağlantısındaki reference_name=kpktsdsd9n filtresi o anda boştu. Bu, sistemde hiç Agent Job olmadığı anlamına gelmez.
+
+Açıklamalı ekran: [görsel ve oklar](https://karacaismail.github.io/pressguide/steps/live-no-job-at-preparing/)
+
+## 51. Build hatasında nereye bakılır?
+
+Preparing veya Failure durumunda uygulama listesine dönmeden önce build aşamasını ve ilgili logu belirle. Bu kurulumda iki farklı hata ayrı kanıtlarla bulundu.
+
+1. Release Group → Deploy Candidate → Deploy Candidate Build kaydını aç. Grup, candidate, build kimliğini ve zaman damgasını kaydet; egitimxv1 için bench-0027 / deploy-0027-000001 / kpktsdsd9n.
+2. Build Steps tablosunda ilk Failure satırını bul. Sonraki Pending satırlar çoğunlukla henüz başlamamış adımlardır; ayrı hata sanma.
+3. Run Validations → Pre-build Failure ise satırı açıp Output alanını oku. Required app not found çıktısında istenen bağımlılığı gerçek App/Source ve uyumlu branch ile ekle. Eski educator denemesinde eksik app erpnext idi.
+4. Upload → Build Context Failure ise build Connections → Error Log bağlantısını aç. Deploy Candidate Build Exception kaydında request method, path ve response koduna bak. Güncel kanıt qu5n7pv6pk: POST builder/upload/kpktsdsd9n → HTTP 500.
+5. Traceback sonunda JSONDecodeError varsa daha önceki response satırını oku. HTTP 500 birincil hata; JSONDecodeError yanıtın JSON olarak çözümlenemediğini belirtir. BufferedReader cannot pickle ise traceback değişkenini yazdırırken oluşmuş ikincil hatadır.
+6. Server List → ilgili Build Server → Ping → Ping Agent ile bağlantıyı kontrol et. pong, temel bağlantıyı doğrular; upload veya build protokolünün doğru olduğunu kanıtlamaz.
+7. Aynı Server → Actions → Show Agent Version ile agent commit’ini; Help → About ile yönetim paneli Frappe/Press sürümünü kaydet. Hedef grubun v16 uygulama sürümlerini yönetim panelinin v15 Framework sürümüyle karıştırma.
+8. Clone, bağımlılık kontrolü ve paketleme Success iken agent POST 500 veriyorsa Hüseyin Cengiz agent/proxy traceback’ini, gerçek çalışan process kodunu ve Press commit’ini sunucuda inceler. Repo HEAD bilgisi çalışan process sürümünü tek başına kanıtlamaz.
+9. Preparing sırasında Error Log veya Agent Job filtreleri boş olabilir. Bu kurulumda üç upload denemesi ve aradaki toplam 600 saniye bekleme Preparing süresini açıkladı. Kayıt oluşmadan tekrar build başlatma.
+10. Agent Job, RQ Job ve Error Log filtrelerinin kapsamını kontrol et. No matching records yalnız seçili filtrede kayıt olmadığını söyler; sistemde hiçbir iş veya hata yok demek değildir. Scheduler Active de build endpoint sağlığını kanıtlamaz.
+11. Uyumlu sürüm çifti ve geri dönüş planı doğrulandıktan sonra düzeltmeyi uygula; ardından tek build ile clone → validation → package → upload → image build/push Success akışını doğrula. Sonra deploy/Bench ve en son egitimxv1 sitesinin HTTPS, giriş ve app ekranlarını doğrula.
+
+Somut notlar:
+
+- Bildirilen agent commit’inin pinned kaynak kodunda eski upload endpoint’i yok. Eski Press–yeni agent protokol uyuşmazlığı güçlü bir çıkarımdır; agent/proxy logu ve gerçek process sürümüyle tamamlanmalıdır.
+- Press Settings → Branch global bir ayardır. Use for Build kutusu endpoint oluşturmaz. Update Agent veya Ansible düğmesine rastgele basma; servis etkisi ve geri dönüş planı incelenmeli.
+- Sadece upload endpoint’ini içeren eski bir commit seçmek yeterli değildir: build endpoint’inin filename/Dockerfile sözleşmesi de uyumlu olmalı. Bu yüzden doğrulanmamış SHA’yı branch alanına yazmak çözüm değildir.
+- Secret içerebilen tam traceback, agent tokenları, config veya özel anahtarlar public rehbere aktarılmaz. Buradaki ekranlar görünür veri incelemesinden geçirildi.
+- Teknik düzeltme sahibi Hüseyin Cengiz. DNS gerekirse kayıt gereksinimini Hüseyin Cengiz hazırlar, GoDaddy uygulamasını Asistan Hüseyin yapar.
+
+Doğrulama: Hatanın ilk başarısız aşaması, esas HTTP/log mesajı ve sürüm kanıtları ayrı kaydedildi. Sunucu düzeltmesi, başarılı build/deploy ve çalışan site henüz doğrulanmadı.
+
+Bu adım için henüz ekran kanıtı yok.
+
 ## Kaynaklar
 
 - [Education v16: app_name ve required_apps](https://github.com/frappe/education/blob/version-16/education/hooks.py)
@@ -573,3 +839,6 @@ Açıklamalı ekran: [görsel ve oklar](https://karacaismail.github.io/pressguid
 - [ERPNext v16 runtime gereksinimleri](https://github.com/frappe/erpnext/blob/version-16/pyproject.toml)
 - [Payments v16 runtime gereksinimleri](https://github.com/frappe/payments/blob/version-16/pyproject.toml)
 - [LMS v16 bağımlılıkları](https://github.com/frappe/lms/blob/version-16/lms/hooks.py)
+- [Bildirilen agent commit’i: builder route’ları](https://github.com/frappe/agent/blob/2a412bc2b1292176f0b6c8ea51240d743981f283/agent/web.py)
+- [Agent sürüm bilgisinin kaynağı](https://github.com/frappe/agent/blob/2a412bc2b1292176f0b6c8ea51240d743981f283/agent/server.py#L1018)
+- [Agent güncellemesinde branch ve upstream sözleşmesi](https://github.com/frappe/agent/blob/2a412bc2b1292176f0b6c8ea51240d743981f283/agent/server.py#L873)
