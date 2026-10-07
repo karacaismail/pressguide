@@ -1,8 +1,8 @@
 # Press kullanım rehberi
 
-Güncelleme: 7 Ekim 2026 — deploy-0027-000002 ilk build’i f476t39m7i Pre-build Failure (npm aralığı ayrıştırma), hedefli Press düzeltmesi; yeni build j8vu7j2qnm Running, Pre-build, Package ve Upload Build Context Success
+Güncelleme: 7 Ekim 2026 — egitimxv1.metaframer.net Active; HTTPS (HTTP/2 200, geçerli TLS) doğrulandı; ilk kurulum tamamlandı (setup_complete=1); Desk, Eğitim, LMS, CRM ve ERPNext ekranlarının açıldığı doğrulandı
 
-KURULUM DEVAM EDİYOR — egitimxv1 sitesi henüz oluşturulmadı; deploy yapılmadı. Disk nedeni doğrulandı: ilk candidate deploy-0027-000001 / kpktsdsd9n build’i Upload Build Context adımında HTTP 500 ile başarısız oldu; uygulama sunucusunun kök dosya sistemi %100 doluydu (156 MB boş) ve Nginx upload gövdesini yazamadı. Kullanıcı onayıyla yalnız docker builder prune --all --force çalıştırıldı (exit 0); temizlik başarılı, disk şimdi %48 (150 GB, 69 GB kullanılmış, 76 GB boş). Üç container aynı uptime ile çalışıyor, Redis bgsave/write ok; image, site, veritabanı, container veya app kaldırılmadı. egitimxv1 / bench-0027 grubuna crm (SRC-crm-002) eklendi ve altı uygulama kaydedildi. Yeni candidate deploy-0027-000002’nin ilk build’i f476t39m7i Pre-build validation aşamasında Failure ile bitti: Invalid simple block '^20.19.0 || >=22.12.0'. Neden: Press, Node için npm sürüm aralığını SimpleSpec ile ayrıştırıyordu. İncelenmiş hedefli düzeltmeyle yalnız Node kontrolü NpmSpec kullanıyor, Python kontrolü SimpleSpec’te kaldı; altı regresyon testi gerçek kurulumdan önce ve sonra geçti. Yalnız dört boşta build worker yeniden başlatıldı; web ve Redis dokunulmadı. Yeni build j8vu7j2qnm 13:39:11 TSİ’de başladı ve şu an Running: altı clone, Pre-build validation, Package Build Context ve Upload Build Context Success. Son okumada 14 adım Success; sistem bağımlılıkları (Setup Prerequisites) kuruluyor. Böylece özgün Upload HTTP 500 ve Node npm aralığı ayrıştırma engellerinin geçildiği doğrulandı. Build’in tamamlanması, image push, deploy ve site henüz doğrulanmadı. Diğer 10 siteye dokunulmadı.
+egitimxv1.metaframer.net Active. Build 28/28 Success; bench ve site kurulumu başarılı. HTTPS, giriş, ilk kurulum ve altı uygulamanın kurulumu doğrulandı; Desk, Eğitim, LMS, CRM ve ERPNext başlangıç ekranları açıldı. Mevcut siteler ve bench-0022 uygulamaları korundu. Press Daily Usage hatası düzeltildi; log servisi tanımlı olmadığı için grafik No data gösteriyor. Gerçek iş süreçleri ve entegrasyonlar test edilmedi. Ayrıntılar aşağıdaki canlı kanıt adımlarında.
 
 ## 1. Release Group ve Team seçimi
 
@@ -219,11 +219,11 @@ Eğitim grubunda önce yalnız build başlatılır. Deploy, build Success oldukt
 Somut notlar:
 
 - Görsel Build menüsünü gösterir; Complete bir seçenek adıdır, build sonucunun başarılı olduğu anlamına gelmez.
-- Bu kurulumda kpktsdsd9n build’i Failure ile bitti; deploy yapılmadı. Disk temizliğinden sonra deploy-0027-000002 için yalnız Build → Complete başlatıldı; ilk build f476t39m7i Pre-build validation’da Failure ile bitti (npm aralığı ayrıştırma). Hedefli Press düzeltmesinden sonra yeni build j8vu7j2qnm Running; Pre-build, Package ve Upload Build Context Success, son okumada 14 adım Success. Build sonucu bekleniyor, deploy yapılmadı.
+- Bu kurulumda kpktsdsd9n build’i Failure ile bitti; deploy yapılmadı. Disk temizliğinden sonra deploy-0027-000002 için yalnız Build → Complete başlatıldı; ilk build f476t39m7i Pre-build validation’da Failure ile bitti (npm aralığı ayrıştırma). Hedefli Press düzeltmesinden sonra build j8vu7j2qnm 27 adımı Success geçti, ancak son adım Upload Docker Image’da Failure ile bitti (ECR deposu eksikti). Yalnız hedef depo oluşturulduktan sonra yeni build qoh3rkif10 28/28 adım Success ile bitti. Deploy ancak bundan sonra, Deploy → Deploy ile bir kez başlatıldı (deploy-0027-000002); yeni bench önce Installing, sonra Active oldu (live-bench-active). Site oluşturuldu ve Active; HTTPS ve giriş ekranı doğrulandı (live-site-active-apps, live-site-https-login).
 - Schedule Build and Deploy ikisini birlikte başlatır; mevcut çalışan siteleri barındıran grupta deploy, migration ve yeniden başlatma etkisi taşıyabilir.
 - Bu temiz görüntü mevcut kayıttan yeniden alındı; geçmişteki tıklama veya başarı anının tekrarı değildir.
 
-Doğrulama: Yeni build kaydı oluşmalı ve Success olmalı; deploy ancak bundan sonra ayrı başlatılır. Bu kurulumda deploy henüz yapılmadı.
+Doğrulama: Yeni build kaydı oluşmalı ve Success olmalı; deploy ancak bundan sonra ayrı başlatılır. Bu kurulumda deploy yalnız qoh3rkif10 Success sonrasında başlatıldı; yeni bench bench-0027-000002-apphtznr Active ve New Bench Agent Job tgajt4obnu Success olarak okundu (live-bench-active).
 
 Açıklamalı ekran: [temiz ekran ve çerçeveler](https://karacaismail.github.io/pressguide/steps/schedule/)
 
@@ -239,7 +239,7 @@ Geçmiş denemede build yalnız Preparing durumunda görüldü; bu durum başar�
 Somut notlar:
 
 - Yalnız Preparing durumuna bakarak kurulum çalışıyor deme. Hata türü belirlenmeden tekrar tekrar yeni build açma.
-- Geçmiş rgv1 denemesinde iki build Failure bulundu; live-error adımına bak. İlk egitimxv1 build’i kpktsdsd9n de Failure; hata-tanisi adımına bak. deploy-0027-000002’nin ilk build’i f476t39m7i Pre-build validation Failure; live-npm-range-validation adımına bak. Yeni build j8vu7j2qnm 13:39:11 TSİ’de başladı, şu an Running; Pre-build, Package ve Upload Build Context Success, son okumada 14 adım Success. Build sonucu bekleniyor; live-prebuild-upload-success adımına bak.
+- Geçmiş rgv1 denemesinde iki build Failure bulundu; live-error adımına bak. İlk egitimxv1 build’i kpktsdsd9n de Failure; hata-tanisi adımına bak. deploy-0027-000002’nin ilk build’i f476t39m7i Pre-build validation Failure; live-npm-range-validation adımına bak. Sonraki build j8vu7j2qnm 13:39:11 TSİ’de başladı; Running iken Pre-build, Package ve Upload Build Context Success görüldü (live-prebuild-upload-success), ardından son adım Upload Docker Image’da Failure ile bitti (live-ecr-push-failure). Yeni build qoh3rkif10 28/28 adım Success ile bitti (live-build-success).
 
 Doğrulama: Build başarılı, deploy başarılı ve ilgili Bench hazır olmadan Site adımına geçme.
 
@@ -247,20 +247,30 @@ Bu adım için henüz ekran kanıtı yok.
 
 ## 14. Eğitim sitesini oluştur ve doğrula
 
-egitimxv1 sitesi henüz oluşturulmadı. İlk build disk doluluğu nedeniyle Upload Build Context adımında başarısız oldu; onaylı build cache temizliği yapıldı (disk %48). deploy-0027-000002’nin ilk build’i f476t39m7i npm aralığı ayrıştırma hatasıyla Pre-build’de başarısız oldu; hedefli düzeltme sonrası yeni build j8vu7j2qnm Running; Pre-build, Package ve Upload Build Context Success, sistem bağımlılıkları kuruluyor. Bu build’in Success olması ve ardından deploy gerekli.
+egitimxv1 sitesi henüz oluşturulmadı. İlk build disk doluluğu nedeniyle Upload Build Context adımında başarısız oldu; onaylı build cache temizliği yapıldı (disk %48). deploy-0027-000002’nin ilk build’i f476t39m7i npm aralığı ayrıştırma hatasıyla Pre-build’de başarısız oldu; hedefli düzeltme sonrası j8vu7j2qnm 27 adımı geçip son adım Upload Docker Image’da Failure ile bitti (ECR deposu eksikti). Eksik depo oluşturuldu; yeni build qoh3rkif10 28/28 Success ve image ECR’de doğrulandı. Deploy deploy-0027-000002 başlatıldı; yeni bench bench-0027-000002-apphtznr önce Installing, sonra Active oldu (live-bench-active). Site oluşturma gönderildi; form önce Creating site... This may take a while... gösterdi, site satırı bir süre Installing kaldı. Şimdi egitimxv1.metaframer.net Active: New Site Agent Job 2sdhhleqvr çalıştırılan tüm adımlarda Success, Add Site to Upstream 2secikpbrg Success; HTTPS HTTP/2 200 ve geçerli TLS; giriş ekranı açıldı; altı uygulama kurulu. İlk kurulum tamamlandı (veritabanında setup_complete=1); Desk ve uygulama ana ekranları açıldı (live-site-desk, live-site-education, live-site-lms).
 
-1. Başarılı deploy sonrasında uygun Bench üzerinde Create Site / New Site akışını aç.
-2. Site adı egitimxv1; panelde yapılandırılmış base domain ile tam adresi oluştur.
-3. Kurulacak uygulamaları gerçek bağımlılıklarıyla seç; education için ERPNext gerekir.
-4. Oluşturma işinin sonucunu, HTTPS yanıtını, giriş ekranını ve kurulu app listesini kontrol et.
+1. Genel Dashboard → Sites → New Site (/dashboard/sites/new) formunu kullanma: bu kurulumda Framework seçenekleri görünmedi.
+2. Bench Active olduktan sonra Dashboard → Benches → egitimxv1 (bench-0027) → Sites → New Site yolunu aç. Bu kurulumda adres /dashboard/groups/bench-0027/sites/new.
+3. Grup private kalır; site bu grubun kendi sayfasından açıldığı için grubu public yapmaya gerek yoktur. Grup görünürlüğünü değiştirme.
+4. Uygulamalar: frappe otomatik gelir; erpnext, crm, education, lms ve payments seçilir. education için ERPNext, lms için Payments gerekir.
+5. Site adı egitimxv1; panelin base domain’i ile tam adres egitimxv1.metaframer.net. Version 16 seçili olmalı.
+6. Plan: Metaframer ERP Test ($0/ay); plan açıklaması ürün garantisi içermediğini belirtir. Bölge: Hetzner Falkenstein (FSN1).
+7. Bölgeye bağlı yasal onay kutusunu yalnız kullanıcı metni okuyup açıkça kabul ettikten sonra işaretle. İsteğe bağlı yerel iş ortağı bilgisi kutusu bu kurulumda kapalı bırakıldı.
+8. Create site ile bir kez gönder. Oluşturma işinin sonucunu, HTTPS yanıtını, giriş ekranını ve kurulu app listesini ayrı ayrı kontrol et; sonuç görülmeden formu tekrar gönderme.
 
 Somut notlar:
 
-- Bu adım henüz uygulanmadı; ekran görüntüsü yok. Domain, plan ve hazır Bench canlı doğrulama bekliyor.
+- Bu kurulumda form gönderildi; form önce Creating site... This may take a while... gösterdi (bu anın ekran görüntüsü yayımlanmadı).
+- Tarihsel gözlem: Benches → bench-0027-000002-apphtznr → Sites tablosunda egitimxv1.metaframer.net satırı Installing idi (live-bench-active görseli); o anda New Site adımı Success, Install Apps Running, upstream 2secikpbrg Pending. Installing site başarısı değildir.
+- Güncel sonuç: site Active ve Apps sekmesinde altı uygulama (live-site-active-apps). New Site Agent Job 2sdhhleqvr (uzak iş 4435) çalıştırılan tüm adımlarda Success; Add Site to Upstream 2secikpbrg Success. TLS doğrulaması atlanmadan yapılan HTTPS curl isteği HTTP/2 200 ve geçerli sertifika döndü; tarayıcıda giriş ekranı açıldı (live-site-https-login).
+- Kurulum sürerken formu tekrar gönderme, job’u yeniden başlatma veya siteyi silme. Site Active olduktan sonra HTTPS, giriş ve uygulama listesini ayrı ayrı doğrula; bu kurulumda üçü de ayrı kanıtla doğrulandı.
+- İlk kurulum: Press Setup Site düğmesiyle otomatik giriş yapıldı ve kurulum sihirbazı tamamlandı; sitenin veritabanından okunan setup_complete değeri 1. Kişisel hesap alanlarını ve parolayı kullanıcı kendisi girdi; bu değerler kaydedilmedi. Test seçimleri: dil Türkçe, ülke Türkiye, saat dilimi Europe/Istanbul, para birimi TRY; şirket EgitimXV1, kısaltma EXV1, Turkey varsayılan hesap planı, mali yıl başlangıcı 2026-01-01; ERP kurulumundaki demo veri kutusu kapalı. CRM kendi örnek/onboarding lead kayıtlarını otomatik gösteriyor; hiçbir kayıt silinmedi. Gerçek iş akışları, para işlemleri ve entegrasyonlar test edilmedi.
+- Default cluster kaydının title ve country alanları boştu (null); bu yüzden yasal metinde bölge adı yerine null görünüyordu. App sunucusunun availability zone değeri fsn1-dc8 olarak doğrulandı. Önceki iki değer yedeklendikten sonra yalnız katalog alanları güncellendi: title Hetzner Falkenstein (FSN1), country Germany. Yasal metin artık doğru bölgeyi gösteriyor.
+- Bu düzeltme yalnız katalog etiketidir: sunucu, sağlayıcı veya ağ ayarı değiştirilmedi, servis yeniden başlatılmadı. Tüm altyapının konum denetimi yapılmış sayılmaz.
 - DNS gerekirse Hüseyin Cengiz kayıt türü/adı/değerini hazırlar, Asistan Hüseyin GoDaddy’de uygular, Hüseyin Cengiz HTTPS sonucunu doğrular.
-- Administrator parolası veya başka secret değerleri rehberde yayımlanmaz; mevcut giriş bilgileri değiştirilmez.
+- Administrator parolası veya başka secret değerleri rehberde yayımlanmaz; mevcut giriş bilgileri değiştirilmez. Mevcut siteler ve bench-0022 uygulamaları korunuyor.
 
-Doğrulama: Site başarılı, HTTPS ve giriş çalışıyor, uygulama ekranları açılıyor; her biri ayrı doğrulama kanıtı gerektirir.
+Doğrulama: Site Active; 2sdhhleqvr ve 2secikpbrg Success; HTTPS HTTP/2 200, geçerli TLS; giriş ekranı açıldı; bench list-apps altı uygulamayı döndürdü. İlk kurulum tamamlandı (setup_complete=1); Desk, Eğitim, LMS, CRM ve ERPNext ekranları açıldı. İş akışları test edilmedi.
 
 Bu adım için henüz ekran kanıtı yok.
 
@@ -338,7 +348,7 @@ Sites → New Site açıldı; framework version seçenekleri görünmedi.
 Somut notlar:
 
 - Ödeme yöntemi ekleme uyarısı ayrı konu; bu görevde ödeme yöntemi eklenmedi.
-- Henüz site oluşturulmadı.
+- Bu gözlem anında site oluşturulmadı. Doğru yol sonradan bulundu: Benches → egitimxv1 (bench-0027) → Sites → New Site (/dashboard/groups/bench-0027/sites/new); site adımına bak.
 - Ekran görüntüsü yayımlanmadı; bu, canlı oturumda kaydedilen geçmiş gözlemdir.
 
 Doğrulama: Versiyon seçeneklerinin boş olduğu canlı gözlendi.
@@ -574,7 +584,7 @@ Mevcut geniş uygulama grubu Active; rgv1 ve eğitim grubu Awaiting Deploy idi. 
 Somut notlar:
 
 - Mevcut başka bir Bench’in Active olması yeni eğitim grubunun hazır olduğu anlamına gelmez.
-- Awaiting Deploy gözlenen durumdur; egitimxv1 için hazır Bench veya oluşturulmuş site kanıtı henüz yoktur.
+- Awaiting Deploy o andaki gözlenen durumdur. Sonradan qoh3rkif10 Success ve deploy sonrasında yeni bench Active oldu (live-bench-active); egitimxv1.metaframer.net sitesi oluşturuldu ve Active (live-site-active-apps).
 - Ekran görüntüsü yayımlanmadı; bu, canlı oturumda kaydedilen geçmiş gözlemdir.
 
 Doğrulama: egitimxv1 satırı Active değil; site oluşturma için hazır Bench yok.
@@ -652,7 +662,7 @@ kpktsdsd9n build genel durumu Failure. Bu kırpım clone satırlarını gösteri
 Somut notlar:
 
 - Bu ekran belirli bir anın kanıtıdır; başarılı site kurulumu anlamına gelmez.
-- Bu, ilk candidate deploy-0027-000001’in build’idir ve tarihsel kanıt olarak kalır. Disk temizliğinden sonraki deploy-0027-000002’nin ilk build’i f476t39m7i farklı bir nedenle (Pre-build npm aralığı ayrıştırma) başarısız oldu; yeni build j8vu7j2qnm Running, Upload Build Context dahil ilk dokuz adımı Success; build sonucu bekleniyor.
+- Bu, ilk candidate deploy-0027-000001’in build’idir ve tarihsel kanıt olarak kalır. Disk temizliğinden sonraki deploy-0027-000002’nin ilk build’i f476t39m7i farklı bir nedenle (Pre-build npm aralığı ayrıştırma) başarısız oldu; sonraki build j8vu7j2qnm Upload Build Context dahil 27 adımı geçti ama son adım Upload Docker Image’da Failure ile bitti; yeni build qoh3rkif10 28/28 Success ile bitti (live-build-success).
 - Bu temiz görüntü mevcut kayıttan yeniden alındı; geçmişteki tıklama veya başarı anının tekrarı değildir.
 
 Doğrulama: Status Failure; deploy ve site oluşturma başlatılmadı.
@@ -689,7 +699,7 @@ Somut notlar:
 - BufferedReader hatası traceback değişkenlerinin yazdırılmasında oluşuyor; birincil HTTP 500 hatasıyla karıştırma.
 - Ekran görüntüsü yayımlanmadı; Error Log ve sunucu logları yalnız gerekli satırlar metin olarak aktarılarak kaydedildi.
 
-Doğrulama: HTTP 500 nedeni Nginx geçici istek gövdesi dosyası için disk alanı yetersizliği olarak doğrulandı. Sonradan onaylı build cache temizliğiyle disk %48’e indi. deploy-0027-000002’nin ilk build’i f476t39m7i Pre-build’de durdu. Hedefli düzeltme sonrası yeni build j8vu7j2qnm’de Upload Build Context Success; temizlik sonrası upload engeli geçildi (live-prebuild-upload-success). Build’in tamamlanması, image push, deploy ve site henüz doğrulanmadı.
+Doğrulama: HTTP 500 nedeni Nginx geçici istek gövdesi dosyası için disk alanı yetersizliği olarak doğrulandı. Sonradan onaylı build cache temizliğiyle disk %48’e indi. deploy-0027-000002’nin ilk build’i f476t39m7i Pre-build’de durdu. Hedefli düzeltme sonrası j8vu7j2qnm’de Upload Build Context Success; temizlik sonrası upload engeli geçildi (live-prebuild-upload-success). Aynı build sonradan farklı bir nedenle, Upload Docker Image adımında Failure ile bitti (live-ecr-push-failure). Sonraki qoh3rkif10 Success ve image ECR’de doğrulandı (live-build-success); yeni bench Active (live-bench-active). Site Active; HTTPS HTTP/2 200 ve geçerli TLS (live-site-https-login).
 
 Bu adım için henüz ekran kanıtı yok.
 
@@ -703,7 +713,7 @@ Somut notlar:
 
 - Ekran görüntüsü yayımlanmadı; bu, canlı oturumda kaydedilen geçmiş gözlemdir.
 
-Doğrulama: Eski hata Pre-build (Required app not found); kpktsdsd9n hatası Upload / Build Context. Güncel j8vu7j2qnm build’inde Pre-build ve Upload Build Context Success.
+Doğrulama: Eski hata Pre-build (Required app not found); kpktsdsd9n hatası Upload / Build Context. j8vu7j2qnm build’inde Pre-build ve Upload Build Context Success; onun hatası son adım Upload Docker Image.
 
 Bu adım için henüz ekran kanıtı yok.
 
@@ -789,7 +799,7 @@ Somut notlar:
 
 - Ekran görüntüsü yayımlanmadı; bu, canlı oturumda kaydedilen geçmiş gözlemdir.
 
-Doğrulama: Her iki durumda seçenek görünmedi; site oluşturulmadı.
+Doğrulama: Her iki durumda seçenek görünmedi; site oluşturulmadı. Site formu sonradan grubun kendi sayfasından açıldı: /dashboard/groups/bench-0027/sites/new.
 
 Bu adım için henüz ekran kanıtı yok.
 
@@ -851,27 +861,28 @@ Bu adım için henüz ekran kanıtı yok.
 
 ## 51. Build hatasında nereye bakılır?
 
-Preparing veya Failure durumunda uygulama listesine dönmeden önce build aşamasını ve ilgili logu belirle. Bu kurulumda üç farklı hata ayrı kanıtlarla bulundu: Required app not found, Upload HTTP 500 ve npm aralığı ayrıştırma.
+Preparing veya Failure durumunda uygulama listesine dönmeden önce build aşamasını ve ilgili logu belirle. Bu kurulumda dört farklı hata ayrı kanıtlarla bulundu: Required app not found, Upload HTTP 500, npm aralığı ayrıştırma ve registry’de eksik image deposu (Upload Docker Image).
 
 1. Release Group → Deploy Candidate → Deploy Candidate Build kaydını aç. Grup, candidate, build kimliğini ve zaman damgasını kaydet; egitimxv1 için bench-0027 / deploy-0027-000001 / kpktsdsd9n.
 2. Build Steps tablosunda ilk Failure satırını bul. Sonraki Pending satırlar çoğunlukla henüz başlamamış adımlardır; ayrı hata sanma.
 3. Run Validations → Pre-build Failure ise satırı açıp Output alanını oku. Required app not found çıktısında istenen bağımlılığı gerçek App/Source ve uyumlu branch ile ekle. Eski educator denemesinde eksik app erpnext idi. Output Invalid simple block ise sorun uygulama listesi değil sürüm aralığı ayrıştırmasıdır; live-npm-range-validation adımına bak.
 4. Upload → Build Context Failure ise build Connections → Error Log bağlantısını aç. Deploy Candidate Build Exception kaydında request method, path ve response koduna bak. Güncel kanıt qu5n7pv6pk: POST builder/upload/kpktsdsd9n → HTTP 500.
-5. Traceback sonunda JSONDecodeError varsa daha önceki response satırını oku. HTTP 500 birincil hata; JSONDecodeError yanıtın JSON olarak çözümlenemediğini belirtir. BufferedReader cannot pickle ise traceback değişkenini yazdırırken oluşmuş ikincil hatadır.
-6. Server List → ilgili Build Server → Ping → Ping Agent ile bağlantıyı kontrol et. pong, temel bağlantıyı doğrular; upload veya build protokolünün doğru olduğunu kanıtlamaz.
-7. Aynı Server → Actions → Show Agent Version ile agent commit’ini; Help → About ile yönetim paneli Frappe/Press sürümünü kaydet. Hedef grubun v16 uygulama sürümlerini yönetim panelinin v15 Framework sürümüyle karıştırma.
-8. Agent Job → Run Remote Builder kayıtlarını tarih ve Reference Name ile eşleştir. 5ignfoq0t5 kaydında 6 Ekim tarihli Redis AOF / No space left on device hatası var; bu tarihsel kanıttır, bugünkü upload 500 için sunucuda ayrıca ölçüm yapılır.
-9. Doğru uygulama sunucusuna bağlandığını doğrula (hostname ve rol); bağlantı bilgilerini, IP’yi ve kimlik bilgilerini rehbere veya bilete yazma. Bu kurulumda ilk denenen IP başka bir altyapı sunucusuydu.
-10. df -h ile blok alanını oku: kök dosya sistemi Use% ve Avail değerlerine bak. Bu kurulumda 150 GB, 144 GB kullanılmış, 156 MB boş, %100.
-11. df -i ile inode kullanımını ayrı oku. No space left on device hem blok alanı hem inode tükenmesinde görülebilir; bu kurulumda inode %63, yani neden blok alanı doluluğu.
-12. İlgili Nginx error.log satırlarını yalnız build kimliği ve /agent/builder/upload yolu ile filtreleyerek oku. Bu kurulumda kpktsdsd9n için 08:52:59, 08:58:00, 09:03:02 UTC (11:52:59, 11:58:00, 12:03:02 TSİ) pwrite() temporary request body failed (28: No space left on device) görüldü.
-13. docker system df ile yalnız özet kullanımı oku; ayrıntılı (-v) listeyi veya image adlarını rehbere taşıma. Bu kurulumda temizlik öncesi Build Cache 61.2 GB, Images 29 GB geri kazanılabilir; üç aktif container çalışıyor.
-14. redis-cli INFO persistence ile aof_last_write_status, rdb_last_bgsave_status ve aof_last_bgrewrite_status değerlerini oku. Bu kurulumda üçü de ok; 6 Ekim Redis hatası bugün sürmüyor.
-15. Ölçümler salt okunurdur. Temizlik yalnız kullanıcının açık silme onayıyla ve yalnız kullanılmayan Docker build cache için yapılır; image, site, veritabanı, container, backup veya Redis dosyası silme. Servis yeniden başlatma veya deploy bu adımın parçası değildir.
-16. Repo HEAD bilgisi çalışan kodu tek başına kanıtlamaz. Bu sunucuda HEAD aynı, ancak agent/web.py değiştirilmiş ve legacy_builder.py mevcut; disk doluluğu doğrulandığı için protokol uyuşmazlığını çözüm olarak uygulama ve agent kodunu değiştirme.
-17. Preparing sırasında Error Log veya Agent Job filtreleri boş olabilir. Bu kurulumda üç upload denemesi ve aradaki toplam 600 saniye bekleme Preparing süresini açıkladı. Kayıt oluşmadan tekrar build başlatma.
-18. Agent Job, RQ Job ve Error Log filtrelerinin kapsamını kontrol et. No matching records yalnız seçili filtrede kayıt olmadığını söyler; sistemde hiçbir iş veya hata yok demek değildir. Scheduler Active de build endpoint sağlığını kanıtlamaz.
-19. Onaylı build cache temizliği sonrasında df -h ile boş alanı yeniden ölç; ardından tek build ile clone → validation → package → upload → image build/push Success akışını doğrula. Sonra deploy/Bench ve en son egitimxv1 sitesinin HTTPS, giriş ve app ekranlarını doğrula.
+5. Upload → Docker Image Failure ise satır Output’unun son satırını oku; Agent Job Success sonucunu image push başarısı sayma. Registry’de depo yoksa live-ecr-push-failure adımına bak.
+6. Traceback sonunda JSONDecodeError varsa daha önceki response satırını oku. HTTP 500 birincil hata; JSONDecodeError yanıtın JSON olarak çözümlenemediğini belirtir. BufferedReader cannot pickle ise traceback değişkenini yazdırırken oluşmuş ikincil hatadır.
+7. Server List → ilgili Build Server → Ping → Ping Agent ile bağlantıyı kontrol et. pong, temel bağlantıyı doğrular; upload veya build protokolünün doğru olduğunu kanıtlamaz.
+8. Aynı Server → Actions → Show Agent Version ile agent commit’ini; Help → About ile yönetim paneli Frappe/Press sürümünü kaydet. Hedef grubun v16 uygulama sürümlerini yönetim panelinin v15 Framework sürümüyle karıştırma.
+9. Agent Job → Run Remote Builder kayıtlarını tarih ve Reference Name ile eşleştir. 5ignfoq0t5 kaydında 6 Ekim tarihli Redis AOF / No space left on device hatası var; bu tarihsel kanıttır, bugünkü upload 500 için sunucuda ayrıca ölçüm yapılır.
+10. Doğru uygulama sunucusuna bağlandığını doğrula (hostname ve rol); bağlantı bilgilerini, IP’yi ve kimlik bilgilerini rehbere veya bilete yazma. Bu kurulumda ilk denenen IP başka bir altyapı sunucusuydu.
+11. df -h ile blok alanını oku: kök dosya sistemi Use% ve Avail değerlerine bak. Bu kurulumda 150 GB, 144 GB kullanılmış, 156 MB boş, %100.
+12. df -i ile inode kullanımını ayrı oku. No space left on device hem blok alanı hem inode tükenmesinde görülebilir; bu kurulumda inode %63, yani neden blok alanı doluluğu.
+13. İlgili Nginx error.log satırlarını yalnız build kimliği ve /agent/builder/upload yolu ile filtreleyerek oku. Bu kurulumda kpktsdsd9n için 08:52:59, 08:58:00, 09:03:02 UTC (11:52:59, 11:58:00, 12:03:02 TSİ) pwrite() temporary request body failed (28: No space left on device) görüldü.
+14. docker system df ile yalnız özet kullanımı oku; ayrıntılı (-v) listeyi veya image adlarını rehbere taşıma. Bu kurulumda temizlik öncesi Build Cache 61.2 GB, Images 29 GB geri kazanılabilir; üç aktif container çalışıyor.
+15. redis-cli INFO persistence ile aof_last_write_status, rdb_last_bgsave_status ve aof_last_bgrewrite_status değerlerini oku. Bu kurulumda üçü de ok; 6 Ekim Redis hatası bugün sürmüyor.
+16. Ölçümler salt okunurdur. Temizlik yalnız kullanıcının açık silme onayıyla ve yalnız kullanılmayan Docker build cache için yapılır; image, site, veritabanı, container, backup veya Redis dosyası silme. Servis yeniden başlatma veya deploy bu adımın parçası değildir.
+17. Repo HEAD bilgisi çalışan kodu tek başına kanıtlamaz. Bu sunucuda HEAD aynı, ancak agent/web.py değiştirilmiş ve legacy_builder.py mevcut; disk doluluğu doğrulandığı için protokol uyuşmazlığını çözüm olarak uygulama ve agent kodunu değiştirme.
+18. Preparing sırasında Error Log veya Agent Job filtreleri boş olabilir. Bu kurulumda üç upload denemesi ve aradaki toplam 600 saniye bekleme Preparing süresini açıkladı. Kayıt oluşmadan tekrar build başlatma.
+19. Agent Job, RQ Job ve Error Log filtrelerinin kapsamını kontrol et. No matching records yalnız seçili filtrede kayıt olmadığını söyler; sistemde hiçbir iş veya hata yok demek değildir. Scheduler Active de build endpoint sağlığını kanıtlamaz.
+20. Onaylı build cache temizliği sonrasında df -h ile boş alanı yeniden ölç; ardından tek build ile clone → validation → package → upload → image build/push Success akışını doğrula. Sonra deploy/Bench ve en son egitimxv1 sitesinin HTTPS, giriş ve app ekranlarını doğrula.
 
 Somut notlar:
 
@@ -883,8 +894,9 @@ Somut notlar:
 - Teknik düzeltme sahibi Hüseyin Cengiz. DNS gerekirse kayıt gereksinimini Hüseyin Cengiz hazırlar, GoDaddy uygulamasını Asistan Hüseyin yapar.
 - Doğru uygulama sunucusuna SSH bağlantısı başarılı oldu. Kullanıcı onayıyla yalnız docker builder prune --all --force çalıştırıldı (exit 0); image, site, veritabanı, container veya app kaldırılmadı, deploy yapılmadı.
 - Temizlik sonrası df -h: 150 GB, 69 GB kullanılmış, 76 GB boş, %48 (önce 156 MB boş, %100). Üç container aynı uptime ile çalışıyor; Redis bgsave/write ok. Ayrıntı live-cleanup-crm adımında.
+- Ayrı hata: Press Dashboard Daily Usage analytics InternalServerError. Hedefli düzeltme kuruldu ve canlıda doğrulandı; Daily Usage artık No data gösteriyor. Log server yapılandırılmadığı için metrik yokluğu çözülmemiş bir yetenek eksikliğidir. Boş analytics grafiği site kesintisi veya sıfır kullanım anlamına gelmez; site durumunu Dashboard status, HTTPS yanıtı ve giriş ekranıyla ayrıca doğrula. Ayrıntı live-analytics-daily-usage adımında.
 
-Doğrulama: İlk başarısız aşama, HTTP 500 kaydı ve bunun nedeni olan disk doluluğu (df -h, df -i, Nginx error.log) ayrı kanıtlarla kaydedildi. Onaylı build cache temizliği başarılı. deploy-0027-000002’nin ilk build’i f476t39m7i Pre-build’de npm aralığı ayrıştırma hatasıyla durdu; hedefli düzeltme sonrası yeni build j8vu7j2qnm Running: Pre-build, Package ve Upload Build Context Success, son okumada 14 adım Success. Build sonucu, image push, deploy ve çalışan site henüz doğrulanmadı.
+Doğrulama: İlk başarısız aşama, HTTP 500 kaydı ve bunun nedeni olan disk doluluğu (df -h, df -i, Nginx error.log) ayrı kanıtlarla kaydedildi. Onaylı build cache temizliği başarılı. deploy-0027-000002’nin ilk build’i f476t39m7i Pre-build’de npm aralığı ayrıştırma hatasıyla durdu; hedefli düzeltme sonrası j8vu7j2qnm 27 adımı Success geçti, son adım Upload Docker Image’da registry deposu eksik olduğu için Failure ile bitti. Yalnız eksik ECR deposu oluşturuldu; yeni build qoh3rkif10 28/28 Success, image ECR’de tam tag ile doğrulandı. Deploy başlatıldı; yeni bench önce Installing, sonra Active (New Bench Agent Job tgajt4obnu Success). Site Active; HTTPS HTTP/2 200, geçerli TLS ve giriş ekranı doğrulandı. Bu zincir build hatalarını kapsar; tüm Press hatalarının çözüldüğü anlamına gelmez (Daily Usage analytics notuna bak).
 
 Bu adım için henüz ekran kanıtı yok.
 
@@ -952,7 +964,7 @@ Somut notlar:
 
 - Yalnız build cache temizlendi. Image, site, veritabanı, container veya app kaldırılmadı; deploy yapılmadı.
 - Değişiklik yalnız egitimxv1 / bench-0027 grubunda yapıldı. Mevcut 10 site, custom app’ler ve Press’in Frappe 15 yönetim kurulumu korunuyor.
-- svholl uygulamasının kimliği belirsiz olduğu için gruba eklenmedi.
+- O anda svholl uygulamasının kimliği belirsiz olduğu için gruba eklenmedi. Kullanıcı sonradan bunun school yazımı olduğunu açıkladı; okul yönetimi ihtiyacı gruptaki mevcut education uygulamasıyla karşılanır. Bu bir çıkarımdır; ayrı okul reposu belirlenmedi ve ayrı uygulama eklenmedi.
 - Bağımlılık sırası korunuyor: LMS için Payments, Education için ERPNext kendilerinden önce yer alır. crm son satırdadır.
 - Kaydedilmiş tablo yapılandırma kanıtıdır; build başarısı değildir. SSH bağlantı bilgisi, kimlik bilgisi ve kullanıcı/site verisi rehbere aktarılmaz.
 
@@ -962,7 +974,7 @@ Açıklamalı ekran: [temiz ekran ve çerçeveler](https://karacaismail.github.i
 
 ## 56. İkinci candidate: deploy-0027-000002
 
-CRM eklendikten sonra yeni candidate oluşturuldu; altı uygulama belirli commitlere sabitlendi. İlk build f476t39m7i Pre-build validation’da Failure; hedefli düzeltme sonrası yeni build j8vu7j2qnm Running, Pre-build ve Upload Build Context Success; build sonucu bekleniyor.
+CRM eklendikten sonra yeni candidate oluşturuldu; altı uygulama belirli commitlere sabitlendi. İlk build f476t39m7i Pre-build validation’da Failure; hedefli düzeltme sonrası j8vu7j2qnm 27 adımı geçip son adım Upload Docker Image’da Failure ile bitti; eksik ECR deposu oluşturulduktan sonra yeni build qoh3rkif10 28/28 Success; ardından Deploy başlatıldı.
 
 1. bench-0027 → Actions → Create Deploy Candidate ile yeni candidate oluştur; bu kurulumda deploy-0027-000002.
 2. Apps & Deps içinde altı satırın Source, Release ve Hash alanlarını kontrol et. crm satırı SRC-crm-002, commit deedce73c1eb48577e7f70e95df6bac1dc55c93f.
@@ -974,10 +986,10 @@ Somut notlar:
 - Ekranda hash sütunu kısaltılmış görünür; tam commit kimliği App Release kaydından okunur.
 - Görsel yalnız Apps & Deps tablosunu gösterir; build başlangıcı veya sonucu bu görselde yoktur.
 - Eski candidate deploy-0027-000001 ve onun kpktsdsd9n Failure build’i tarihsel kanıt olarak kalır; silinmedi.
-- Bu candidate’ın ilk build’i f476t39m7i Pre-build validation’da Failure ile bitti ve tarihsel kanıt olarak kalır; ayrıntı live-npm-range-validation adımında. Aynı candidate için yeni build j8vu7j2qnm başlatıldı.
-- Deploy ve site oluşturma henüz yapılmadı.
+- Bu candidate’ın ilk build’i f476t39m7i Pre-build validation’da Failure ile bitti ve tarihsel kanıt olarak kalır; ayrıntı live-npm-range-validation adımında. Aynı candidate için sonraki build j8vu7j2qnm de son adım Upload Docker Image’da Failure ile bitti (live-ecr-push-failure); ardından qoh3rkif10 başlatıldı ve 28/28 Success ile bitti (live-build-success).
+- Deploy başlatıldı; yeni bench önce Installing, sonra Active oldu (live-bench-active). Site oluşturuldu ve Active; altı uygulama sitede kurulu (live-site-active-apps).
 
-Doğrulama: Candidate bench-0027’ye bağlı; altı satırda Source, Release ve Hash dolu. İlk build f476t39m7i Failure; yeni build j8vu7j2qnm Running (son okumada 14 adım Success), build sonucu doğrulanmadı; deploy ve site yok.
+Doğrulama: Candidate bench-0027’ye bağlı; altı satırda Source, Release ve Hash dolu. İlk build f476t39m7i Failure; j8vu7j2qnm Failure (son adım Upload Docker Image); qoh3rkif10 Success (28/28). Yeni bench Active; site Active, HTTPS doğrulandı.
 
 Açıklamalı ekran: [temiz ekran ve çerçeveler](https://karacaismail.github.io/pressguide/steps/live-candidate-two/)
 
@@ -991,41 +1003,231 @@ deploy-0027-000002’nin ilk build’i f476t39m7i Pre-build validation aşaması
 4. Düzeltme hedefli olmalı: yalnız Node gereksinimi kontrolü NpmSpec kullanır; Python gereksinimi SimpleSpec ile kalır. Kurulu sürümlerin NpmSpec desteğini doğrula; bu kurulumda semantic-version 2.10.0 ve Python 3.10.12 destekliyor.
 5. Uygulamadan önce özgün dosyanın yedeğini al ve SHA değerini kontrol et; düzeltmeyi incelet. Regresyon testlerini gerçek kurulumdan önce ve sonra çalıştır; bu kurulumda altı test her iki seferde geçti.
 6. Değişikliği yüklemek için yalnız boşta olan build worker’larını yeniden başlat. Bu kurulumda dört boşta build worker yeniden başlatıldı; web ve Redis süreçlerine dokunulmadı.
-7. Aynı candidate için tek yeni build başlat ve sonucunu izle. Bu kurulumda j8vu7j2qnm 13:39:11 TSİ’de başladı; Pre-build validation Success ve build şu an Running (live-prebuild-upload-success). Sonuç görülmeden yeni build açma.
+7. Aynı candidate için tek yeni build başlat ve sonucunu izle. Bu kurulumda j8vu7j2qnm 13:39:11 TSİ’de başladı ve Pre-build validation Success oldu (live-prebuild-upload-success); build daha sonra farklı bir nedenle, son adım Upload Docker Image’da Failure ile bitti (live-ecr-push-failure). Sonuç görülmeden yeni build açma.
 
 Somut notlar:
 
 - Doğrulamayı atlama: Pre-build validation’ı kapatma, Node gereksinimini silme ve uygulamanın sürüm aralığını değiştirme. Hata ayrıştırıcıdaydı; çözüm aralığın doğru ayrıştırıcıyla okunmasıdır.
 - f476t39m7i Failure kaydı tarihsel kanıt olarak kalır; silinmedi. kpktsdsd9n Upload hatası (disk doluluğu) ile bu Pre-build hatası ayrı nedenlerdir.
-- Kapsam yalnız egitimxv1 / bench-0027; diğer 10 site ve gruplarına dokunulmadı, hiçbir uygulama kaldırılmadı. svholl kimliği belirsiz olduğu için gruba eklenmedi.
+- Kapsam yalnız egitimxv1 / bench-0027; diğer 10 site ve gruplarına dokunulmadı, hiçbir uygulama kaldırılmadı. svholl (sonradan school olarak açıklandı) için ayrı uygulama eklenmedi; okul yönetimi mevcut education uygulamasıyla karşılanır (çıkarım).
 - Ekran görüntüsü yayımlanmadı; bu adım canlı oturumda okunan çıktının metin kaydıdır. Sunucu bağlantı bilgisi, IP ve kimlik bilgileri rehbere aktarılmaz.
 
-Doğrulama: f476t39m7i: Pre-build validation Failure, Invalid simple block '^20.19.0 || >=22.12.0'. Hedefli düzeltme sonrası altı regresyon testi geçti. j8vu7j2qnm’de Pre-build validation Success; build Running. Build Success, deploy ve egitimxv1 sitesi henüz doğrulanmadı.
+Doğrulama: f476t39m7i: Pre-build validation Failure, Invalid simple block '^20.19.0 || >=22.12.0'. Hedefli düzeltme sonrası altı regresyon testi geçti. j8vu7j2qnm’de Pre-build validation Success; bu build sonradan Upload Docker Image’da Failure ile bitti. Sonraki qoh3rkif10 Success ve yeni bench Active; egitimxv1 sitesi Active ve HTTPS doğrulandı.
 
 Bu adım için henüz ekran kanıtı yok.
 
-## 58. Yeni build: Pre-build, Package ve Upload geçti
+## 58. j8vu7j2qnm: Pre-build, Package ve Upload geçti (tarihsel ekran)
 
-j8vu7j2qnm build’i Running. Altı clone, Pre-build validation, Package Build Context ve Upload Build Context Success. Özgün Upload HTTP 500 ve Node npm aralığı engelleri geçildi; build henüz tamamlanmadı.
+Tarihsel çekim: j8vu7j2qnm Running iken altı clone, Pre-build validation, Package Build Context ve Upload Build Context (satır 7–9) Success görüldü. Özgün Upload HTTP 500 ve Node npm aralığı engelleri geçildi. Build daha sonra son adım Upload Docker Image’da Failure ile bitti; live-ecr-push-failure adımına bak.
 
-1. deploy-0027-000002 → Deploy Candidate Build → j8vu7j2qnm kaydını aç; başlıktaki durumun Running olduğunu oku.
+1. deploy-0027-000002 → Deploy Candidate Build → j8vu7j2qnm kaydını aç; güncel durum FINISHED / Failure. Bu ekran Running anına aittir.
 2. Build Steps tablosunda 7. Run Validations / Pre-build, 8. Package / Build Context ve 9. Upload / Build Context satırlarının Success olduğunu kontrol et.
-3. Sonraki Setup Prerequisites satırlarını izle. Running veya Pending satırlar hata değildir; ilk Failure görülürse yalnız o satırın Output alanını ve Error Log bağlantısını aç.
-4. Build Success olmadan Deploy menüsünü kullanma ve yeni build başlatma.
+3. Running veya Pending satırlar hata değildir; ilk Failure görüldüğünde yalnız o satırın Output alanını ve Error Log bağlantısını aç. Bu build’de ilk ve tek Failure son adım Upload Docker Image.
+4. Build Success olmadan Deploy menüsünü kullanma; sonuç görülmeden yeni build başlatma.
 
 Somut notlar:
 
-- Görselde ilk dokuz adım Success, 10. satır Setup Prerequisites / Install Essential Packages Running, sonraki satırlar Pending. Son okumada 14 adım Success; sistem bağımlılıkları (Setup Prerequisites) kuruluyor.
+- Görselde ilk dokuz adım Success, 10. satır Setup Prerequisites / Install Essential Packages Running, sonraki satırlar Pending. Bu, çekim anının tarihsel görüntüsüdür; güncel durum değildir.
+- Sonraki okumada 27 adımın tamamı Success (altı uygulama kuruldu); 28. ve son adım Upload Docker Image Failure ile bitti.
 - Pre-build Success, f476t39m7i’deki Invalid simple block hatasının hedefli NpmSpec düzeltmesiyle geçildiğini gösterir. Upload Build Context Success, kpktsdsd9n’deki disk doluluğu kaynaklı HTTP 500’ün temizlik sonrası tekrar etmediğini gösterir.
-- kpktsdsd9n ve f476t39m7i Failure kayıtları tarihsel kanıt olarak kalır; silinmedi.
-- Bu ekran build başarısı değildir. Image build/push, deploy, Bench ve egitimxv1 sitesi henüz doğrulanmadı.
+- kpktsdsd9n, f476t39m7i ve j8vu7j2qnm Failure kayıtları tarihsel kanıt olarak kalır; silinmedi.
+- Bu ekran build başarısı değildir. Sonraki başarılı build qoh3rkif10 live-build-success adımındadır.
 
-Doğrulama: j8vu7j2qnm Running; satır 1–9 Success (altı clone, Pre-build, Package, Upload Build Context). Son okumada 14 adım Success. Build sonucu, image push, deploy ve site doğrulanmadı.
+Doğrulama: Çekim anında satır 1–9 Success (altı clone, Pre-build, Package, Upload Build Context). j8vu7j2qnm sonradan FINISHED / Failure: 27 adım Success, son adım Upload Docker Image Failure; bu build’in image’ı push edilmedi.
 
 Açıklamalı ekran: [temiz ekran ve çerçeveler](https://karacaismail.github.io/pressguide/steps/live-prebuild-upload-success/)
 
+## 59. Upload Docker Image Failure: registry deposu eksik
+
+j8vu7j2qnm build’i 27 adımı Success geçtikten sonra son adım Upload Docker Image’da Failure ile bitti: image’ın gönderileceği ECR deposu yoktu. Bu adımın yayımlanmış ekranı yok.
+
+1. Build kaydında son Failure satırını (Upload / Docker Image) aç ve Output alanının son satırını oku. Bu kurulumda: repository 'frappe/metaframer.net/bench-0027' does not exist in registry.
+2. Agent Job sonucunu image push sonucuyla karıştırma. Bu kurulumda ji7trk4c6d Success ve data.build_failed=false; bu yalnız uzak işin döndüğünü gösterir. Push sonucu Build Steps satırındadır.
+3. Önce hedefi doğrula: Press sunucusundaki mevcut AWS kimlik bilgisinin hesabı yapılandırılmış registry hesabıyla eşleşmeli; region ve namespace (frappe/<domain>/bench-XXXX) registry adresiyle aynı olmalı. Secret değerlerini yazdırma.
+4. Tam hedef adla describe_repository çalıştır. RepositoryNotFoundException dönerse yalnız bu hedef depoyu oluştur; şifreleme, tarama ve tag mutability ayarlarını mevcut bir bench deposuyla (bu kurulumda bench-0022) aynı tut ve oluşturma sonrası tekrar describe ile doğrula.
+5. Mevcut depoları değiştirme veya silme; AWS hesap ayarlarına dokunma.
+6. Aynı candidate için normal cache ile tek yeni build başlat. Bu kurulumda qoh3rkif10 13:51:58 TSİ’de başladı (o anda Preparing) ve sonradan 28/28 Success ile bitti (live-build-success). Sonuç görülmeden yeni build açma.
+
+Somut notlar:
+
+- Push adımını atlama, Upload Docker Image’ı devre dışı bırakma ve Failure build’i elle Success olarak işaretleme; deploy, image’ın registry’de bulunmasına bağlıdır.
+- Bu kurulumda yapılandırılmış hesap doğrulandı, yalnız bench-0027 deposu oluşturulup doğrulandı; mevcut depolar ve AWS hesap ayarları değiştirilmedi.
+- j8vu7j2qnm Failure kaydı tarihsel kanıt olarak kalır; silinmedi.
+- Ekran görüntüsü yayımlanmadı; bu adım canlı oturumda okunan çıktının metin kaydıdır. AWS hesap kimliği, erişim anahtarları ve registry kimlik bilgileri rehbere aktarılmaz.
+
+Doğrulama: j8vu7j2qnm FINISHED / Failure: 27 adım Success, son adım Upload Docker Image Failure. bench-0027 deposu oluşturuldu ve doğrulandı. Sonraki qoh3rkif10 Success ve image push ECR’de doğrulandı; ayrıntı live-build-success.
+
+Bu adım için henüz ekran kanıtı yok.
+
+## 60. qoh3rkif10: build Success ve image ECR’de
+
+deploy-0027-000002 için qoh3rkif10 build’i 28/28 adım Success ile bitti; image ECR’de tam tag ile doğrulandı. Deploy bu başarılı build’den bir kez başlatıldı. Build başarısı, Bench veya site hazır olduğu anlamına gelmez.
+
+1. deploy-0027-000002 → Deploy Candidate Build → qoh3rkif10 kaydını aç; başlıktaki durum etiketini ve Status alanını oku. Bu kurulumda ikisi de Success.
+2. Build Steps tablosunda tüm satırları kontrol et; bu kurulumda 28/28 adım Success, son adım Upload Docker Image dahil.
+3. Image’ı registry’de ayrıca doğrula: ECR describe_images’ı tam depo adı ve tam tag ile çalıştır; digest ve boyutu kaydet. Bu kurulumda digest sha256:31977a473a878d2de8e966f10954bbf699d804d5ae4d8128eb3061cce9ef9abf, imageSizeInBytes 1723501363. Mevcut aynı AWS hesap kimliğini kullan; kimlik bilgisini yazdırma.
+4. Ancak bundan sonra aynı build sayfasında Deploy → Deploy seçeneğini bir kez kullan. Bu kurulumda Deploy deploy-0027-000002 oluştu, kuyruk kaydı sutd4rm1um Started, yeni bench bench-0027-000002-apphtznr o anda Installing.
+5. Deploy’u tekrar başlatma; Bench Active olana kadar bekle ve logları izle. Bu kurulumda bench sonradan Active oldu; live-bench-active adımına bak. Site oluşturma ancak Active Bench doğrulandıktan sonra yapılır.
+
+Somut notlar:
+
+- Görsel yalnız build kaydını gösterir: başlık Success, Status Success ve Build Steps’in ilk altı clone satırı. 28/28 sonucu, ECR doğrulaması ve deploy/bench durumu ekranın dışındaki ayrı canlı okumalardır.
+- Bu okuma anında bench Installing idi; Installing hazır Bench değildir. Sonraki Active bench live-bench-active adımında; Active site, HTTPS ve giriş ekranı live-site-active-apps ve live-site-https-login adımlarında ayrı kanıtlarla doğrulandı.
+- j8vu7j2qnm, f476t39m7i ve kpktsdsd9n Failure kayıtları tarihsel kanıt olarak kalır; silinmedi. Yeni uygulama, kaynak veya kök kimlik bilgisi eklenmedi.
+- AWS hesap kimliği, erişim anahtarları ve registry kimlik bilgileri rehbere aktarılmaz.
+
+Doğrulama: Ekranda: qoh3rkif10 başlık ve Status alanı Success. Ayrı okumalar: 28/28 adım Success; ECR describe_images tam tag ile digest ve 1723501363 bayt döndü; Deploy deploy-0027-000002 Started, bench-0027-000002-apphtznr o anda Installing (sonradan Active; live-bench-active). Site ve HTTPS bu ekranın kanıtı değildir; sonradan ayrı doğrulandı (live-site-https-login).
+
+Açıklamalı ekran: [temiz ekran ve çerçeveler](https://karacaismail.github.io/pressguide/steps/live-build-success/)
+
+## 61. Yeni bench Active: bench-0027-000002-apphtznr
+
+qoh3rkif10 build’inden yapılan deploy sonrası yeni bench Installing durumundan Active durumuna geçti; New Bench Agent Job tgajt4obnu Success. Görsel Dashboard bench sayfasıdır: bench Active, egitimxv1.metaframer.net site satırı Installing. Active Bench site oluşturmanın ön koşuludur, site başarısı değildir.
+
+1. Dashboard → Benches → egitimxv1 (bench-0027) → bench-0027-000002-apphtznr sayfasını aç; başlıktaki durum etiketini oku. Bu kurulumda Active.
+2. Bench’in Release Group = bench-0027, Deploy Candidate = deploy-0027-000002 ve Build = qoh3rkif10 ile eşleştiğini kontrol et; altı uygulama listesi grup ve candidate kayıtlarından okunur (live-cleanup-crm, live-candidate-two).
+3. New Bench Agent Job sonucunu ayrıca oku; bu kurulumda tgajt4obnu Success.
+4. Site formunu grubun kendi sayfasından aç (site adımı). Gönderimden sonra aynı bench sayfasının Sites sekmesinde site satırının Status değerini izle; bu kurulumda Installing.
+
+Somut notlar:
+
+- Üç durum ayrı okunur. Build durumu (qoh3rkif10 Success) image’ın üretilip registry’ye gönderildiğini gösterir. Bench durumu (Active) bu image’dan bench’in sunucuda hazırlandığını gösterir. Site durumu (Installing) site kaydının bu bench üzerinde oluştuğunu ve uygulama kurulumunun sürdüğünü gösterir. Biri diğerinin başarısı değildir.
+- Görsel yalnız bench başlığındaki Active etiketini ve Sites tablosundaki egitimxv1.metaframer.net satırının Installing durumunu gösterir. Uygulama listesi bu görselde yoktur; altı uygulamanın kanıtı önceki grup ve candidate ekranlarıdır.
+- Bu görsel TARİHSEL kanıttır: çekim anında New Site Agent Job 2sdhhleqvr (uzak iş 4435) içinde New Site adımı Success, Install Apps adımı Running; upstream iş 2secikpbrg Pending idi. Sonradan site Active oldu; bu sonuç ayrı kanıttır (live-site-active-apps, live-site-https-login).
+- Mevcut siteler ve bench-0022 uygulamaları korunuyor; hiçbir uygulama veya veri silinmedi. Önceki Failure build’leri tarihsel kanıt olarak kalır.
+
+Doğrulama: Ekranda (çekim anı): bench başlık etiketi Active; egitimxv1.metaframer.net satırı Installing. Ayrı okumalar: New Bench Agent Job tgajt4obnu Success; o anda 2sdhhleqvr New Site Success, Install Apps Running. Sonraki Active site, HTTPS ve giriş ayrı adımlarda doğrulandı.
+
+Açıklamalı ekran: [temiz ekran ve çerçeveler](https://karacaismail.github.io/pressguide/steps/live-bench-active/)
+
+## 62. Site Active: altı uygulama kurulu
+
+Site Installing durumundan Active durumuna geçti. Dashboard site sayfasının Apps sekmesinde altı uygulama görünür: frappe, erpnext, payments, Education, lms, crm. Active site, ilk kurulumun bittiği anlamına gelmez.
+
+1. Dashboard → Sites → egitimxv1.metaframer.net sayfasını aç; başlıktaki durum etiketini oku. Bu kurulumda Active.
+2. Apps sekmesinde App ve Branch sütunlarını oku; altı uygulamanın grup ve candidate kayıtlarıyla (live-cleanup-crm, live-candidate-two) eşleştiğini kontrol et.
+3. Agent Job sonuçlarını ayrıca oku: New Site Agent Job 2sdhhleqvr (uzak iş 4435) çalıştırılan tüm adımlarda Success; Add Site to Upstream 2secikpbrg Success.
+4. Kurulu sürümleri uzak sunucuda bench list-apps ile salt okunur oku; ekrandaki commit mesajındaki sürüm metnini sürüm kanıtı sayma.
+
+Somut notlar:
+
+- Görsel yalnız başlıktaki Active etiketini ve Apps tablosundaki altı uygulama adı ile branch değerlerini gösterir: frappe, erpnext, payments ve Education version-16; lms ve crm main.
+- Ayrı okuma (görselde değil): uzak bench list-apps sonucu frappe 16.50.0, erpnext 16.50.0, payments 0.0.1, education 16.0.1, lms 2.64.0, crm 1.86.0.
+- Bench sayfasındaki Installing çekimi (live-bench-active) tarihsel kanıt olarak kalır; bu Active site ekranı ayrı ve sonraki kanıttır. Önceki Failure build’leri de tarihsel kanıttır.
+- Uygulamaların kurulu olması ERP, eğitim, LMS veya CRM iş akışlarının test edildiği anlamına gelmez; bu kurulumda iş akışı testi yapılmadı.
+- Dashboard Daily Usage grafiği No data gösterir: bu kurulumda log server yapılandırılmadı. Önceki InternalServerError hedefli düzeltmeyle giderildi (live-analytics-daily-usage). Boş analytics verisi site kesintisi veya sıfır kullanım anlamına gelmez.
+- Mevcut siteler ve bench-0022 uygulamaları korunuyor; hiçbir uygulama veya veri silinmedi.
+
+Doğrulama: Ekranda: site başlığı Active; Apps tablosunda altı uygulama ve branch değerleri. Ayrı okumalar: 2sdhhleqvr ve 2secikpbrg Success; bench list-apps altı uygulama sürümünü döndürdü. İş akışları test edilmedi.
+
+Açıklamalı ekran: [temiz ekran ve çerçeveler](https://karacaismail.github.io/pressguide/steps/live-site-active-apps/)
+
+## 63. HTTPS ve giriş ekranı
+
+TLS doğrulaması atlanmadan yapılan HTTPS isteği HTTP/2 200 döndü ve sertifika geçerli; tarayıcıda Sign In ekranı açıldı. Ardından Press Setup Site ile ilk kurulum sihirbazına geçildi ve kurulum tamamlandı (setup_complete=1).
+
+1. HTTPS yanıtını sertifika doğrulamasını kapatmadan kontrol et (örneğin curl için insecure seçeneği kullanma). Bu kurulumda yanıt HTTP/2 200 ve TLS doğrulaması geçerli.
+2. Siteyi tarayıcıda aç ve giriş ekranının yüklendiğini kontrol et.
+3. İlk kurulum için Dashboard site sayfasında Setup Site düğmesini kullan; bu kurulumda otomatik giriş başarılı oldu ve oturum açılmış Desk kurulum sihirbazı açıldı.
+4. Kişisel hesap alanlarını ve parolayı site sahibi kendisi girer; bu değerleri rehbere, bilete veya ekran görüntüsüne aktarma.
+5. Bölge ve şirket alanlarını doldur. Bu kurulumda: dil Türkçe, ülke Türkiye, saat dilimi Europe/Istanbul, para birimi TRY; şirket EgitimXV1, kısaltma EXV1, Turkey varsayılan hesap planı, mali yıl başlangıcı 2026-01-01; ERP kurulumundaki demo veri kutusu kapalı.
+6. Kurulum işlenirken sayfayı yeniden gönderme. Bitince Desk ekranının açıldığını ve setup_complete değerini ayrıca doğrula; bu kurulumda veritabanı okuması 1 döndü.
+
+Somut notlar:
+
+- Görsel yalnız giriş ekranının yüklendiğini gösterir; e-posta alanında yalnız örnek yer tutucu vardır, gerçek hesap verisi yoktur. HTTP/2 200 ve TLS geçerliliği görselde değil, ayrı curl okumasıdır.
+- Kişisel hesap alanlarını ve parolayı kullanıcı kendisi girip Continue ile ilerledi; hiçbir secret kaydedilmedi veya yayımlanmadı.
+- Kurulum sihirbazı tamamlandı; son Desk ekranı live-site-desk adımında. Demo veri kutusunun kapalı olması her uygulamada örnek kayıt olmadığı anlamına gelmez: CRM örnek/onboarding lead kayıtlarını otomatik gösteriyor. İş akışları test edilmedi.
+- Giriş ekranının açılması ve HTTP 200, uygulama modüllerinin çalıştığını tek başına kanıtlamaz.
+
+Doğrulama: Ayrı okuma: HTTPS curl (TLS doğrulaması açık) HTTP/2 200, sertifika geçerli. Ekranda: Sign In formu yüklendi. Setup Site otomatik girişi kurulum sihirbazını açtı; kurulum tamamlandı, veritabanında setup_complete=1.
+
+Açıklamalı ekran: [temiz ekran ve çerçeveler](https://karacaismail.github.io/pressguide/steps/live-site-https-login/)
+
+## 64. İlk kurulum tamamlandı: Desk ana ekranı
+
+Kurulum sihirbazı tamamlandı; veritabanından okunan setup_complete değeri 1. /desk ana ekranında beş uygulama kutusu görünür: ERPNext, Eğitim, Learning, Müşteri Yönetimi, Çerçeve.
+
+1. Kurulum sihirbazı bittikten sonra https://egitimxv1.metaframer.net/desk adresini aç.
+2. Uygulama kutularını oku. Bu kurulumda beş kutu: ERPNext, Eğitim (Education), Learning (LMS), Müşteri Yönetimi (CRM; ekranda kısaltılmış görünür) ve Çerçeve (Frappe).
+3. İlk kurulumun bittiğini yalnız ekrana bakarak kabul etme; setup_complete değerini site veritabanından salt okunur oku. Bu kurulumda 1.
+4. Her kutunun açıldığını ayrıca kontrol et: Eğitim → /desk/education, Learning → /lms/, Müşteri Yönetimi → /crm/, ERPNext → /desk/setup/home. Bu kurulumda dördü de açıldı.
+
+Somut notlar:
+
+- Görsel yalnız Desk ana ekranını ve beş uygulama kutusunu gösterir. setup_complete=1 ve diğer ekranların açılması ayrı okumalardır.
+- Payments uygulaması kurulu (bench list-apps), ancak Desk’te ayrı kutu olarak görünmez.
+- Test seçimleri: Türkçe, Türkiye, Europe/Istanbul, TRY; şirket EgitimXV1 / EXV1; Turkey varsayılan hesap planı; mali yıl başlangıcı 2026-01-01; ERP kurulumundaki demo veri kutusu kapalı. Kişisel hesap ve parola kullanıcı tarafından girildi, yayımlanmaz.
+- Demo veri kutusunun kapalı olması her uygulamada örnek kayıt olmadığı anlamına gelmez: CRM örnek/onboarding lead kayıtlarını otomatik gösteriyor. Hiçbir kayıt silinmedi. CRM ekranının görüntüsü kişi verisi içerebileceği için yayımlanmadı.
+- Ekranların açılması iş akışlarının çalıştığını kanıtlamaz; gerçek iş akışları, para işlemleri ve entegrasyonlar test edilmedi.
+- Mevcut siteler ve bench-0022 uygulamaları korunuyor.
+
+Doğrulama: Ekranda: /desk ana ekranında beş uygulama kutusu. Ayrı okumalar: veritabanında setup_complete=1; /desk/education, /lms/, /crm/ ve /desk/setup/home açıldı. İş akışları test edilmedi.
+
+Açıklamalı ekran: [temiz ekran ve çerçeveler](https://karacaismail.github.io/pressguide/steps/live-site-desk/)
+
+## 65. Eğitim çalışma alanı: /desk/education
+
+Desk’te Eğitim kutusu /desk/education çalışma alanını açar. Kısayollar ve Raporlar & Kayıtlar bölümleri görünür.
+
+1. Desk ana ekranında Eğitim kutusuna tıkla veya /desk/education adresini aç.
+2. Başlığın Eğitim olduğunu ve Kısayollar bölümünün yüklendiğini kontrol et: Öğrenci, Eğitmen, Program, Kurs, Satış Faturası, Student Monthly Attendance, Course Scheduling, Student Attendance.
+3. Raporlar & Kayıtlar altındaki grupları (Student Management, Academics, Admissions, Fee Management, Attendance vb.) yalnız gezinme için oku; bu adımda kayıt oluşturma.
+
+Somut notlar:
+
+- Görsel çalışma alanının o anki arayüzünü gösterir; kısayollardaki sayaçlar (örneğin 0 Active) çekim anındaki okumadır, iş akışı sonucu değildir.
+- Okul yönetimi ihtiyacı education uygulamasıyla karşılanır (çıkarım); öğrenci, program, kayıt, ücret veya devamsızlık iş akışları test edilmedi.
+- Ekranda kişisel veri yoktur; hiçbir kayıt oluşturulmadı veya silinmedi.
+
+Doğrulama: Ekranda: /desk/education çalışma alanı, Eğitim başlığı ve sekiz kısayol. İş akışları test edilmedi.
+
+Açıklamalı ekran: [temiz ekran ve çerçeveler](https://karacaismail.github.io/pressguide/steps/live-site-education/)
+
+## 66. LMS ana sayfası: /lms/
+
+Desk’te Learning kutusu /lms/ ana sayfasını açar. Kenar çubuğunda Kurs menüsü ve sağda Getting started paneli görünür.
+
+1. Desk ana ekranında Learning kutusuna tıkla veya /lms/ adresini aç.
+2. Kenar çubuğunda Kurs, Programs, Sınıflar gibi menülerin ve sağdaki Getting started panelinin yüklendiğini kontrol et.
+3. Getting started adımlarını bu doğrulamanın parçası olarak çalıştırma; kurs, ders veya sınıf oluşturma ayrı bir iş akışıdır.
+
+Somut notlar:
+
+- Görsel LMS ana sayfasının o anki arayüzünü gösterir. Ana sayfada bir kurs kartı ve 0/8 adımlık Getting started paneli görünür; bu, rehberin oluşturduğu içerik veya tamamlanmış bir iş akışı olarak sunulmaz. Hiçbir kayıt silinmedi.
+- Kurs oluşturma, öğrenci kaydı, sınav veya ödeme akışları test edilmedi.
+
+Doğrulama: Ekranda: /lms/ ana sayfası, kenar çubuğunda Kurs menüsü ve Getting started paneli. İş akışları test edilmedi.
+
+Açıklamalı ekran: [temiz ekran ve çerçeveler](https://karacaismail.github.io/pressguide/steps/live-site-lms/)
+
+## 67. Dashboard Daily Usage: InternalServerError düzeltildi, log server yok
+
+Log server yapılandırılmamışken Press Dashboard Daily Usage grafiği InternalServerError veriyordu. Hedefli düzeltme sonrası grafik No data gösteriyor. Metrik yokluğu çözülmemiş bir yetenek eksikliğidir, sıfır kullanım değildir. Bu adımın yayımlanmış ekranı yok.
+
+1. Press Desk → Error Log listesini aç; traceback içinde daily_usage ve get_usage geçen kayıtları ara. Bu kurulumda son satır str nesnesinde max çağrısından gelen AttributeError idi.
+2. Press Settings → log_server alanını kontrol et. Bu kurulumda log server yapılandırılmamış.
+3. Nedeni ayır: log server yokken veya aggregations boş dönerken get_usage boş sözlük döndürüyordu. Bu değeri liste bekleyen üç tüketici sözlüğün anahtarları (str) üzerinde dolaşıyor ve max çağrısı hata veriyordu.
+4. Düzeltme hedefli olmalı: yalnız bu iki boş dönüş [] yapılır. Hata yakalama, maskeleme veya sahte sıfır veri ekleme yapılmaz.
+5. Kurmadan önce özgün dosyanın yedeğini al ve SHA değerini kontrol et; düzeltmeyi incelet. Kodu yüklemek için yalnız Press web sürecini yeniden başlat; müşteri bench’lerine dokunma.
+6. Sonucu canlıda doğrula: daily_usage yanıtı boş data listesi ve plan limiti döndürmeli; Dashboard Daily Usage grafiği InternalServerError yerine No data göstermeli.
+
+Somut notlar:
+
+- Bu kurulumda: düzeltme öncesi testler RED (2 fail / 1 pass), düzeltme sonrası GREEN (3/3). Bağımsız inceleme, sınırlı kaynak erişimiyle, uygulanabilir bulgu bildirmedi. Yedek ve SHA doğrulandı.
+- Yalnız Press web süreci yeniden başlatıldı; müşteri bench’leri ve mevcut siteler etkilenmedi.
+- Canlı okuma: daily_usage yanıtında data [] ve plan limiti 86400; Dashboard Daily Usage No data gösteriyor, InternalServerError görünmüyor.
+- Log server yapılandırılmadı. No data, sitenin kullanılmadığı veya kesinti olduğu anlamına gelmez; kullanım metrikleri log server kurulana kadar yoktur. Bu açık bir yetenek eksikliğidir.
+- Bu düzeltme yalnız bu analytics hatasını kapsar; tüm Press altyapı hatalarının çözüldüğü iddia edilmez.
+- Ekran görüntüsü yayımlanmadı; traceback ve sunucu bilgileri yalnız gerekli satırlar metin olarak aktarılarak kaydedildi.
+
+Doğrulama: Düzeltme öncesi Error Log’da daily_usage/get_usage traceback’i; düzeltme sonrası daily_usage data [], plan limiti 86400; Dashboard Daily Usage No data, InternalServerError yok. Log server yapılandırılmadı; metrikler yok.
+
+Bu adım için henüz ekran kanıtı yok.
+
 ## Kaynaklar
 
+- [Frappe Education: okul yönetim sistemi](https://github.com/frappe/education)
 - [Education v16: app_name ve required_apps](https://github.com/frappe/education/blob/version-16/education/hooks.py)
 - [Press App Source uygulaması](https://github.com/frappe/press/blob/develop/press/press/doctype/app_source/app_source.py)
 - [Frappe Press resmî kaynak kodu](https://github.com/frappe/press)

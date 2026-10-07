@@ -252,3 +252,37 @@ test('keyboard has one visible focus indicator; pointer does not frame sections'
       .evaluate((el) => getComputedStyle(el).outlineStyle),
   ).toBe('none');
 });
+
+test('new site evidence numbers remain separate at narrow widths', async ({
+  page,
+}) => {
+  for (const id of [
+    'live-site-active-apps',
+    'live-site-education',
+    'live-site-lms',
+  ]) {
+    await page.goto(`./steps/${id}/`);
+    const references = await page
+      .locator('.annotation-reference')
+      .evaluateAll((elements) =>
+        elements.map((element) => {
+          const rect = element.getBoundingClientRect();
+          return { top: rect.top, bottom: rect.bottom };
+        }),
+      );
+    expect(references.length).toBeGreaterThan(0);
+    for (let i = 0; i < references.length; i++) {
+      for (let j = i + 1; j < references.length; j++) {
+        expect(
+          references[i].bottom <= references[j].top ||
+            references[j].bottom <= references[i].top,
+        ).toBe(true);
+      }
+    }
+    expect(
+      await page.evaluate(
+        () => document.documentElement.scrollWidth <= innerWidth,
+      ),
+    ).toBe(true);
+  }
+});
