@@ -1,0 +1,62 @@
+---
+import { readFile } from 'node:fs/promises';
+import type { Guide, Step } from '../../types';
+import Screenshot from '../../components/Screenshot.astro';
+import '../../styles/global.css';
+export async function getStaticPaths() {
+  const guide = JSON.parse(
+    await readFile(
+      new URL('src/data/guide.json', `file://${process.cwd()}/`),
+      'utf8',
+    ),
+  ) as Guide;
+  return guide.steps
+    .filter((step) => step.screenshot)
+    .map((step) => ({ params: { id: step.id }, props: { step } }));
+}
+const { step } = Astro.props as { step: Step };
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{step.title} — Press kullanım rehberi</title>
+  </head>
+  <body>
+    <main class="wrap detail-page">
+      <a class="button secondary" href={`${base}/#${step.id}`}>
+        Rehbere dön
+      </a>
+      <h1>{step.title}</h1>
+      <p class="step-summary">{step.summary}</p>
+      {step.screenshot && (
+        <Screenshot screenshot={step.screenshot} id={step.id} detail />
+      )}
+      <section class="step-copy">
+        <h2>Yapılacak işlem</h2>
+        <ol>
+          {step.actions.map((action) => (
+            <li>{action}</li>
+          ))}
+        </ol>
+        {step.notes.length > 0 && (
+          <aside class="notes">
+            <h2>Somut notlar</h2>
+            <ul>
+              {step.notes.map((note) => (
+                <li>{note}</li>
+              ))}
+            </ul>
+          </aside>
+        )}
+        <div class="verification">
+          <h2>Başarı nasıl anlaşılır?</h2>
+          <p>{step.verification}</p>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,95 @@
+---
+import type { Step } from '../types';
+const {
+  screenshot,
+  id,
+  detail = false,
+} = Astro.props as {
+  screenshot: NonNullable<Step['screenshot']>;
+  id: string;
+  detail?: boolean;
+};
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const src = `${base}/${screenshot.src.replace(/^\//, '')}`;
+---
+
+<figure class="evidence">
+  <a
+    class="image-link"
+    href={detail ? src : `${base}/steps/${id}/`}
+    target="_blank"
+    rel="noopener"
+    aria-label={`${screenshot.alt} — açıklamalı ekranı aç`}
+  >
+    <div class="image-stage">
+      <img
+        src={src}
+        alt={screenshot.alt}
+        width={screenshot.width}
+        height={screenshot.height}
+        loading="lazy"
+        decoding="async"
+      />
+      <svg
+        class="annotations"
+        viewBox="0 0 100 100"
+        preserveAspectRatio="none"
+        aria-hidden="true"
+      >
+        <defs>
+          <marker
+            id={`arrow-${id}`}
+            viewBox="0 0 10 10"
+            refX="9"
+            refY="5"
+            markerWidth="5"
+            markerHeight="5"
+            orient="auto-start-reverse"
+          >
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--color-annotation)" />
+          </marker>
+        </defs>
+        {screenshot.annotations.map((annotation) => (
+          <line
+            x1={annotation.x}
+            y1={annotation.y}
+            x2={annotation.targetX}
+            y2={annotation.targetY}
+            marker-end={`url(#arrow-${id})`}
+          />
+        ))}
+      </svg>
+      {screenshot.annotations.map((annotation, index) => (
+        <span
+          class="annotation-number"
+          style={`--annotation-x:${annotation.x}%;--annotation-y:${annotation.y}%`}
+          aria-hidden="true"
+        >
+          {index + 1}
+        </span>
+      ))}
+      {detail &&
+        screenshot.annotations.map((annotation, index) => (
+          <span
+            class="annotation-label"
+            style={`--annotation-x:${annotation.x}%;--annotation-y:${annotation.y}%`}
+          >
+            {index + 1}. {annotation.label}
+          </span>
+        ))}
+    </div>
+  </a>
+  <figcaption>
+    <p>{screenshot.alt}. İşaretler aşağıdaki açıklamalarla eşleşir.</p>
+    <ol>
+      {screenshot.annotations.map((annotation) => (
+        <li>{annotation.label}</li>
+      ))}
+    </ol>
+    <p>
+      <a class="original-image-link" href={src} target="_blank" rel="noopener">
+        İşaretsiz özgün ekran görüntüsünü aç
+      </a>
+    </p>
+  </figcaption>
+</figure>
