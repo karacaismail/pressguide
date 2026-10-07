@@ -1,8 +1,8 @@
 # Press kullanım rehberi
 
-Güncelleme: 7 Ekim 2026 — temiz ekran çekimleri ve Agent Job kanıtları güncellendi
+Güncelleme: 7 Ekim 2026 — deploy-0027-000002 ilk build’i f476t39m7i Pre-build Failure (npm aralığı ayrıştırma), hedefli Press düzeltmesi; yeni build j8vu7j2qnm Running, Pre-build, Package ve Upload Build Context Success
 
-KURULUM DEVAM EDİYOR — egitimxv1 sitesi henüz oluşturulmadı. bench-0027 ve deploy-0027-000001 hazır. kpktsdsd9n: clone, bağımlılık kontrolü ve paketleme başarılı; Upload Build Context HTTP 500 ile başarısız. Agent Job incelemesinde 6 Ekim tarihli Redis AOF disk alanı hatası bulundu; bugünkü neden ayrıca doğrulanmalı. 7 Ekim 07:27’de eski filename protokolüyle başarılı başka build var; protokol uyuşmazlığı kesin neden değildir.
+KURULUM DEVAM EDİYOR — egitimxv1 sitesi henüz oluşturulmadı; deploy yapılmadı. Disk nedeni doğrulandı: ilk candidate deploy-0027-000001 / kpktsdsd9n build’i Upload Build Context adımında HTTP 500 ile başarısız oldu; uygulama sunucusunun kök dosya sistemi %100 doluydu (156 MB boş) ve Nginx upload gövdesini yazamadı. Kullanıcı onayıyla yalnız docker builder prune --all --force çalıştırıldı (exit 0); temizlik başarılı, disk şimdi %48 (150 GB, 69 GB kullanılmış, 76 GB boş). Üç container aynı uptime ile çalışıyor, Redis bgsave/write ok; image, site, veritabanı, container veya app kaldırılmadı. egitimxv1 / bench-0027 grubuna crm (SRC-crm-002) eklendi ve altı uygulama kaydedildi. Yeni candidate deploy-0027-000002’nin ilk build’i f476t39m7i Pre-build validation aşamasında Failure ile bitti: Invalid simple block '^20.19.0 || >=22.12.0'. Neden: Press, Node için npm sürüm aralığını SimpleSpec ile ayrıştırıyordu. İncelenmiş hedefli düzeltmeyle yalnız Node kontrolü NpmSpec kullanıyor, Python kontrolü SimpleSpec’te kaldı; altı regresyon testi gerçek kurulumdan önce ve sonra geçti. Yalnız dört boşta build worker yeniden başlatıldı; web ve Redis dokunulmadı. Yeni build j8vu7j2qnm 13:39:11 TSİ’de başladı ve şu an Running: altı clone, Pre-build validation, Package Build Context ve Upload Build Context Success. Son okumada 14 adım Success; sistem bağımlılıkları (Setup Prerequisites) kuruluyor. Böylece özgün Upload HTTP 500 ve Node npm aralığı ayrıştırma engellerinin geçildiği doğrulandı. Build’in tamamlanması, image push, deploy ve site henüz doğrulanmadı. Diğer 10 siteye dokunulmadı.
 
 ## 1. Release Group ve Team seçimi
 
@@ -53,6 +53,7 @@ Framework ilk sırada olmalı; her satırın App ve Source alanları birlikte ta
 Somut notlar:
 
 - Görselde egitimxv1 / bench-0027 grubunun kaydedilmiş beş satırı görünür: frappe, erpnext, payments, education, lms. Tablo bir yapılandırma kanıtıdır; build başarısı değildir.
+- Bu beş satırlık çekim CRM eklenmeden önceki tarihsel görüntüdür. Güncel altı satırlık tablo live-cleanup-crm adımındadır.
 - Tüm uygulamaları aynı anda eklemek yerine uyumlu küçük bir küme ile başlayıp build sonucu doğrula.
 - Education ve LMS aynı işlevi temsil etmez; kurulacak uygulamalar teknik bağımlılıklarıyla seçilir.
 - Bu temiz görüntü mevcut kayıttan yeniden alındı; geçmişteki tıklama veya başarı anının tekrarı değildir.
@@ -182,6 +183,7 @@ App kaynaklarının seçilmesi build içeriğini belirler.
 Somut notlar:
 
 - Görselde education satırına SRC-education-003 bağlı; geçmişteki educator kaynağı bu grupta kullanılmadı.
+- Bu beş satırlık çekim CRM eklenmeden önceki tarihsel görüntüdür; crm → SRC-crm-002 satırı live-cleanup-crm adımında görünür.
 - SRC isimlerini bu kurulumdan kopyalamak yerine kendi kayıtlarının repo/branch alanlarını incele.
 - Bu temiz görüntü mevcut kayıttan yeniden alındı; geçmişteki tıklama veya başarı anının tekrarı değildir.
 
@@ -198,7 +200,7 @@ Deploy Candidate, grup uygulama release’lerinin build için seçilmiş anlık 
 
 Somut notlar:
 
-- Görsel egitimxv1 / bench-0027 grubunun Actions menüsünü gösterir. Bu grupta Create Deploy Candidate deploy-0027-000001 kaydını üretti; eski rgv1 / bench-0026 grubu ayrı kayıttır.
+- Görsel egitimxv1 / bench-0027 grubunun Actions menüsünü gösterir. Bu grupta Create Deploy Candidate önce deploy-0027-000001, CRM eklendikten sonra deploy-0027-000002 kaydını üretti; eski rgv1 / bench-0026 grubu ayrı kayıttır.
 - Create Duplicate Deploy Candidate ve Change Server farklı işlemlerdir.
 - Bu temiz görüntü mevcut kayıttan yeniden alındı; geçmişteki tıklama veya başarı anının tekrarı değildir.
 
@@ -217,7 +219,7 @@ Eğitim grubunda önce yalnız build başlatılır. Deploy, build Success oldukt
 Somut notlar:
 
 - Görsel Build menüsünü gösterir; Complete bir seçenek adıdır, build sonucunun başarılı olduğu anlamına gelmez.
-- Bu kurulumda kpktsdsd9n build’i Failure ile bitti; deploy yapılmadı.
+- Bu kurulumda kpktsdsd9n build’i Failure ile bitti; deploy yapılmadı. Disk temizliğinden sonra deploy-0027-000002 için yalnız Build → Complete başlatıldı; ilk build f476t39m7i Pre-build validation’da Failure ile bitti (npm aralığı ayrıştırma). Hedefli Press düzeltmesinden sonra yeni build j8vu7j2qnm Running; Pre-build, Package ve Upload Build Context Success, son okumada 14 adım Success. Build sonucu bekleniyor, deploy yapılmadı.
 - Schedule Build and Deploy ikisini birlikte başlatır; mevcut çalışan siteleri barındıran grupta deploy, migration ve yeniden başlatma etkisi taşıyabilir.
 - Bu temiz görüntü mevcut kayıttan yeniden alındı; geçmişteki tıklama veya başarı anının tekrarı değildir.
 
@@ -237,7 +239,7 @@ Geçmiş denemede build yalnız Preparing durumunda görüldü; bu durum başar�
 Somut notlar:
 
 - Yalnız Preparing durumuna bakarak kurulum çalışıyor deme. Hata türü belirlenmeden tekrar tekrar yeni build açma.
-- Geçmiş rgv1 denemesinde iki build Failure bulundu; live-error adımına bak. Güncel kpktsdsd9n build’i de Failure; hata-tanisi adımına bak.
+- Geçmiş rgv1 denemesinde iki build Failure bulundu; live-error adımına bak. İlk egitimxv1 build’i kpktsdsd9n de Failure; hata-tanisi adımına bak. deploy-0027-000002’nin ilk build’i f476t39m7i Pre-build validation Failure; live-npm-range-validation adımına bak. Yeni build j8vu7j2qnm 13:39:11 TSİ’de başladı, şu an Running; Pre-build, Package ve Upload Build Context Success, son okumada 14 adım Success. Build sonucu bekleniyor; live-prebuild-upload-success adımına bak.
 
 Doğrulama: Build başarılı, deploy başarılı ve ilgili Bench hazır olmadan Site adımına geçme.
 
@@ -245,7 +247,7 @@ Bu adım için henüz ekran kanıtı yok.
 
 ## 14. Eğitim sitesini oluştur ve doğrula
 
-egitimxv1 sitesi henüz oluşturulmadı. Build Upload Build Context adımında başarısız; başarılı build/deploy gerekli.
+egitimxv1 sitesi henüz oluşturulmadı. İlk build disk doluluğu nedeniyle Upload Build Context adımında başarısız oldu; onaylı build cache temizliği yapıldı (disk %48). deploy-0027-000002’nin ilk build’i f476t39m7i npm aralığı ayrıştırma hatasıyla Pre-build’de başarısız oldu; hedefli düzeltme sonrası yeni build j8vu7j2qnm Running; Pre-build, Package ve Upload Build Context Success, sistem bağımlılıkları kuruluyor. Bu build’in Success olması ve ardından deploy gerekli.
 
 1. Başarılı deploy sonrasında uygun Bench üzerinde Create Site / New Site akışını aç.
 2. Site adı egitimxv1; panelde yapılandırılmış base domain ile tam adresi oluştur.
@@ -391,6 +393,7 @@ Somut notlar:
 
 - frappe framework ilk sıradadır; education için erpnext, lms için payments gerekli olduğundan bağımlılıklar kendilerine ihtiyaç duyan uygulamalardan önce yer alır.
 - Eski educator kaydını education satırında kullanma. Kaydedilmiş doğru tablo, bağımlılık hatasının giderildiği yönünde yapılandırma kanıtıdır; başarılı build kanıtı değildir.
+- Bu beş satırlık çekim CRM eklenmeden önceki tarihsel görüntüdür. Güncel tabloda altıncı satır crm → SRC-crm-002; live-cleanup-crm adımına bak.
 - Bu temiz görüntü mevcut kayıttan yeniden alındı; geçmişteki tıklama veya başarı anının tekrarı değildir.
 
 Doğrulama: Kaydedilmiş tabloda beş satırın her biri boş olmayan ve aynı ada sahip Source kaydına bağlı.
@@ -427,6 +430,7 @@ Somut notlar:
 
 - Candidate uygulama kaynaklarının belirli commitlerini bir araya getirir. Daha sonra branch değişmesi bu ekranda seçilmiş release hashinin aynı olduğu anlamına gelmez.
 - Canlı oturumda candidate kaynakları ve commit manifestleri incelendi. Bu inceleme build/deploy sonucunun yerine geçmez.
+- Bu çekim ilk candidate deploy-0027-000001’in beş satırını gösterir ve tarihsel kanıt olarak kalır. CRM içeren güncel candidate live-candidate-two adımındadır.
 - Bu temiz görüntü mevcut kayıttan yeniden alındı; geçmişteki tıklama veya başarı anının tekrarı değildir.
 
 Doğrulama: Beş satırın her birinde Source, Release ve Hash alanı dolu; Source kimlikleri grup tablosuyla aynı.
@@ -463,7 +467,7 @@ Somut notlar:
 
 - kpktsdsd9n build’in açılmış olması kuyruk veya hazırlık aşamasının gözlendiğini gösterir; başarılı image, deploy veya çalışan site kanıtı değildir.
 - Sonraki kabul sırası: build başarılı sonucu → deploy sonucu → Bench hazır durumu → egitimxv1 site oluşturma. Bu kayıtta son üç aşama tamamlandı diye sunulmaz.
-- Preparing anının ekranı yayımlanmadı; bu, canlı oturumda kaydedilen geçmiş gözlemdir. Güncel sonuç Failure; live-current-failure adımına bak.
+- Preparing anının ekranı yayımlanmadı; bu, canlı oturumda kaydedilen geçmiş gözlemdir. kpktsdsd9n sonucu Failure; live-current-failure adımına bak.
 
 Doğrulama: Build kaydının candidate bağlantısı deploy-0027-000001; daha sonra Failure ile bitti.
 
@@ -583,7 +587,7 @@ New Bench ekranında framework version seçenekleri görünmedi. Desk üzerinden
 
 1. Dashboard → Benches → New Bench akışını aç ve framework version seçim alanını kontrol et.
 2. Bu oturumda seçenekler boş görüldü. Seçim varmış gibi ilerleme; Desk aramasından Release Group List açarak doğru egitimxv1 grubunu oluşturma yolunu kullan.
-3. Desk’teki bench-0027, candidate deploy-0027-000001 ve build kpktsdsd9n kayıtlarıyla ilerle; Dashboard seçeneklerini build/deploy sonucu sonrasında yeniden kontrol et.
+3. Desk’teki bench-0027 ve güncel candidate deploy-0027-000002 kaydıyla ilerle (ilk candidate deploy-0027-000001 / kpktsdsd9n Failure ile bitti); Dashboard seçeneklerini build/deploy sonucu sonrasında yeniden kontrol et.
 
 Somut notlar:
 
@@ -617,10 +621,11 @@ Server → Actions → Show Agent Version: 2a412bc2b1292176f0b6c8ea51240d743981f
 
 Somut notlar:
 
-- Show Agent Version repo HEAD bilgisidir. Aynı sunucudaki 7 Ekim 07:27 başarılı filename build’i, çalışan servisin eski protokolü desteklediğini gösterir. Sürüm uyuşmazlığı kök neden olarak doğrulanmadı; çalışan dosyalar ve yüklenen Python kodu ayrıca incelenmeli.
+- Show Agent Version repo HEAD bilgisidir. SSH incelemesinde sunucudaki repo HEAD aynı bulundu; ancak agent/web.py yerelde değiştirilmiş ve legacy_builder.py dosyası mevcut. Bu nedenle HEAD tek başına çalışan kodu tanımlamaz.
+- Aynı sunucudaki 7 Ekim 07:27 başarılı filename build’i ve doğrulanan disk doluluğu nedeniyle protokol uyuşmazlığı bu upload hatasının çözümü olarak sunulmaz; agent kodunu değiştirme.
 - Ekran görüntüsü yayımlanmadı; bu, canlı oturumda kaydedilen geçmiş gözlemdir.
 
-Doğrulama: Commit kimliği kaydedildi; çalışan process kodu henüz SSH ile doğrulanmadı.
+Doğrulama: Commit kimliği kaydedildi; SSH ile HEAD aynı, çalışma ağacında agent/web.py değişikliği ve legacy_builder.py görüldü.
 
 Bu adım için henüz ekran kanıtı yok.
 
@@ -647,6 +652,7 @@ kpktsdsd9n build genel durumu Failure. Bu kırpım clone satırlarını gösteri
 Somut notlar:
 
 - Bu ekran belirli bir anın kanıtıdır; başarılı site kurulumu anlamına gelmez.
+- Bu, ilk candidate deploy-0027-000001’in build’idir ve tarihsel kanıt olarak kalır. Disk temizliğinden sonraki deploy-0027-000002’nin ilk build’i f476t39m7i farklı bir nedenle (Pre-build npm aralığı ayrıştırma) başarısız oldu; yeni build j8vu7j2qnm Running, Upload Build Context dahil ilk dokuz adımı Success; build sonucu bekleniyor.
 - Bu temiz görüntü mevcut kayıttan yeniden alındı; geçmişteki tıklama veya başarı anının tekrarı değildir.
 
 Doğrulama: Status Failure; deploy ve site oluşturma başlatılmadı.
@@ -670,22 +676,26 @@ Açıklamalı ekran: [temiz ekran ve çerçeveler](https://karacaismail.github.i
 
 ## 39. HTTP 500: agent upload yanıtı
 
-Error Log qu5n7pv6pk: POST builder/upload/kpktsdsd9n yanıtı HTTP 500; yanıt JSON olarak çözümlenemedi.
+Error Log qu5n7pv6pk: POST builder/upload/kpktsdsd9n yanıtı HTTP 500; yanıt JSON olarak çözümlenemedi. Neden sunucuda doğrulandı: Nginx, istek gövdesini geçici dosyaya yazarken disk doluluğu hatası verdi.
 
 1. Build → Error Log → Deploy Candidate Build Exception kaydını aç; response ve path satırlarını oku.
+2. Uygulama sunucusunda /var/log/nginx/error.log içinde aynı build kimliğini ve /agent/builder/upload yolunu ara; UTC zaman damgalarını Türkiye saatine (+3) çevirerek Error Log zamanıyla eşleştir.
 
 Somut notlar:
 
+- Nginx error.log: kpktsdsd9n POST /agent/builder/upload isteğinde 08:52:59, 08:58:00 ve 09:03:02 UTC (Türkiye saatiyle 11:52:59, 11:58:00, 12:03:02) pwrite() temporary request body failed (28: No space left on device). Üç kayıt, Press’in üç upload denemesiyle uyumludur.
+- Kök dosya sistemi df -h ile 150 GB boyut, 144 GB kullanılmış, 156 MB boş, %100 dolu ölçüldü; df -i ile inode kullanımı %63. Sorun inode tükenmesi değil, blok alanı doluluğudur.
+- Bu kanıt 6 Ekim Redis job kaydından ayrı, bugünkü upload isteğine ait doğrudan kanıttır. Redis’in güncel persistence durumu ok.
 - BufferedReader hatası traceback değişkenlerinin yazdırılmasında oluşuyor; birincil HTTP 500 hatasıyla karıştırma.
-- Ekran görüntüsü yayımlanmadı; Error Log secret içerebileceği için yalnız metin olarak kaydedildi.
+- Ekran görüntüsü yayımlanmadı; Error Log ve sunucu logları yalnız gerekli satırlar metin olarak aktarılarak kaydedildi.
 
-Doğrulama: Birincil hata agent upload yanıtındaki HTTP 500; nedeni sunucu loglarıyla henüz doğrulanmadı.
+Doğrulama: HTTP 500 nedeni Nginx geçici istek gövdesi dosyası için disk alanı yetersizliği olarak doğrulandı. Sonradan onaylı build cache temizliğiyle disk %48’e indi. deploy-0027-000002’nin ilk build’i f476t39m7i Pre-build’de durdu. Hedefli düzeltme sonrası yeni build j8vu7j2qnm’de Upload Build Context Success; temizlik sonrası upload engeli geçildi (live-prebuild-upload-success). Build’in tamamlanması, image push, deploy ve site henüz doğrulanmadı.
 
 Bu adım için henüz ekran kanıtı yok.
 
 ## 40. Eski build Pre-build aşamasında durmuş
 
-Eski rgv1 grubunda Pre-build Failure gözlendi. Güncel egitimxv1 build’i bu aşamayı geçti; iki hatayı karıştırma.
+Eski rgv1 grubunda Pre-build Failure gözlendi. İlk egitimxv1 build’i kpktsdsd9n bu aşamayı geçip Upload’da durdu; iki hatayı karıştırma.
 
 1. Eski ve güncel build kayıtlarında ilk Failure satırının Stage/Step değerlerini yan yana karşılaştır.
 
@@ -693,7 +703,7 @@ Somut notlar:
 
 - Ekran görüntüsü yayımlanmadı; bu, canlı oturumda kaydedilen geçmiş gözlemdir.
 
-Doğrulama: Eski hata Pre-build (Required app not found); güncel hata Upload / Build Context.
+Doğrulama: Eski hata Pre-build (Required app not found); kpktsdsd9n hatası Upload / Build Context. Güncel j8vu7j2qnm build’inde Pre-build ve Upload Build Context Success.
 
 Bu adım için henüz ekran kanıtı yok.
 
@@ -841,31 +851,40 @@ Bu adım için henüz ekran kanıtı yok.
 
 ## 51. Build hatasında nereye bakılır?
 
-Preparing veya Failure durumunda uygulama listesine dönmeden önce build aşamasını ve ilgili logu belirle. Bu kurulumda iki farklı hata ayrı kanıtlarla bulundu.
+Preparing veya Failure durumunda uygulama listesine dönmeden önce build aşamasını ve ilgili logu belirle. Bu kurulumda üç farklı hata ayrı kanıtlarla bulundu: Required app not found, Upload HTTP 500 ve npm aralığı ayrıştırma.
 
 1. Release Group → Deploy Candidate → Deploy Candidate Build kaydını aç. Grup, candidate, build kimliğini ve zaman damgasını kaydet; egitimxv1 için bench-0027 / deploy-0027-000001 / kpktsdsd9n.
 2. Build Steps tablosunda ilk Failure satırını bul. Sonraki Pending satırlar çoğunlukla henüz başlamamış adımlardır; ayrı hata sanma.
-3. Run Validations → Pre-build Failure ise satırı açıp Output alanını oku. Required app not found çıktısında istenen bağımlılığı gerçek App/Source ve uyumlu branch ile ekle. Eski educator denemesinde eksik app erpnext idi.
+3. Run Validations → Pre-build Failure ise satırı açıp Output alanını oku. Required app not found çıktısında istenen bağımlılığı gerçek App/Source ve uyumlu branch ile ekle. Eski educator denemesinde eksik app erpnext idi. Output Invalid simple block ise sorun uygulama listesi değil sürüm aralığı ayrıştırmasıdır; live-npm-range-validation adımına bak.
 4. Upload → Build Context Failure ise build Connections → Error Log bağlantısını aç. Deploy Candidate Build Exception kaydında request method, path ve response koduna bak. Güncel kanıt qu5n7pv6pk: POST builder/upload/kpktsdsd9n → HTTP 500.
 5. Traceback sonunda JSONDecodeError varsa daha önceki response satırını oku. HTTP 500 birincil hata; JSONDecodeError yanıtın JSON olarak çözümlenemediğini belirtir. BufferedReader cannot pickle ise traceback değişkenini yazdırırken oluşmuş ikincil hatadır.
 6. Server List → ilgili Build Server → Ping → Ping Agent ile bağlantıyı kontrol et. pong, temel bağlantıyı doğrular; upload veya build protokolünün doğru olduğunu kanıtlamaz.
 7. Aynı Server → Actions → Show Agent Version ile agent commit’ini; Help → About ile yönetim paneli Frappe/Press sürümünü kaydet. Hedef grubun v16 uygulama sürümlerini yönetim panelinin v15 Framework sürümüyle karıştırma.
-8. Agent Job → Run Remote Builder kayıtlarını tarih ve Reference Name ile eşleştir. 5ignfoq0t5 kaydında 6 Ekim tarihli Redis AOF / No space left on device hatası var. Bugünkü upload 500 için disk/inode ve güncel Redis persistence durumu ayrıca kontrol edilmeli.
-9. Clone, bağımlılık kontrolü ve paketleme Success iken agent POST 500 veriyorsa Hüseyin Cengiz agent/proxy traceback’ini, gerçek çalışan process kodunu ve Press commit’ini sunucuda inceler. Repo HEAD bilgisi çalışan process sürümünü tek başına kanıtlamaz.
-10. Preparing sırasında Error Log veya Agent Job filtreleri boş olabilir. Bu kurulumda üç upload denemesi ve aradaki toplam 600 saniye bekleme Preparing süresini açıkladı. Kayıt oluşmadan tekrar build başlatma.
-11. Agent Job, RQ Job ve Error Log filtrelerinin kapsamını kontrol et. No matching records yalnız seçili filtrede kayıt olmadığını söyler; sistemde hiçbir iş veya hata yok demek değildir. Scheduler Active de build endpoint sağlığını kanıtlamaz.
-12. Uyumlu sürüm çifti ve geri dönüş planı doğrulandıktan sonra düzeltmeyi uygula; ardından tek build ile clone → validation → package → upload → image build/push Success akışını doğrula. Sonra deploy/Bench ve en son egitimxv1 sitesinin HTTPS, giriş ve app ekranlarını doğrula.
+8. Agent Job → Run Remote Builder kayıtlarını tarih ve Reference Name ile eşleştir. 5ignfoq0t5 kaydında 6 Ekim tarihli Redis AOF / No space left on device hatası var; bu tarihsel kanıttır, bugünkü upload 500 için sunucuda ayrıca ölçüm yapılır.
+9. Doğru uygulama sunucusuna bağlandığını doğrula (hostname ve rol); bağlantı bilgilerini, IP’yi ve kimlik bilgilerini rehbere veya bilete yazma. Bu kurulumda ilk denenen IP başka bir altyapı sunucusuydu.
+10. df -h ile blok alanını oku: kök dosya sistemi Use% ve Avail değerlerine bak. Bu kurulumda 150 GB, 144 GB kullanılmış, 156 MB boş, %100.
+11. df -i ile inode kullanımını ayrı oku. No space left on device hem blok alanı hem inode tükenmesinde görülebilir; bu kurulumda inode %63, yani neden blok alanı doluluğu.
+12. İlgili Nginx error.log satırlarını yalnız build kimliği ve /agent/builder/upload yolu ile filtreleyerek oku. Bu kurulumda kpktsdsd9n için 08:52:59, 08:58:00, 09:03:02 UTC (11:52:59, 11:58:00, 12:03:02 TSİ) pwrite() temporary request body failed (28: No space left on device) görüldü.
+13. docker system df ile yalnız özet kullanımı oku; ayrıntılı (-v) listeyi veya image adlarını rehbere taşıma. Bu kurulumda temizlik öncesi Build Cache 61.2 GB, Images 29 GB geri kazanılabilir; üç aktif container çalışıyor.
+14. redis-cli INFO persistence ile aof_last_write_status, rdb_last_bgsave_status ve aof_last_bgrewrite_status değerlerini oku. Bu kurulumda üçü de ok; 6 Ekim Redis hatası bugün sürmüyor.
+15. Ölçümler salt okunurdur. Temizlik yalnız kullanıcının açık silme onayıyla ve yalnız kullanılmayan Docker build cache için yapılır; image, site, veritabanı, container, backup veya Redis dosyası silme. Servis yeniden başlatma veya deploy bu adımın parçası değildir.
+16. Repo HEAD bilgisi çalışan kodu tek başına kanıtlamaz. Bu sunucuda HEAD aynı, ancak agent/web.py değiştirilmiş ve legacy_builder.py mevcut; disk doluluğu doğrulandığı için protokol uyuşmazlığını çözüm olarak uygulama ve agent kodunu değiştirme.
+17. Preparing sırasında Error Log veya Agent Job filtreleri boş olabilir. Bu kurulumda üç upload denemesi ve aradaki toplam 600 saniye bekleme Preparing süresini açıkladı. Kayıt oluşmadan tekrar build başlatma.
+18. Agent Job, RQ Job ve Error Log filtrelerinin kapsamını kontrol et. No matching records yalnız seçili filtrede kayıt olmadığını söyler; sistemde hiçbir iş veya hata yok demek değildir. Scheduler Active de build endpoint sağlığını kanıtlamaz.
+19. Onaylı build cache temizliği sonrasında df -h ile boş alanı yeniden ölç; ardından tek build ile clone → validation → package → upload → image build/push Success akışını doğrula. Sonra deploy/Bench ve en son egitimxv1 sitesinin HTTPS, giriş ve app ekranlarını doğrula.
 
 Somut notlar:
 
-- Agent Job listesinde başka başarılı builder işleri var. 333inegvf4 bugün 07:27’de filename protokolüyle Success; bu karşı örnek nedeniyle önceki güçlü protokol uyuşmazlığı çıkarımı geri çekildi.
+- Bu kurulumda Upload HTTP 500’ün kök nedeni doğrulandı: uygulama sunucusunda kök dosya sistemi %100 dolu ve Nginx upload isteğinin gövdesini geçici dosyaya yazamadı. 6 Ekim Redis kanıtından ayrı, bugünkü doğrudan kanıttır.
+- Agent Job listesinde başka başarılı builder işleri var. 333inegvf4 bugün 07:27’de filename protokolüyle Success; protokol uyuşmazlığı bu hatanın nedeni veya çözümü olarak kabul edilmez.
 - Press Settings → Branch global bir ayardır. Use for Build kutusu endpoint oluşturmaz. Update Agent veya Ansible düğmesine rastgele basma; servis etkisi ve geri dönüş planı incelenmeli.
 - Sadece upload endpoint’ini içeren eski bir commit seçmek yeterli değildir: build endpoint’inin filename/Dockerfile sözleşmesi de uyumlu olmalı. Bu yüzden doğrulanmamış SHA’yı branch alanına yazmak çözüm değildir.
 - Secret içerebilen tam traceback, agent tokenları, config veya özel anahtarlar public rehbere aktarılmaz. Buradaki ekranlar görünür veri incelemesinden geçirildi.
 - Teknik düzeltme sahibi Hüseyin Cengiz. DNS gerekirse kayıt gereksinimini Hüseyin Cengiz hazırlar, GoDaddy uygulamasını Asistan Hüseyin yapar.
-- SSH port 5055 iki denemede kimlik doğrulamadan önce Connection reset by peer ile kesildi. Şifre denenmedi; sunucuda değişiklik yapılmadı.
+- Doğru uygulama sunucusuna SSH bağlantısı başarılı oldu. Kullanıcı onayıyla yalnız docker builder prune --all --force çalıştırıldı (exit 0); image, site, veritabanı, container veya app kaldırılmadı, deploy yapılmadı.
+- Temizlik sonrası df -h: 150 GB, 69 GB kullanılmış, 76 GB boş, %48 (önce 156 MB boş, %100). Üç container aynı uptime ile çalışıyor; Redis bgsave/write ok. Ayrıntı live-cleanup-crm adımında.
 
-Doğrulama: Hatanın ilk başarısız aşaması, esas HTTP/log mesajı ve sürüm kanıtları ayrı kaydedildi. Sunucu düzeltmesi, başarılı build/deploy ve çalışan site henüz doğrulanmadı.
+Doğrulama: İlk başarısız aşama, HTTP 500 kaydı ve bunun nedeni olan disk doluluğu (df -h, df -i, Nginx error.log) ayrı kanıtlarla kaydedildi. Onaylı build cache temizliği başarılı. deploy-0027-000002’nin ilk build’i f476t39m7i Pre-build’de npm aralığı ayrıştırma hatasıyla durdu; hedefli düzeltme sonrası yeni build j8vu7j2qnm Running: Pre-build, Package ve Upload Build Context Success, son okumada 14 adım Success. Build sonucu, image push, deploy ve çalışan site henüz doğrulanmadı.
 
 Bu adım için henüz ekran kanıtı yok.
 
@@ -904,21 +923,106 @@ Açıklamalı ekran: [temiz ekran ve çerçeveler](https://karacaismail.github.i
 
 ## 54. Önceki hata: Redis AOF için disk alanı yok
 
-5ignfoq0t5 job traceback’i Redis AOF dosyasına yazımda No space left on device hatasını gösteriyor.
+Tarihsel kanıt: 6 Ekim tarihli 5ignfoq0t5 job traceback’i Redis AOF dosyasına yazımda No space left on device hatasını gösteriyor. Bugünkü upload hatasının kanıtı ayrıdır.
 
 1. 5ignfoq0t5 job kaydında Traceback alanının son satırını oku.
-2. Hüseyin Cengiz disk alanı, inode ve Redis AOF durumunu salt okunur olarak kontrol etsin.
-3. 7 Ekim upload hatası zamanındaki agent ve proxy loglarıyla karşılaştır.
+2. Redis’in güncel durumunu redis-cli INFO persistence ile salt okunur kontrol et; bu kurulumda aof_last_write_status, rdb_last_bgsave_status ve aof_last_bgrewrite_status ok.
+3. Bugünkü upload hatası için Nginx error.log ve df -h kanıtını kullan; live-agent-http500 ve hata-tanisi adımlarına bak.
 
 Somut notlar:
 
-- Bu hata 6 Ekim 18:47–18:59 işine ait; bugünkü HTTP 500’ün aynı nedenle oluştuğu kanıtlanmadı.
-- Disk temizleme, backup silme, Docker prune veya Redis AOF silme uygulanmadı. Aktif siteler korunuyor.
+- Bu hata 6 Ekim 18:47–18:59 işine ait tarihsel kayıttır. Bugünkü HTTP 500 bu kayda dayanılarak değil, aynı güne ait Nginx log ve df ölçümüyle doğrulandı.
+- Bu kayıt incelenirken temizlik yapılmadı. Sonradan kullanıcı onayıyla yalnız Docker build cache temizlendi; backup, Redis AOF, image veya site silinmedi. Aktif siteler korunuyor.
 - Çekim Request Data ve token alanlarını dışarıda bırakacak şekilde kırpıldı.
 
-Doğrulama: redis.exceptions.ResponseError: MISCONF Errors writing to the AOF file: No space left on device.
+Doğrulama: 6 Ekim: redis.exceptions.ResponseError: MISCONF Errors writing to the AOF file: No space left on device. 7 Ekim güncel Redis persistence durumu ok.
 
 Açıklamalı ekran: [temiz ekran ve çerçeveler](https://karacaismail.github.io/pressguide/steps/live-redis-enospc/)
+
+## 55. Build cache temizliği ve CRM eklenmesi
+
+Kullanıcı onayıyla yalnız Docker build cache temizlendi; disk %100’den %48’e indi. Ardından egitimxv1 / bench-0027 Apps tablosuna crm eklendi ve altı satır kaydedildi.
+
+1. Silme işleminden önce kullanıcıdan yalnız Docker build cache için açık onay al. Onaydan sonra docker builder prune --all --force çalıştır ve exit kodunu kontrol et; bu kurulumda exit 0, çıktıdaki Total 96.68 GB.
+2. df -h ile kök dosya sistemini yeniden ölç. Bu kurulumda 150 GB, 69 GB kullanılmış, 76 GB boş, %48 (önce 156 MB boş, %100).
+3. Mevcut container’ların yeniden başlamadığını uptime ile, Redis yazımının sürdüğünü redis-cli INFO persistence ile kontrol et. Bu kurulumda üç container aynı uptime ile çalışıyor; bgsave/write ok.
+4. bench-0027 → Apps → Add Row: App crm, Source SRC-crm-002 (branch main, Version 16, Enabled). Save ile kaydet ve altı satırı tekrar oku.
+
+Somut notlar:
+
+- Yalnız build cache temizlendi. Image, site, veritabanı, container veya app kaldırılmadı; deploy yapılmadı.
+- Değişiklik yalnız egitimxv1 / bench-0027 grubunda yapıldı. Mevcut 10 site, custom app’ler ve Press’in Frappe 15 yönetim kurulumu korunuyor.
+- svholl uygulamasının kimliği belirsiz olduğu için gruba eklenmedi.
+- Bağımlılık sırası korunuyor: LMS için Payments, Education için ERPNext kendilerinden önce yer alır. crm son satırdadır.
+- Kaydedilmiş tablo yapılandırma kanıtıdır; build başarısı değildir. SSH bağlantı bilgisi, kimlik bilgisi ve kullanıcı/site verisi rehbere aktarılmaz.
+
+Doğrulama: Prune exit 0; df -h %48; üç container ve Redis yazımı çalışıyor. Apps tablosunda altı satır kaydedildi: frappe, erpnext, payments, education, lms, crm. Bu adım anında build sonucu yoktu; sonraki build’ler için live-candidate-two ve live-npm-range-validation adımlarına bak.
+
+Açıklamalı ekran: [temiz ekran ve çerçeveler](https://karacaismail.github.io/pressguide/steps/live-cleanup-crm/)
+
+## 56. İkinci candidate: deploy-0027-000002
+
+CRM eklendikten sonra yeni candidate oluşturuldu; altı uygulama belirli commitlere sabitlendi. İlk build f476t39m7i Pre-build validation’da Failure; hedefli düzeltme sonrası yeni build j8vu7j2qnm Running, Pre-build ve Upload Build Context Success; build sonucu bekleniyor.
+
+1. bench-0027 → Actions → Create Deploy Candidate ile yeni candidate oluştur; bu kurulumda deploy-0027-000002.
+2. Apps & Deps içinde altı satırın Source, Release ve Hash alanlarını kontrol et. crm satırı SRC-crm-002, commit deedce73c1eb48577e7f70e95df6bac1dc55c93f.
+3. crm commit manifestini runtime ile karşılaştır: Frappe >=15,<17 ve Python >=3.10; grup Version 16 ve Python 3.14.
+4. Build → Complete ile yalnız build başlat. Build Success olmadan Deploy menüsünü kullanma.
+
+Somut notlar:
+
+- Ekranda hash sütunu kısaltılmış görünür; tam commit kimliği App Release kaydından okunur.
+- Görsel yalnız Apps & Deps tablosunu gösterir; build başlangıcı veya sonucu bu görselde yoktur.
+- Eski candidate deploy-0027-000001 ve onun kpktsdsd9n Failure build’i tarihsel kanıt olarak kalır; silinmedi.
+- Bu candidate’ın ilk build’i f476t39m7i Pre-build validation’da Failure ile bitti ve tarihsel kanıt olarak kalır; ayrıntı live-npm-range-validation adımında. Aynı candidate için yeni build j8vu7j2qnm başlatıldı.
+- Deploy ve site oluşturma henüz yapılmadı.
+
+Doğrulama: Candidate bench-0027’ye bağlı; altı satırda Source, Release ve Hash dolu. İlk build f476t39m7i Failure; yeni build j8vu7j2qnm Running (son okumada 14 adım Success), build sonucu doğrulanmadı; deploy ve site yok.
+
+Açıklamalı ekran: [temiz ekran ve çerçeveler](https://karacaismail.github.io/pressguide/steps/live-candidate-two/)
+
+## 57. Pre-build validation: npm sürüm aralığı ayrıştırma hatası
+
+deploy-0027-000002’nin ilk build’i f476t39m7i Pre-build validation aşamasında Failure ile bitti. Neden uygulama listesi değil, Press’in Node npm aralığını yanlış ayrıştırıcıyla okumasıydı. Bu adımın yayımlanmış ekranı yok.
+
+1. f476t39m7i build kaydını aç; Build Steps içindeki ilk Failure satırının Pre-build validation olduğunu doğrula.
+2. Satırı açıp Output alanını oku. Bu kurulumdaki çıktı: Invalid simple block '^20.19.0 || >=22.12.0'. Bu, Required app not found hatasından farklıdır; uygulama veya Source eklemek çözüm değildir.
+3. Nedeni ayır: ^ ve || npm sürüm aralığı sözdizimidir. semantic-version kütüphanesinde SimpleSpec bu sözdizimini kabul etmez; npm aralıkları NpmSpec ile okunur. Press Node gereksinimini SimpleSpec ile ayrıştırdığı için doğrulama hata verdi.
+4. Düzeltme hedefli olmalı: yalnız Node gereksinimi kontrolü NpmSpec kullanır; Python gereksinimi SimpleSpec ile kalır. Kurulu sürümlerin NpmSpec desteğini doğrula; bu kurulumda semantic-version 2.10.0 ve Python 3.10.12 destekliyor.
+5. Uygulamadan önce özgün dosyanın yedeğini al ve SHA değerini kontrol et; düzeltmeyi incelet. Regresyon testlerini gerçek kurulumdan önce ve sonra çalıştır; bu kurulumda altı test her iki seferde geçti.
+6. Değişikliği yüklemek için yalnız boşta olan build worker’larını yeniden başlat. Bu kurulumda dört boşta build worker yeniden başlatıldı; web ve Redis süreçlerine dokunulmadı.
+7. Aynı candidate için tek yeni build başlat ve sonucunu izle. Bu kurulumda j8vu7j2qnm 13:39:11 TSİ’de başladı; Pre-build validation Success ve build şu an Running (live-prebuild-upload-success). Sonuç görülmeden yeni build açma.
+
+Somut notlar:
+
+- Doğrulamayı atlama: Pre-build validation’ı kapatma, Node gereksinimini silme ve uygulamanın sürüm aralığını değiştirme. Hata ayrıştırıcıdaydı; çözüm aralığın doğru ayrıştırıcıyla okunmasıdır.
+- f476t39m7i Failure kaydı tarihsel kanıt olarak kalır; silinmedi. kpktsdsd9n Upload hatası (disk doluluğu) ile bu Pre-build hatası ayrı nedenlerdir.
+- Kapsam yalnız egitimxv1 / bench-0027; diğer 10 site ve gruplarına dokunulmadı, hiçbir uygulama kaldırılmadı. svholl kimliği belirsiz olduğu için gruba eklenmedi.
+- Ekran görüntüsü yayımlanmadı; bu adım canlı oturumda okunan çıktının metin kaydıdır. Sunucu bağlantı bilgisi, IP ve kimlik bilgileri rehbere aktarılmaz.
+
+Doğrulama: f476t39m7i: Pre-build validation Failure, Invalid simple block '^20.19.0 || >=22.12.0'. Hedefli düzeltme sonrası altı regresyon testi geçti. j8vu7j2qnm’de Pre-build validation Success; build Running. Build Success, deploy ve egitimxv1 sitesi henüz doğrulanmadı.
+
+Bu adım için henüz ekran kanıtı yok.
+
+## 58. Yeni build: Pre-build, Package ve Upload geçti
+
+j8vu7j2qnm build’i Running. Altı clone, Pre-build validation, Package Build Context ve Upload Build Context Success. Özgün Upload HTTP 500 ve Node npm aralığı engelleri geçildi; build henüz tamamlanmadı.
+
+1. deploy-0027-000002 → Deploy Candidate Build → j8vu7j2qnm kaydını aç; başlıktaki durumun Running olduğunu oku.
+2. Build Steps tablosunda 7. Run Validations / Pre-build, 8. Package / Build Context ve 9. Upload / Build Context satırlarının Success olduğunu kontrol et.
+3. Sonraki Setup Prerequisites satırlarını izle. Running veya Pending satırlar hata değildir; ilk Failure görülürse yalnız o satırın Output alanını ve Error Log bağlantısını aç.
+4. Build Success olmadan Deploy menüsünü kullanma ve yeni build başlatma.
+
+Somut notlar:
+
+- Görselde ilk dokuz adım Success, 10. satır Setup Prerequisites / Install Essential Packages Running, sonraki satırlar Pending. Son okumada 14 adım Success; sistem bağımlılıkları (Setup Prerequisites) kuruluyor.
+- Pre-build Success, f476t39m7i’deki Invalid simple block hatasının hedefli NpmSpec düzeltmesiyle geçildiğini gösterir. Upload Build Context Success, kpktsdsd9n’deki disk doluluğu kaynaklı HTTP 500’ün temizlik sonrası tekrar etmediğini gösterir.
+- kpktsdsd9n ve f476t39m7i Failure kayıtları tarihsel kanıt olarak kalır; silinmedi.
+- Bu ekran build başarısı değildir. Image build/push, deploy, Bench ve egitimxv1 sitesi henüz doğrulanmadı.
+
+Doğrulama: j8vu7j2qnm Running; satır 1–9 Success (altı clone, Pre-build, Package, Upload Build Context). Son okumada 14 adım Success. Build sonucu, image push, deploy ve site doğrulanmadı.
+
+Açıklamalı ekran: [temiz ekran ve çerçeveler](https://karacaismail.github.io/pressguide/steps/live-prebuild-upload-success/)
 
 ## Kaynaklar
 
