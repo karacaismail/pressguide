@@ -1,5 +1,47 @@
 import { expect, test } from '@playwright/test';
 
+test('screenshot frames keep controls readable and numbered labels outside the image', async ({
+  page,
+}) => {
+  await page.goto('./');
+  const href = await page.locator('.image-link').first().getAttribute('href');
+  await page.goto(href!);
+  const figure = page.locator('.evidence').first();
+  await figure.locator('img').scrollIntoViewIfNeeded();
+  await expect(figure.locator('.annotations rect').first()).toBeVisible();
+  expect(
+    await figure
+      .locator(
+        '.annotations line, .annotations path, .annotations text, .annotation-number, .annotation-label',
+      )
+      .count(),
+  ).toBe(0);
+  const image = await figure.locator('img').boundingBox();
+  const labels = await figure
+    .locator('.annotation-reference')
+    .evaluateAll((elements) =>
+      elements.map((element) => {
+        const rect = element.getBoundingClientRect();
+        return {
+          right: rect.right,
+          fontSize: parseFloat(getComputedStyle(element).fontSize),
+        };
+      }),
+    );
+  expect(labels.length).toBeGreaterThan(0);
+  expect(
+    labels.every((label) => label.right <= image!.x && label.fontSize >= 16),
+  ).toBe(true);
+  expect(await figure.locator('figcaption ol li').count()).toBe(
+    await figure.locator('.annotations rect').count(),
+  );
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= innerWidth,
+    ),
+  ).toBe(true);
+});
+
 test('long repository URLs reflow inside the 320px grid across font substitutions', async ({
   page,
 }, testInfo) => {

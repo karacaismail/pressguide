@@ -10,7 +10,6 @@
   --color-caution-soft: #f1e5ca;
   --color-focus: #125eaa;
   --color-annotation: #9d241c;
-  --color-on-annotation: #fff;
   --font-body: 'Segoe UI', system-ui, -apple-system, sans-serif;
   --font-display: Georgia, 'Times New Roman', serif;
   --text-body: 1rem;
@@ -25,7 +24,9 @@
   --space-section: clamp(2.5rem, 7vw, 5rem);
   --page-gutter: clamp(0.75rem, 3vw, 2rem);
   --reading-width: 72rem;
-  --annotation-label-width: 14rem;
+  --annotation-reference-size: 1.5rem;
+  --annotation-gutter: 2rem;
+  --annotation-stroke: 1.5px;
   --target-size: 2.75rem;
   --control-padding: 0.75rem;
   --radius-control: 0.375rem;

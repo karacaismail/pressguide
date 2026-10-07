@@ -228,6 +228,10 @@ svg.icon {
 .image-stage {
   position: relative;
   line-height: 0;
+  padding-inline-start: var(--annotation-gutter);
+}
+.image-surface {
+  position: relative;
 }
 .image-stage img {
   display: block;
@@ -246,23 +250,26 @@ svg.icon {
   pointer-events: none;
   overflow: visible;
 }
-.annotations line {
+.annotations rect {
   stroke: var(--color-annotation);
-  stroke-width: 0.55;
+  stroke-width: var(--annotation-stroke);
+  fill: none;
 }
-.annotation-number {
+.annotation-reference {
   position: absolute;
-  left: var(--annotation-x);
-  top: var(--annotation-y);
-  transform: translate(-50%, -50%);
-  background: var(--color-annotation);
-  color: var(--color-on-annotation);
+  inset-inline-start: 0;
+  top: clamp(
+    0px,
+    var(--annotation-y),
+    calc(100% - var(--annotation-reference-size))
+  );
+  color: var(--color-annotation);
   font-size: var(--text-body);
   font-weight: 700;
   line-height: 1.5;
-  min-width: var(--space-lg);
+  width: var(--annotation-reference-size);
+  height: var(--annotation-reference-size);
   text-align: center;
-  border-radius: 50%;
   pointer-events: none;
 }
 figcaption {
@@ -386,23 +393,4 @@ footer {
 }
 .detail-page .evidence {
   margin-block: var(--space-xl);
-}
-.annotation-label {
-  display: none;
-}
-@media (min-width: 40rem) {
-  .annotation-label {
-    display: block;
-    position: absolute;
-    left: min(var(--annotation-x), calc(100% - var(--annotation-label-width)));
-    top: var(--annotation-y);
-    width: var(--annotation-label-width);
-    padding: var(--space-sm);
-    background: var(--color-annotation);
-    color: var(--color-on-annotation);
-    font-size: var(--text-body);
-    line-height: 1.4;
-    border-radius: var(--radius-control);
-    pointer-events: none;
-  }
 }

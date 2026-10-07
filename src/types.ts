@@ -1,8 +1,16 @@
-export interface Annotation {
+export interface AnnotationBounds {
+  /** Percentages of the exact screenshot dimensions. */
   x: number;
   y: number;
-  targetX: number;
-  targetY: number;
+  width: number;
+  height: number;
+}
+export interface Annotation {
+  x?: number;
+  y?: number;
+  targetX?: number;
+  targetY?: number;
+  bounds?: AnnotationBounds;
   label: string;
 }
 export interface Step {
