@@ -1,8 +1,8 @@
 # Press kullanım rehberi
 
-Güncelleme: 7 Ekim 2026 · Europe/Istanbul
+Güncelleme: 7 Ekim 2026 · 12:10 Europe/Istanbul
 
-egitimxv1 Release Group oluşturuldu (bench-0027). Beş app ve bağımlılık kontrolü kaydedildi; deploy-0027-000001 candidate oluşturuldu. kpktsdsd9n build Preparing: sonuç henüz doğrulanmadı. Site henüz oluşturulmadı.
+KURULUM DEVAM EDİYOR — egitimxv1 sitesi henüz oluşturulmadı. bench-0027 ve deploy-0027-000001 hazırlandı. kpktsdsd9n build: clone, bağımlılık kontrolü ve paketleme başarılı; Upload Build Context başarısız (agent HTTP 500). Agent temel ping yanıtı pong. Eski Press upload protokolü ile bildirilen yeni agent commit’i arasında uyuşmazlık güçlü biçimde destekleniyor; sunucuda doğrulama ve düzeltme bekleniyor.
 
 ## 1. Release Group ve Team seçimi
 
@@ -233,7 +233,7 @@ Açıklamalı ekran: [görsel ve oklar](https://karacaismail.github.io/pressguid
 
 ## 14. Eğitim sitesini oluştur ve doğrula
 
-Site adı egitimxv1 olacak. Yeni eğitim grubu bench-0027; build/deploy sonucu bekleniyor.
+egitimxv1 sitesi henüz oluşturulmadı. Build Upload Build Context adımında başarısız; başarılı build/deploy gerekli.
 
 1. Başarılı deploy sonrasında uygun Bench üzerinde Create Site / New Site akışını aç.
 2. Site adı egitimxv1; panelde yapılandırılmış base domain ile tam adresi oluştur.

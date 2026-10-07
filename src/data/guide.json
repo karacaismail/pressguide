@@ -1,8 +1,8 @@
 {
   "title": "Press Eğitim Rehberi",
   "subtitle": "Uygulama kaynağından çalışan eğitim sitesine: açıklamalı ekranlar ve doğrulama adımları.",
-  "updated": "7 Ekim 2026 · Europe/Istanbul",
-  "liveStatus": "egitimxv1 Release Group oluşturuldu (bench-0027). Beş app ve bağımlılık kontrolü kaydedildi; deploy-0027-000001 candidate oluşturuldu. kpktsdsd9n build Preparing: sonuç henüz doğrulanmadı. Site henüz oluşturulmadı.",
+  "updated": "7 Ekim 2026 · 12:10 Europe/Istanbul",
+  "liveStatus": "KURULUM DEVAM EDİYOR — egitimxv1 sitesi henüz oluşturulmadı. bench-0027 ve deploy-0027-000001 hazırlandı. kpktsdsd9n build: clone, bağımlılık kontrolü ve paketleme başarılı; Upload Build Context başarısız (agent HTTP 500). Agent temel ping yanıtı pong. Eski Press upload protokolü ile bildirilen yeni agent commit’i arasında uyuşmazlık güçlü biçimde destekleniyor; sunucuda doğrulama ve düzeltme bekleniyor.",
   "steps": [
     {
       "id": "team",
@@ -507,7 +507,7 @@
     {
       "id": "site",
       "title": "Eğitim sitesini oluştur ve doğrula",
-      "summary": "Site adı egitimxv1 olacak. Yeni eğitim grubu bench-0027; build/deploy sonucu bekleniyor.",
+      "summary": "egitimxv1 sitesi henüz oluşturulmadı. Build Upload Build Context adımında başarısız; başarılı build/deploy gerekli.",
       "actions": [
         "Başarılı deploy sonrasında uygun Bench üzerinde Create Site / New Site akışını aç.",
         "Site adı egitimxv1; panelde yapılandırılmış base domain ile tam adresi oluştur.",

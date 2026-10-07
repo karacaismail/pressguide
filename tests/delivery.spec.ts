@@ -48,6 +48,7 @@ test('production manifest isolates optional JS and CSS until activation and reco
       ? 'Alt+Tab'
       : 'Tab';
   await page.keyboard.press(navigationKey);
+  await expect(modal.getByRole('checkbox').first()).toBeFocused();
   const focus = await page.locator(':focus').evaluate((el) => {
     const style = getComputedStyle(el);
     return {

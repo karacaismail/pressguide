@@ -1,5 +1,49 @@
 import { expect, test } from '@playwright/test';
 
+test('long repository URLs reflow inside the 320px grid across font substitutions', async ({
+  page,
+}, testInfo) => {
+  test.skip(
+    !testInfo.project.name.endsWith('-320'),
+    'The constrained reflow regression targets 320 CSS px.',
+  );
+  await page.goto('./');
+  await page.addStyleTag({
+    content: ':root { --font-body: "Courier New", monospace; }',
+  });
+  const geometry = await page.evaluate(() => ({
+    viewport: innerWidth,
+    documentWidth: document.documentElement.scrollWidth,
+    offenders: [...document.querySelectorAll('body *')]
+      .filter(
+        (element) => element.getBoundingClientRect().right > innerWidth + 0.1,
+      )
+      .map((element) => {
+        const rect = element.getBoundingClientRect();
+        const style = getComputedStyle(element);
+        return {
+          tag: element.tagName,
+          className: element.getAttribute('class'),
+          text: element.textContent?.slice(0, 140),
+          right: rect.right,
+          width: rect.width,
+          minWidth: style.minWidth,
+          overflowWrap: style.overflowWrap,
+          font: style.fontFamily,
+        };
+      }),
+  }));
+  await testInfo.attach('font-substitution-layout', {
+    body: JSON.stringify(geometry, null, 2),
+    contentType: 'application/json',
+  });
+  await testInfo.attach('source-form-reflow', {
+    body: await page.locator('#source-form').screenshot(),
+    contentType: 'image/png',
+  });
+  expect(geometry.documentWidth).toBeLessThanOrEqual(geometry.viewport);
+});
+
 test('annotated evidence opens a step page retaining actions and original link', async ({
   page,
 }) => {
@@ -23,17 +67,39 @@ test('annotated evidence opens a step page retaining actions and original link',
 
 test('critical reading journey works at every viewport without shrinking text', async ({
   page,
-}) => {
+}, testInfo) => {
   await page.goto('./');
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
   await expect(
     page.getByRole('navigation', { name: 'Rehber bölümleri' }),
   ).toBeVisible();
-  expect(
-    await page.evaluate(
-      () => document.documentElement.scrollWidth <= innerWidth,
-    ),
-  ).toBe(true);
+  const documentGeometry = await page.evaluate(() => ({
+    viewport: innerWidth,
+    width: document.documentElement.scrollWidth,
+    overflowing: [...document.querySelectorAll('body *')]
+      .filter(
+        (element) => element.getBoundingClientRect().right > innerWidth + 0.1,
+      )
+      .map((element) => ({
+        tag: element.tagName,
+        className: element.getAttribute('class'),
+        text: element.textContent?.slice(0, 140),
+        right: element.getBoundingClientRect().right,
+        font: getComputedStyle(element).fontFamily,
+        minWidth: getComputedStyle(element).minWidth,
+      })),
+  }));
+  if (documentGeometry.width > documentGeometry.viewport) {
+    await testInfo.attach('actual-font-overflow', {
+      body: JSON.stringify(documentGeometry, null, 2),
+      contentType: 'application/json',
+    });
+    await testInfo.attach('actual-font-source-form', {
+      body: await page.locator('#source-form').screenshot(),
+      contentType: 'image/png',
+    });
+  }
+  expect(documentGeometry.width).toBeLessThanOrEqual(documentGeometry.viewport);
   const smallText = await page
     .locator('body *')
     .evaluateAll((elements) =>

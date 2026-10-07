@@ -198,7 +198,12 @@ svg.icon {
 .step-content {
   margin-top: var(--space-xl);
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-xl);
+}
+.step-copy {
+  min-inline-size: 0;
+  overflow-wrap: break-word;
 }
 .step-copy h3 {
   margin-bottom: var(--space-sm);
