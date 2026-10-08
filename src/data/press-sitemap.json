@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-08T12:03:01.237539+00:00",
+  "lastUpdated": "2026-10-08T14:12:06Z",
   "auditPhase": "in_progress",
   "reviewedForPublic": true,
   "coverageScope": [
@@ -79361,13 +79361,13 @@
       "parentId": "desk-module-press",
       "label": "Deploy Candidate Difference App — gerçek child table kapsamı",
       "kind": "table",
-      "status": "discovered",
-      "source": "schema_ui",
+      "status": "visited",
+      "source": "live_ui",
       "notes": [
-        "Child table bağımsız liste sayfası değildir.",
-        "Şema incelendi; gerçek grid başlıkları ve genişletilmiş satır kontrolleri ayrı doğrulanır.",
-        "Şemadaki parent alanlar: Deploy Candidate Difference.apps"
-      ]
+        "Mevcut kaydedilmiş parent formda Apps tablosu ve dolu satır salt okunur incelendi.",
+        "Parent: Deploy Candidate Difference.apps; kayıt değerleri/kimliği yayımlanmadı."
+      ],
+      "observedAt": "2026-10-08T14:12:06Z"
     },
     {
       "surface": "desk",
@@ -79378,11 +79378,12 @@
       "parentId": "desk-live-child-deploy-candidate-difference-app",
       "label": "Gerçek grid sütun başlıkları",
       "kind": "section",
-      "status": "discovered",
-      "source": "schema_ui",
+      "status": "visited",
+      "source": "live_ui",
       "notes": [
-        "Parent table kontrolünün görünmesi grid sütun başlıklarının incelendiğini kanıtlamaz."
-      ]
+        "Görülen başlıklar: App, Deploy Type, Difference, Source Release, Destination Release."
+      ],
+      "observedAt": "2026-10-08T14:12:06Z"
     },
     {
       "surface": "desk",
@@ -79393,11 +79394,13 @@
       "parentId": "desk-live-child-deploy-candidate-difference-app",
       "label": "Genişletilmiş satır kontrolleri",
       "kind": "section",
-      "status": "discovered",
-      "source": "schema_ui",
+      "status": "visited",
+      "source": "live_ui",
       "notes": [
-        "Satır açılmadı; Add/Save/Delete yapılmadı. Boş tablo expanded row kanıtı değildir."
-      ]
+        "Mevcut dolu satır açıldı; beş alan görünür.",
+        "Save/Add/Delete/Deploy çalıştırılmadı. Select seçenekleri ve diğer koşullu durumlar incelenmedi."
+      ],
+      "observedAt": "2026-10-08T14:12:06Z"
     },
     {
       "surface": "desk",
@@ -182166,6 +182169,96 @@
         "Required: false.",
         "Enabled text combobox observed; grid-body was not observed; no grid/header/editor coverage inferred.",
         "No query, selection, Save, invitation, access grant or reaction executed."
+      ]
+    },
+    {
+      "id": "desk-live-child-deploy-candidate-difference-app-expanded-row-field-app",
+      "parentId": "desk-live-child-deploy-candidate-difference-app-expanded-row",
+      "label": "App",
+      "kind": "field",
+      "surface": "desk",
+      "risk": "read",
+      "status": "visited",
+      "source": "live_ui",
+      "observedAt": "2026-10-08T14:12:06Z",
+      "executed": false,
+      "functionalTest": "not_run",
+      "notes": [
+        "Observed control type: Link.",
+        "Required: true.",
+        "Mevcut satırda yalnız kontrol etiketi/türü görüldü; değerler ve kayıt kimlikleri hariç."
+      ]
+    },
+    {
+      "id": "desk-live-child-deploy-candidate-difference-app-expanded-row-field-deploy_type",
+      "parentId": "desk-live-child-deploy-candidate-difference-app-expanded-row",
+      "label": "Deploy Type",
+      "kind": "field",
+      "surface": "desk",
+      "risk": "read",
+      "status": "visited",
+      "source": "live_ui",
+      "observedAt": "2026-10-08T14:12:06Z",
+      "executed": false,
+      "functionalTest": "not_run",
+      "notes": [
+        "Observed control type: Select.",
+        "Required: false.",
+        "Mevcut satırda yalnız kontrol etiketi/türü görüldü; değerler ve kayıt kimlikleri hariç."
+      ]
+    },
+    {
+      "id": "desk-live-child-deploy-candidate-difference-app-expanded-row-field-difference",
+      "parentId": "desk-live-child-deploy-candidate-difference-app-expanded-row",
+      "label": "Difference",
+      "kind": "field",
+      "surface": "desk",
+      "risk": "read",
+      "status": "visited",
+      "source": "live_ui",
+      "observedAt": "2026-10-08T14:12:06Z",
+      "executed": false,
+      "functionalTest": "not_run",
+      "notes": [
+        "Observed control type: Link.",
+        "Required: false.",
+        "Mevcut satırda yalnız kontrol etiketi/türü görüldü; değerler ve kayıt kimlikleri hariç."
+      ]
+    },
+    {
+      "id": "desk-live-child-deploy-candidate-difference-app-expanded-row-field-source_release",
+      "parentId": "desk-live-child-deploy-candidate-difference-app-expanded-row",
+      "label": "Source Release",
+      "kind": "field",
+      "surface": "desk",
+      "risk": "read",
+      "status": "visited",
+      "source": "live_ui",
+      "observedAt": "2026-10-08T14:12:06Z",
+      "executed": false,
+      "functionalTest": "not_run",
+      "notes": [
+        "Observed control type: Link.",
+        "Required: false.",
+        "Mevcut satırda yalnız kontrol etiketi/türü görüldü; değerler ve kayıt kimlikleri hariç."
+      ]
+    },
+    {
+      "id": "desk-live-child-deploy-candidate-difference-app-expanded-row-field-destination_release",
+      "parentId": "desk-live-child-deploy-candidate-difference-app-expanded-row",
+      "label": "Destination Release",
+      "kind": "field",
+      "surface": "desk",
+      "risk": "read",
+      "status": "visited",
+      "source": "live_ui",
+      "observedAt": "2026-10-08T14:12:06Z",
+      "executed": false,
+      "functionalTest": "not_run",
+      "notes": [
+        "Observed control type: Link.",
+        "Required: false.",
+        "Mevcut satırda yalnız kontrol etiketi/türü görüldü; değerler ve kayıt kimlikleri hariç."
       ]
     }
   ]

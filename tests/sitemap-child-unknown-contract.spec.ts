@@ -74,3 +74,27 @@ test('site action field observations remain separate from execution', async () =
     expect(field.functionalTest).toBe('not_run');
   }
 });
+
+test('saved candidate difference row has five observed controls without operation claims', async () => {
+  const data = await load();
+  const prefix = 'desk-live-child-deploy-candidate-difference-app-expanded-row';
+  const fields = [
+    'app',
+    'deploy_type',
+    'difference',
+    'source_release',
+    'destination_release',
+  ];
+  for (const field of fields) {
+    const node = data.nodes.find(
+      (item) => item.id === `${prefix}-field-${field}`,
+    );
+    expect(node, field).toBeDefined();
+    expect(node?.status).toBe('visited');
+    expect(node?.source).toBe('live_ui');
+    expect(node?.executed).toBe(false);
+    expect(node?.functionalTest).toBe('not_run');
+    expect(node?.observedAt).toBeTruthy();
+  }
+  expect(data.auditPhase).toBe('in_progress');
+});
