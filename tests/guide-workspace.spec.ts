@@ -203,9 +203,16 @@ test('modal controls retain visible keyboard focus and short-height reflow', asy
     contentType: 'image/png',
   });
   await close.press('Tab');
-  await expect(
-    inspector.getByRole('link', { name: 'Adıma git' }),
-  ).toBeFocused();
+  const go = inspector.getByRole('link', { name: 'Adıma git' });
+  if (
+    testInfo.project.name.startsWith('webkit-') &&
+    !(await go.evaluate((el) => el === document.activeElement))
+  ) {
+    // WebKit's native limited keyboard mode skips links; Alt+Tab enables full control navigation.
+    await close.focus();
+    await close.press('Alt+Tab');
+  }
+  await expect(go).toBeFocused();
   await page.keyboard.press('Escape');
 });
 

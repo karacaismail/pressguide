@@ -179,13 +179,14 @@ const { steps } = Astro.props;
         );
       }
     };
-    const open = (nextMode: typeof mode) => {
+    const open = (nextMode: typeof mode, invoker?: HTMLElement) => {
       syncHash();
       if (!dialog.open)
         returnFocus =
-          document.activeElement instanceof HTMLElement
+          invoker ??
+          (document.activeElement instanceof HTMLElement
             ? document.activeElement
-            : null;
+            : null);
       mode = nextMode;
       navigating = false;
       root.querySelector('#workspace-dialog-title')!.textContent =
@@ -267,8 +268,10 @@ const { steps } = Astro.props;
     dialog.addEventListener('close', () => {
       if (!navigating) returnFocus?.focus();
     });
-    searchButton.addEventListener('click', () => open('search'));
-    contextButton.addEventListener('click', () => open('context'));
+    searchButton.addEventListener('click', () => open('search', searchButton));
+    contextButton.addEventListener('click', () =>
+      open('context', contextButton),
+    );
     window.addEventListener('hashchange', syncHash);
     document.addEventListener('keydown', (event) => {
       if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') {
