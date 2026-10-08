@@ -1,98 +1,61 @@
 import { readdir, readFile } from 'node:fs/promises';
-import { posix } from 'node:path';
 import { expect, test } from '@playwright/test';
-import { SITEMAP_BUDGETS } from '../src/sitemap-budgets';
-import { METADATA_LIMIT } from '../src/sitemap-partitions';
-
-/**
- * Measured budget guard over EVERY built sitemap HTML document (run after
- * `npm run build`). Bytes are raw UTF-8 file sizes; DOM is the element count
- * of DOMParser output, so scripts never execute. Segment/BFS correctness is
- * guarded independently in tests/sitemap-bounded.spec.ts.
- */
-const distSitemap = 'dist/sitemap';
-const PARSE_BATCH = 200;
-/** Owned primary segment plus the repeated anchor. */
-const MAX_PRIMARY = METADATA_LIMIT + 1;
-
-const report = (items: string[]) => ({
-  count: items.length,
-  sample: items.slice(0, 20),
-});
-const none = { count: 0, sample: [] };
-
-test.beforeEach(({}, testInfo) =>
-  test.skip(
-    testInfo.project.name !== 'chromium-320',
-    'Pure built-HTML budget check runs once.',
-  ),
-);
-
-test('every built sitemap document stays within the measured budget', async ({
+import { SITEMAP_BUDGETS, JSON_BYTES } from '../src/sitemap-budgets';
+import { validateSitemap } from '../src/sitemap';
+test('single built document preserves initial and interacted budgets', async ({
   page,
-}) => {
-  const entries = (await readdir(distSitemap, { recursive: true }))
-    .map((entry) => entry.split('\\').join('/'))
-    .filter((entry) => entry === 'index.html' || entry.endsWith('/index.html'));
-  expect(entries.length, 'root plus partition documents built').toBeGreaterThan(
-    1,
-  );
-  expect(entries, 'built root').toContain('index.html');
-
-  const over: string[] = [];
-  const primary: string[] = [];
-  const max = { bytes: 0, dom: 0, primary: 0, context: 0 };
-  let root:
-    { bytes: number; dom: number; meta: number; primary: number } | undefined;
-
-  for (let i = 0; i < entries.length; i += PARSE_BATCH) {
-    const batch = entries.slice(i, i + PARSE_BATCH);
-    const sources = await Promise.all(
-      batch.map((file) => readFile(posix.join(distSitemap, file))),
-    );
-    const parsed = await page.evaluate(
-      (html) => {
-        const parser = new DOMParser();
-        return html.map((source) => {
-          const doc = parser.parseFromString(source, 'text/html');
-          return {
-            dom: doc.getElementsByTagName('*').length,
-            meta: doc.querySelectorAll('.sitemap-meta').length,
-            primary: doc.querySelectorAll('[data-metadata-primary]').length,
-            context: doc.querySelectorAll('[data-metadata-context]').length,
-          };
-        });
-      },
-      sources.map((buffer) => buffer.toString('utf8')),
-    );
-    batch.forEach((file, j) => {
-      const bytes = sources[j].byteLength;
-      const { dom, meta, primary: p, context } = parsed[j];
-      const isRoot = file === 'index.html';
-      const budget = isRoot ? SITEMAP_BUDGETS.root : SITEMAP_BUDGETS.part;
-      if (bytes > budget.htmlBytes || dom > budget.domElements)
-        over.push(
-          `${file}: ${bytes}/${budget.htmlBytes} bytes, ${dom}/${budget.domElements} DOM`,
-        );
-      if (p > MAX_PRIMARY) primary.push(`${file}: ${p} primary`);
-      if (isRoot) root = { bytes, dom, meta, primary: p };
-      else {
-        max.bytes = Math.max(max.bytes, bytes);
-        max.dom = Math.max(max.dom, dom);
-        max.primary = Math.max(max.primary, p);
-        max.context = Math.max(max.context, context);
-      }
-    });
-  }
-
-  test.info().annotations.push({
-    type: 'measured',
-    description: JSON.stringify({ documents: entries.length, root, max }),
-  });
-  expect(root?.meta, 'root carries no own metadata').toBe(0);
-  expect(report(over), 'documents over budget').toEqual(none);
+}, info) => {
+  test.skip(info.project.name !== 'chromium-320', 'Built budget runs once.');
   expect(
-    report(primary),
-    `primary nodes per document <= ${MAX_PRIMARY} (context not counted)`,
-  ).toEqual(none);
+    (await readdir('dist/sitemap', { recursive: true })).filter((f) =>
+      f.endsWith('.html'),
+    ),
+  ).toEqual(['index.html']);
+  const html = await readFile('dist/sitemap/index.html', 'utf8');
+  expect(Buffer.byteLength(html)).toBeLessThanOrEqual(
+    SITEMAP_BUDGETS.root.htmlBytes,
+  );
+  const dom = await page.evaluate(
+    (source) =>
+      new DOMParser().parseFromString(source, 'text/html').querySelectorAll('*')
+        .length,
+    html,
+  );
+  expect(dom).toBeLessThanOrEqual(SITEMAP_BUDGETS.root.domElements);
+  expect(
+    (await readFile('dist/press-sitemap.json')).byteLength,
+  ).toBeLessThanOrEqual(JSON_BYTES);
+  await page.goto('./sitemap/');
+  await page
+    .getByRole('button', { name: 'Tüm öğeleri aç', exact: true })
+    .click();
+  await expect(page.locator('[data-results] li')).toHaveCount(30);
+  const data = validateSitemap(
+    JSON.parse(await readFile('dist/press-sitemap.json', 'utf8')),
+  );
+  const largest = [...data.nodes].sort(
+    (a, b) => JSON.stringify(b).length - JSON.stringify(a).length,
+  )[0];
+  const childCounts = new Map<string, number>();
+  for (const node of data.nodes)
+    if (node.parentId)
+      childCounts.set(node.parentId, (childCounts.get(node.parentId) ?? 0) + 1);
+  const widest = [...data.nodes].sort(
+    (a, b) => (childCounts.get(b.id) ?? 0) - (childCounts.get(a.id) ?? 0),
+  )[0];
+  for (const node of [largest, widest]) {
+    await page.goto('./sitemap/#node=' + encodeURIComponent(node.id));
+    await expect(page.locator('[data-selected]')).toHaveAttribute(
+      'data-node-id',
+      node.id,
+    );
+    expect(
+      Buffer.byteLength(
+        await page.locator('[data-selected]').evaluate((el) => el.outerHTML),
+      ),
+    ).toBeLessThanOrEqual(SITEMAP_BUDGETS.part.htmlBytes);
+    expect(await page.locator('*').count()).toBeLessThanOrEqual(
+      SITEMAP_BUDGETS.part.domElements,
+    );
+  }
 });

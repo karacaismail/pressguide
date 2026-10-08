@@ -1,17 +1,16 @@
 {
-  "title": "Press Eğitim Rehberi",
-  "subtitle": "Uygulama kaynağından çalışan eğitim sitesine: açıklamalı ekranlar ve doğrulama adımları.",
-  "updated": "7 Ekim 2026 — egitimxv1.metaframer.net Active; HTTPS (HTTP/2 200, geçerli TLS) doğrulandı; ilk kurulum tamamlandı (setup_complete=1); Desk, Eğitim, LMS, CRM ve ERPNext ekranlarının açıldığı doğrulandı",
-  "liveStatus": "egitimxv1.metaframer.net Active. Build 28/28 Success; bench ve site kurulumu başarılı. HTTPS, giriş, ilk kurulum ve altı uygulamanın kurulumu doğrulandı; Desk, Eğitim, LMS, CRM ve ERPNext başlangıç ekranları açıldı. Mevcut siteler ve bench-0022 uygulamaları korundu. Press Daily Usage hatası düzeltildi; log servisi tanımlı olmadığı için grafik No data gösteriyor. Gerçek iş süreçleri ve entegrasyonlar test edilmedi. Ayrıntılar aşağıdaki canlı kanıt adımlarında.",
+  "title": "Press talimatları",
+  "subtitle": "Grubu hazırla, build al, siteyi doğrula.",
+  "updated": "7 Ekim 2026 — kayıtlı kurulum kanıtı",
+  "liveStatus": "Site Active; HTTPS ve uygulama ekranları doğrulandı. İş akışları test edilmedi. Log server yok; kullanım metrikleri bekliyor.",
   "steps": [
     {
       "id": "team",
-      "title": "Release Group ve Team seçimi",
-      "summary": "Bir Release Group, birlikte build ve deploy edilecek uygulama kaynaklarını tanımlar. Site oluşturma adımı değildir.",
+      "title": "Release Group ve Team seç",
+      "summary": "Kaynakların sahibi olan takımı seç; Administrator adını genel kural sayma.",
       "actions": [
-        "Press aramasına Release Group List yaz. Add Release Group ile formu aç.",
-        "Title için egitimxv1 kullan; mevcut kaydı düzeltirken yeni kayıtla karıştırma.",
-        "Version alanında Version 16; Team alanında ilgili kaynakların sahibi olan takımı seç."
+        "Release Group List → Add Release Group aç.",
+        "Title: egitimxv1; Version 16; Team: kaynakların sahibi olan takım."
       ],
       "notes": [
         "Görselde Administrator görünen bir Team kaydı var. Team alanı oturum açan kullanıcı rolünü seçmez.",
@@ -41,12 +40,9 @@
     },
     {
       "id": "server",
-      "title": "Hazır uygulama sunucusunu seç",
-      "summary": "Servers tablosu kayıtlı ve hazır app sunucularını gruba bağlar.",
-      "actions": [
-        "Servers → Add Row.",
-        "Mevcut app sunucusunu seç. Aynı sunucuyu ikinci satıra tekrar ekleme."
-      ],
+      "title": "Hazır app sunucusunu bağla",
+      "summary": "",
+      "actions": ["Servers → Add Row; hazır app sunucusunu bir kez seç."],
       "notes": [
         "İkinci sunucu eklemek için önce Press içinde ayrı ve hazır bir Server kaydı gerekir; Add Row tek başına Hetzner sunucusu kurmaz.",
         "Hüseyin Cengiz ikinci sunucunun kapasitesini, agent erişimini, rollerini ve güvenli ağ bağlantısını hazırlar; Asistan Hüseyin gerekirse GoDaddy DNS kaydını uygular; Hüseyin Cengiz doğrular.",
@@ -75,13 +71,12 @@
     },
     {
       "id": "apps",
-      "title": "Uygulamaları bağımlılık sırasıyla ekle",
-      "summary": "Framework ilk sırada olmalı; her satırın App ve Source alanları birlikte tamamlanmalı.",
+      "title": "Uygulamaları sırayla ekle",
+      "summary": "",
       "actions": [
-        "Apps sekmesini aç. İlk satıra frappe ekle.",
-        "Education için erpnext satırını education satırından önce ekle.",
-        "Ardından education; LMS kullanılacaksa kendi branch bağımlılıklarını doğrulayarak payments ve lms ekle.",
-        "Check Dependent Apps kontrolünü aç; elle kaynak ve sürüm incelemesini de tamamla."
+        "Apps: frappe, erpnext, payments, education, lms sırasıyla ekle.",
+        "Her App için doğru Source seç; branch bağımlılıklarını doğrula.",
+        "Check Dependent Apps açık olsun; Save seç."
       ],
       "notes": [
         "Görselde egitimxv1 / bench-0027 grubunun kaydedilmiş beş satırı görünür: frappe, erpnext, payments, education, lms. Tablo bir yapılandırma kanıtıdır; build başarısı değildir.",
@@ -121,13 +116,12 @@
     },
     {
       "id": "new-app",
-      "title": "Create a new App ekranı ne yapar?",
-      "summary": "Bu ekran uygulama kataloğunda teknik kimlik oluşturur; GitHub kodunu sunucuya kurmaz.",
+      "title": "App kimliğini oluştur",
+      "summary": "",
       "actions": [
-        "Gerçek repo içindeki hooks.py app_name değerini doğrula.",
-        "Name alanına education gibi gerçek paket adını gir; Title okunabilir başlıktır.",
-        "Frappe kutusunu yalnız framework olan frappe için seç.",
-        "App kaydını kaydet, ardından o uygulamaya App Source bağla."
+        "hooks.py → app_name değerini doğrula.",
+        "Name: gerçek paket adı; Title: okunabilir ad.",
+        "Frappe kutusunu yalnız frappe için aç; App kaydet, Source bağla."
       ],
       "notes": [
         "education reposu için educator isimli ikinci teknik kimlik oluşturmak doğru değildir.",
@@ -138,12 +132,11 @@
     },
     {
       "id": "source",
-      "title": "App Source: repo ve branch bağlantısı",
-      "summary": "App Source aynı App için kullanılacak Git reposunu, branch ve sürüm uyumluluğunu tanımlar.",
+      "title": "App Source seç",
+      "summary": "",
       "actions": [
-        "Apps satırında Source alanını aç.",
-        "Doğru App adına bağlı hazır source varsa onu seç.",
-        "Kaynak yoksa Create a new App Source ile repo ve branch tanımla."
+        "Apps → Source aç; doğru App kaydına bağlı kaynağı seç.",
+        "Uygun kaynak yoksa Create a new App Source seç."
       ],
       "notes": [
         "Görseldeki örnek mevcut Framework kaynağı SRC-frappe-004: App = frappe, Repository URL = https://github.com/frappe/frappe, Branch = version-16, Frappe ve Enabled işaretli.",
@@ -173,13 +166,12 @@
     },
     {
       "id": "identity-error",
-      "title": "Uygulama kimliğini doğrula: education",
-      "summary": "Geçmiş rgv1 denemesinde education reposu educator adlı farklı bir teknik app kaydıyla temsil edildi. Bu adımın yayımlanmış ekranı yok.",
+      "title": "education kimliğini doğrula",
+      "summary": "education için educator kaydını kullanma; ERPNext bağımlılığını doğrula.",
       "actions": [
-        "Geçmiş educator kaydını örnek alarak ilerleme.",
-        "education/version-16/education/hooks.py dosyasını aç.",
-        "app_name = education ve required_apps = erpnext değerlerini doğrula.",
-        "Grup içinde gerçek education App kaydı ve ona bağlı source kullan."
+        "education/version-16/education/hooks.py aç.",
+        "app_name=education; required_apps=erpnext doğrula.",
+        "Gerçek education App ve Source kullan; educator kaydını örnek alma."
       ],
       "notes": [
         "Press develop kaynağı dependency hooks yolunu App adıyla kuruyor; educator yanlış dosya yoluna dönüşebilir.",
@@ -190,12 +182,11 @@
     },
     {
       "id": "branch",
-      "title": "Branch gerçekten repoda bulunmalı",
-      "summary": "Version 16 seçimi GitHub branch adını otomatik doğrulamaz.",
+      "title": "Branch’i repoda doğrula",
+      "summary": "Version 16 seçimine güvenmeden gerçek branch’i kontrol et.",
       "actions": [
-        "Repo sayfasında branch listesini aç.",
-        "education için version-16 branch varlığını doğrula.",
-        "frappe ve gerekiyorsa erpnext için de version-16 kullan; her uygulama kendi destek sözleşmesiyle kontrol edilir."
+        "Repo branch listesini aç; education için version-16 varlığını doğrula.",
+        "frappe/erpnext için version-16; diğer uygulamalar için seçili branch gereksinimlerini kontrol et."
       ],
       "notes": [
         "LMS dahil her app için version-16 yazmak doğru bir genel kural değildir. Branch mevcut olmalı ve Frappe 16 desteği doğrulanmalı.",
@@ -206,14 +197,14 @@
     },
     {
       "id": "source-form",
-      "title": "App Source formunu doğru doldur",
-      "summary": "Repo URL, App kimliği, branch ve Versions uyumlu olmalı. Görsel, mevcut Framework kaynağının alan düzenini örnek olarak gösterir.",
+      "title": "App Source formunu doldur",
+      "summary": "",
       "actions": [
-        "Önce doğru App kaydı için hazır source olup olmadığını kontrol et; varsa yeni source oluşturma.",
-        "Yeni source gerekiyorsa App alanına repo içindeki gerçek app_name değerini ve Repository URL alanına o uygulamanın reposunu gir.",
-        "Branch alanına repoda gerçekten bulunan ve hedef Frappe sürümünü destekleyen branch’i yaz; Enabled açık olsun.",
-        "Versions satırına Version 16 ekle; Team grubun takımına uygun olmalı.",
-        "Frappe kutusunu yalnız framework kaynağında işaretle; diğer uygulamalarda kapalı bırak. Save ile kaydet."
+        "Hazır uygun Source varsa onu seç.",
+        "App: gerçek app_name; Repository URL: uygulamanın reposu.",
+        "Desteklenen gerçek Branch seç; Enabled açık olsun.",
+        "Versions: Version 16; Team: grubun kaynak sahibi.",
+        "Frappe kutusunu yalnız framework için aç; Save seç."
       ],
       "notes": [
         "Görseldeki örnek mevcut Framework kaynağıdır (SRC-frappe-004: frappe/frappe, version-16, Frappe işaretli). Bu ekranda yeni kaynak oluşturulmadı; alanların nasıl okunacağını gösterir.",
@@ -243,12 +234,11 @@
     },
     {
       "id": "release",
-      "title": "Create Release neyi oluşturur?",
-      "summary": "App Release, kaynak branch üzerindeki bir Git commit referansını kaydeder.",
+      "title": "Release oluştur",
+      "summary": "",
       "actions": [
-        "App Source kaydı kaydedildikten sonra Actions menüsünü aç.",
-        "Create Release ile commit kaydını üret.",
-        "App Release bağlantısından branch ve commit bilgisini kontrol et."
+        "Kaydedilmiş App Source → Actions → Create Release seç.",
+        "App Release içinde Source, branch ve commit eşleşmesini kontrol et."
       ],
       "notes": [
         "Release oluşması uygulamanın yüklendiği, build olduğu veya çalıştığı anlamına gelmez.",
@@ -259,12 +249,11 @@
     },
     {
       "id": "source-selection",
-      "title": "Release Group içinde doğru source seçimi",
-      "summary": "App kaynaklarının seçilmesi build içeriğini belirler.",
+      "title": "Gruba doğru Source bağla",
+      "summary": "",
       "actions": [
-        "frappe satırına v16 framework source bağla.",
-        "ERPNext bağımlılığını ekle, ardından education kaynağını bağla.",
-        "Save ile grubu kaydet."
+        "frappe için v16 Source; erpnext için bağımlılık; education için kendi Source kaydını seç.",
+        "Apps tablosunda boş Source bırakma; Save seç."
       ],
       "notes": [
         "Görselde education satırına SRC-education-003 bağlı; geçmişteki educator kaynağı bu grupta kullanılmadı.",
@@ -303,11 +292,11 @@
     },
     {
       "id": "candidate",
-      "title": "Create Deploy Candidate",
-      "summary": "Deploy Candidate, grup uygulama release’lerinin build için seçilmiş anlık kümesidir.",
+      "title": "Deploy Candidate oluştur",
+      "summary": "",
       "actions": [
-        "Kaydedilmiş doğru grupta Actions → Create Deploy Candidate.",
-        "Yeni candidate bağlantısını aç; Apps & Deps listesini incele."
+        "Kaydedilmiş grup → Actions → Create Deploy Candidate seç.",
+        "Yeni candidate → Apps & Deps sırasını ve release listesini kontrol et."
       ],
       "notes": [
         "Görsel egitimxv1 / bench-0027 grubunun Actions menüsünü gösterir. Bu grupta Create Deploy Candidate önce deploy-0027-000001, CRM eklendikten sonra deploy-0027-000002 kaydını üretti; eski rgv1 / bench-0026 grubu ayrı kayıttır.",
@@ -336,12 +325,12 @@
     },
     {
       "id": "schedule",
-      "title": "Build ve deploy başlatma",
-      "summary": "Eğitim grubunda önce yalnız build başlatılır. Deploy, build Success olduktan sonra ayrı adımdır.",
+      "title": "Önce build, sonra deploy başlat",
+      "summary": "",
       "actions": [
-        "deploy-0027-000001 gibi doğrulanmış candidate sayfasında Build menüsünü aç; Complete ile yalnız build başlat.",
-        "Deploy Candidate Build bağlantısından durum ve Build Steps aşamalarını izle.",
-        "Build Success olmadan Deploy menüsünü kullanma. Success sonrasında hedef grubu ve sunucuyu yeniden doğrulayıp deploy işlemini ayrıca başlat."
+        "Candidate → Build → Complete seç; yalnız build başlat.",
+        "Deploy Candidate Build → Status ve Build Steps sonuçlarını izle.",
+        "Build Success sonrası hedef grup ve sunucuyu doğrula; Deploy işlemini ayrı başlat."
       ],
       "notes": [
         "Görsel Build menüsünü gösterir; Complete bir seçenek adıdır, build sonucunun başarılı olduğu anlamına gelmez.",
@@ -371,13 +360,12 @@
     },
     {
       "id": "preparing",
-      "title": "Preparing: çalışıyor mu?",
-      "summary": "Geçmiş denemede build yalnız Preparing durumunda görüldü; bu durum başarılı build, deploy veya site kanıtı değildir. Bu adımın yayımlanmış ekranı yok.",
+      "title": "Preparing loglarını incele",
+      "summary": "Preparing durumunu başarı kanıtı sayma; build, deploy ve Bench sonucunu ayrı doğrula.",
       "actions": [
-        "Build satırını aç, zaman damgası ve aşama loglarını oku.",
-        "Error Log bağlantısını ve candidate Apps & Deps listesini incele.",
-        "Preparing uzun sürüyorsa Press worker/scheduler ve build server görevlerini Hüseyin Cengiz’e kanıtlarıyla aktar.",
-        "Başarılı build sonrasında Deploy ve Bench kaydını ayrıca doğrula."
+        "Build → zaman, Build Steps ve Error Log oku.",
+        "Uzun Preparing durumunu worker/scheduler kanıtlarıyla Hüseyin Cengiz’e aktar.",
+        "Build Success, deploy ve Bench hazır olmadan Site adımına geçme."
       ],
       "notes": [
         "Yalnız Preparing durumuna bakarak kurulum çalışıyor deme. Hata türü belirlenmeden tekrar tekrar yeni build açma.",
@@ -388,17 +376,17 @@
     },
     {
       "id": "site",
-      "title": "Eğitim sitesini oluştur ve doğrula",
-      "summary": "egitimxv1 sitesi henüz oluşturulmadı. İlk build disk doluluğu nedeniyle Upload Build Context adımında başarısız oldu; onaylı build cache temizliği yapıldı (disk %48). deploy-0027-000002’nin ilk build’i f476t39m7i npm aralığı ayrıştırma hatasıyla Pre-build’de başarısız oldu; hedefli düzeltme sonrası j8vu7j2qnm 27 adımı geçip son adım Upload Docker Image’da Failure ile bitti (ECR deposu eksikti). Eksik depo oluşturuldu; yeni build qoh3rkif10 28/28 Success ve image ECR’de doğrulandı. Deploy deploy-0027-000002 başlatıldı; yeni bench bench-0027-000002-apphtznr önce Installing, sonra Active oldu (live-bench-active). Site oluşturma gönderildi; form önce Creating site... This may take a while... gösterdi, site satırı bir süre Installing kaldı. Şimdi egitimxv1.metaframer.net Active: New Site Agent Job 2sdhhleqvr çalıştırılan tüm adımlarda Success, Add Site to Upstream 2secikpbrg Success; HTTPS HTTP/2 200 ve geçerli TLS; giriş ekranı açıldı; altı uygulama kurulu. İlk kurulum tamamlandı (veritabanında setup_complete=1); Desk ve uygulama ana ekranları açıldı (live-site-desk, live-site-education, live-site-lms).",
+      "title": "Eğitim sitesini oluştur",
+      "summary": "",
       "actions": [
-        "Genel Dashboard → Sites → New Site (/dashboard/sites/new) formunu kullanma: bu kurulumda Framework seçenekleri görünmedi.",
-        "Bench Active olduktan sonra Dashboard → Benches → egitimxv1 (bench-0027) → Sites → New Site yolunu aç. Bu kurulumda adres /dashboard/groups/bench-0027/sites/new.",
-        "Grup private kalır; site bu grubun kendi sayfasından açıldığı için grubu public yapmaya gerek yoktur. Grup görünürlüğünü değiştirme.",
-        "Uygulamalar: frappe otomatik gelir; erpnext, crm, education, lms ve payments seçilir. education için ERPNext, lms için Payments gerekir.",
-        "Site adı egitimxv1; panelin base domain’i ile tam adres egitimxv1.metaframer.net. Version 16 seçili olmalı.",
-        "Plan: Metaframer ERP Test ($0/ay); plan açıklaması ürün garantisi içermediğini belirtir. Bölge: Hetzner Falkenstein (FSN1).",
-        "Bölgeye bağlı yasal onay kutusunu yalnız kullanıcı metni okuyup açıkça kabul ettikten sonra işaretle. İsteğe bağlı yerel iş ortağı bilgisi kutusu bu kurulumda kapalı bırakıldı.",
-        "Create site ile bir kez gönder. Oluşturma işinin sonucunu, HTTPS yanıtını, giriş ekranını ve kurulu app listesini ayrı ayrı kontrol et; sonuç görülmeden formu tekrar gönderme."
+        "Bench Active sonrası /dashboard/groups/bench-0027/sites/new adresini aç.",
+        "Grup görünürlüğünü değiştirme; siteyi grubun kendi Sites sayfasından oluştur.",
+        "frappe yanında erpnext, crm, education, lms, payments seç; Education için ERPNext, LMS için Payments gerekir.",
+        "Ad: egitimxv1; Version 16; domain: egitimxv1.metaframer.net.",
+        "Plan: Metaframer ERP Test; garanti koşulunu oku. Bölge: Hetzner Falkenstein (FSN1).",
+        "Bölgesel yasal kutuyu yalnız kullanıcı metni okuyup açıkça kabul ederse işaretle; isteğe bağlı ortak kutusunu kapalı bırak.",
+        "Create site ile bir kez gönder; sonuç görülmeden tekrar gönderme.",
+        "Site Active, Agent Job, HTTPS, giriş ve kurulu app listesini ayrı doğrula."
       ],
       "notes": [
         "Bu kurulumda form gönderildi; form önce Creating site... This may take a while... gösterdi (bu anın ekran görüntüsü yayımlanmadı).",
@@ -416,8 +404,8 @@
     },
     {
       "id": "live-press",
-      "title": "Canlı Press ana ekranı",
-      "summary": "Giriş başarılı; mevcut bilgiler değiştirilmedi.",
+      "title": "Press sayaçlarını oku",
+      "summary": "",
       "actions": ["Sites, Benches ve Servers sayaçlarını oku."],
       "notes": [
         "10 aktif site, 1 aktif bench, birer app/database/proxy server gözlendi.",
@@ -445,8 +433,8 @@
     },
     {
       "id": "live-apps",
-      "title": "Canlı hata: ERPNext eksik",
-      "summary": "Geçmiş kayıt: rgv1 / bench-0026 Apps tablosunda yalnız frappe ve educator bulunuyordu.",
+      "title": "Eksik ERPNext’i kontrol et",
+      "summary": "",
       "actions": [
         "Kaynak uygulamasının gerçek adını kontrol et.",
         "ERPNext bağımlılığını eklemeden yeni build başlatma."
@@ -460,8 +448,8 @@
     },
     {
       "id": "live-failure",
-      "title": "Canlı build sonucu: iki Failure",
-      "summary": "Geçmiş rgv1 denemesi: Preparing durumunun ardından iki build de Failure ile bitti.",
+      "title": "Başarısız build’i aç",
+      "summary": "",
       "actions": [
         "Son build satırını aç.",
         "Build Steps → Pre-build ayrıntısını incele."
@@ -475,8 +463,8 @@
     },
     {
       "id": "live-error",
-      "title": "Canlı hata çıktısı: Required app not found",
-      "summary": "Pre-build çıktısı eksik uygulamayı doğrudan ERPNext olarak belirtiyor.",
+      "title": "Pre-build çıktısını oku",
+      "summary": "",
       "actions": [
         "Pre-build satırına tıkla.",
         "Output alanındaki uygulama ve bağımlılık adlarını oku."
@@ -491,8 +479,8 @@
     },
     {
       "id": "live-new-site",
-      "title": "Dashboard New Site ekranı",
-      "summary": "Sites → New Site açıldı; framework version seçenekleri görünmedi.",
+      "title": "New Site seçeneklerini kontrol et",
+      "summary": "",
       "actions": [
         "Dedicated server seçeneğini kontrol et.",
         "Desk ve hazır Bench verileriyle neden seçenek olmadığına bak."
@@ -507,12 +495,12 @@
     },
     {
       "id": "live-saved",
-      "title": "egitimxv1 grubu kaydedildi",
-      "summary": "Grup kimliği bench-0027; Team Administrator, Version 16, mevcut app sunucusu.",
+      "title": "bench-0027 kaydını doğrula",
+      "summary": "",
       "actions": [
-        "Release Group List içinde egitimxv1 kaydını aç; kayıt kimliğinin bench-0027 olduğunu kontrol et.",
-        "Title = egitimxv1, Team = Administrator ve Version = Version 16 alanlarını kontrol et; Servers tablosunda mevcut app sunucusunu seç.",
-        "Save ile kaydet. Yeni kayıt oluşturmak yerine sonraki Apps ve candidate işlemlerini bu bench-0027 kaydı üzerinde sürdür."
+        "Release Group List → egitimxv1 aç; kimlik bench-0027 olmalı.",
+        "Title: egitimxv1; Team: kaynak sahibi; Version 16; Servers: mevcut app sunucusu.",
+        "Save seç; yeni kayıt açmadan Apps ve candidate işlemlerini bench-0027 üzerinde sürdür."
       ],
       "notes": [
         "bench-0027 Release Group kimliğidir; bu kaydın oluşması çalışan Bench veya Site oluştuğunu kanıtlamaz.",
@@ -541,12 +529,12 @@
     },
     {
       "id": "live-runtime",
-      "title": "Runtime ayarları oluştu",
-      "summary": "Python 3.14, Node 24.12.0, Bench 5.28.0 ve Pip 25.3 kaydetme sonrası oluştu.",
+      "title": "Runtime uyumunu kontrol et",
+      "summary": "",
       "actions": [
-        "bench-0027 kaydında runtime alanlarını aç; Python 3.14, Node 24.12.0, Bench 5.28.0 ve Pip 25.3 değerlerini oku.",
-        "Deploy Candidate içindeki App Release commitlerini aç; her uygulamanın pyproject.toml ve ilgili sürüm gereksinimlerini bu runtime ayarlarıyla karşılaştır.",
-        "Build logunda kullanılan gerçek runtime ve kurulum sonucunu ayrıca kontrol et; yalnız form değerlerine bakarak build başarılı deme."
+        "bench-0027 runtime alanlarını oku: Python 3.14, Node 24.12.0, Bench 5.28.0, Pip 25.3.",
+        "Candidate release commitlerinin pyproject.toml gereksinimlerini runtime ile karşılaştır.",
+        "Gerçek runtime ve kurulum sonucunu build logundan ayrıca kontrol et."
       ],
       "notes": [
         "Bu değerler grup kaydedildikten sonra oluşan yapılandırma alanlarıdır; sunucuda çalışan süreçlerin sürüm ölçümü değildir.",
@@ -575,12 +563,12 @@
     },
     {
       "id": "live-correct-apps",
-      "title": "Doğru beş uygulama ve kaynak",
-      "summary": "frappe → erpnext → payments → education → lms. Check Dependent Apps açık.",
+      "title": "Beş App ve Source’u eşleştir",
+      "summary": "",
       "actions": [
-        "bench-0027 → Apps tablosuna sırasıyla frappe, erpnext, payments, education ve lms satırlarını ekle.",
-        "Source alanlarını eşleştir: frappe → SRC-frappe-004; erpnext → SRC-erpnext-008; payments → SRC-payments-004; education → SRC-education-003; lms → SRC-lms-002.",
-        "Check Dependent Apps kutusunu açık tut. Save ile tabloyu kaydet ve kaydedilmiş beş satırı tekrar oku."
+        "Apps sırası: frappe, erpnext, payments, education, lms.",
+        "Source sırası: SRC-frappe-004, SRC-erpnext-008, SRC-payments-004, SRC-education-003, SRC-lms-002.",
+        "Check Dependent Apps açık olsun; Save sonrası beş satırı yeniden oku."
       ],
       "notes": [
         "frappe framework ilk sıradadır; education için erpnext, lms için payments gerekli olduğundan bağımlılıklar kendilerine ihtiyaç duyan uygulamalardan önce yer alır.",
@@ -619,12 +607,11 @@
     },
     {
       "id": "live-new-candidate",
-      "title": "Candidate oluşturuldu bildirimi",
-      "summary": "deploy-0027-000001 oluşturuldu. Bu bildirim build veya site başarısı değildir.",
+      "title": "Candidate bağlantısını aç",
+      "summary": "",
       "actions": [
-        "Kaydedilmiş egitimxv1 / bench-0027 grubunda Actions → Create Deploy Candidate seç.",
-        "Bildirimde oluşan deploy-0027-000001 bağlantısını aç; candidate kaydının doğru gruba bağlı olduğunu kontrol et.",
-        "Build başlatmadan önce candidate içindeki Apps & Deps ve App Release listesini incele."
+        "bench-0027 → Actions → Create Deploy Candidate seç.",
+        "deploy-0027-000001 aç; grup, Apps & Deps ve release listesini kontrol et."
       ],
       "notes": [
         "deploy-0027-000001 yeni eğitim grubunun candidate kimliğidir; eski bench-0026 candidate’ıyla karıştırma.",
@@ -636,12 +623,12 @@
     },
     {
       "id": "live-candidate-content",
-      "title": "Candidate release hashleri",
-      "summary": "Kaynaklar candidate içinde belirli commit hashlerine sabitlendi; Python/Frappe manifestleri bu commitlerden kontrol edildi.",
+      "title": "Release commitlerini kontrol et",
+      "summary": "",
       "actions": [
-        "deploy-0027-000001 kaydını aç; Apps & Deps içindeki frappe, erpnext, payments, education ve lms satırlarını kontrol et.",
-        "Her satırın App Release bağlantısını aç; kaynak kaydı ve commit hashini karşılaştır. Boş veya yanlış uygulamaya bağlı release varsa build başlatma.",
-        "Uyumluluk kontrolünde branch’in güncel ucunu değil, bu candidate’ın release commitlerindeki pyproject.toml ve hooks.py dosyalarını esas al."
+        "deploy-0027-000001 → Apps & Deps listesindeki beş uygulamayı kontrol et.",
+        "Her App Release bağlantısında Source ve Hash eşleşmesini kontrol et; eksik/yanlış release ile build başlatma.",
+        "Uyumluluğu branch ucundan değil, release commitlerindeki pyproject.toml ve hooks.py dosyalarından oku."
       ],
       "notes": [
         "Candidate uygulama kaynaklarının belirli commitlerini bir araya getirir. Daha sonra branch değişmesi bu ekranda seçilmiş release hashinin aynı olduğu anlamına gelmez.",
@@ -671,12 +658,11 @@
     },
     {
       "id": "live-build-complete",
-      "title": "Build → Complete",
-      "summary": "Önce yalnız build başlatıldı; başarılı build görülmeden deploy yapılmadı.",
+      "title": "Build → Complete seç",
+      "summary": "",
       "actions": [
-        "deploy-0027-000001 sayfasında Build menüsünü aç ve Complete seçeneğini kullanarak yalnız build işlemini başlat.",
-        "Oluşan Deploy Candidate Build bağlantısını aç; bu oturumda yeni kayıt kpktsdsd9n olarak görüldü.",
-        "Build kaydında başarılı sonuç ve aşama logları görülmeden Deploy işlemini başlatma."
+        "deploy-0027-000001 → Build → Complete seç; build kaydını aç.",
+        "Success olmadan Deploy başlatma; kpktsdsd9n tarihsel kaydı Failure oldu."
       ],
       "notes": [
         "Complete burada Build menüsündeki seçenek adıdır; build durumunun tamamlandığı veya başarılı olduğu anlamına gelmez.",
@@ -705,12 +691,12 @@
     },
     {
       "id": "live-build-start",
-      "title": "Yeni build kaydı",
-      "summary": "kpktsdsd9n build kaydı Preparing olarak görüldü. Henüz başarı kanıtı değil.",
+      "title": "Build durumunu izle",
+      "summary": "Preparing veya Failure sonucunu aynı kayıt ve loglarla takip et.",
       "actions": [
-        "Deploy Candidate Build listesinden kpktsdsd9n kaydını aç; candidate bağlantısının deploy-0027-000001 olduğunu kontrol et.",
-        "Status alanını, zaman damgalarını ve Build Steps aşamalarını oku. Bu oturumda görülen durum Preparing idi.",
-        "Preparing sürerse aynı kaydın loglarını incele; Failure oluşursa başarısız aşamayı ve Error Log bağlantısını aç. Sonuç görülmeden yeni buildleri peş peşe oluşturma."
+        "kpktsdsd9n aç; candidate deploy-0027-000001 olmalı.",
+        "Status, zaman ve Build Steps loglarını oku; tarihsel Preparing anını başarı sayma.",
+        "Failure olursa ilk başarısız satırı ve Error Log’u aç; sonuç görülmeden yeni build oluşturma."
       ],
       "notes": [
         "kpktsdsd9n build’in açılmış olması kuyruk veya hazırlık aşamasının gözlendiğini gösterir; başarılı image, deploy veya çalışan site kanıtı değildir.",
@@ -722,12 +708,11 @@
     },
     {
       "id": "live-framework-source",
-      "title": "Framework App Source",
-      "summary": "Canlı alanlar: frappe/frappe, version-16, Frappe checkbox açık. Alttaki installation alanı yayımlanan kırpımın dışında.",
+      "title": "Framework Source’u kontrol et",
+      "summary": "",
       "actions": [
-        "Apps tablosunda frappe satırının SRC-frappe-004 Source bağlantısını aç.",
-        "App = frappe, Repository = frappe/frappe ve Branch = version-16 alanlarını kontrol et; framework kaynağında Frappe checkbox açık olmalı.",
-        "Kaynak kimliğini grup satırıyla karşılaştır; diğer uygulamaların satırlarına bu framework source kaydını bağlama."
+        "SRC-frappe-004 aç: App frappe; repo frappe/frappe; branch version-16; Frappe açık.",
+        "Bu Source’u diğer uygulamalara bağlama."
       ],
       "notes": [
         "Frappe checkbox yalnız framework olan frappe kaynağında açık tutulur; eğitim uygulamalarını framework olarak işaretleme.",
@@ -756,12 +741,11 @@
     },
     {
       "id": "live-erpnext-source",
-      "title": "ERPNext App Source",
-      "summary": "Canlı DOM: frappe/erpnext reposu version-16. Education için gerekli uygulama.",
+      "title": "ERPNext Source’u kontrol et",
+      "summary": "",
       "actions": [
-        "Apps tablosunda erpnext satırının SRC-erpnext-008 Source bağlantısını aç.",
-        "App = erpnext, Repository = frappe/erpnext ve Branch = version-16 eşleşmesini kontrol et.",
-        "education satırından önce erpnext satırının gruba eklendiğini ve kaydedildiğini doğrula."
+        "SRC-erpnext-008 aç: App erpnext; repo frappe/erpnext; branch version-16.",
+        "ERPNext’i Education’dan önce ekle ve kaydet."
       ],
       "notes": [
         "Education’ın required_apps kaydı ERPNext gerektirir. Eski build’de Required app not found hatasının eksik uygulaması erpnext idi.",
@@ -790,12 +774,11 @@
     },
     {
       "id": "live-payments-source",
-      "title": "Payments App Source",
-      "summary": "Canlı alanlar: frappe/payments reposu version-16; LMS için gerekli uygulama.",
+      "title": "Payments Source’u kontrol et",
+      "summary": "",
       "actions": [
-        "Apps tablosunda payments satırının SRC-payments-004 Source bağlantısını aç.",
-        "App = payments, Repository = frappe/payments ve Branch = version-16 alanlarını kontrol et.",
-        "lms satırından önce payments satırını ekle; Apps tablosunu Save ile kaydet."
+        "SRC-payments-004 aç: App payments; repo frappe/payments; branch version-16.",
+        "Payments’ı LMS’ten önce ekle ve kaydet."
       ],
       "notes": [
         "Bu candidate’taki LMS uygulaması payments bağımlılığı gerektirir; ödeme yöntemi ekleme uyarısı ile bu uygulama bağımlılığı farklı konulardır.",
@@ -824,12 +807,11 @@
     },
     {
       "id": "live-education-source",
-      "title": "Education App Source",
-      "summary": "Canlı DOM: education, frappe/education, version-16. educator adı kullanılmadı.",
+      "title": "Education Source’u kontrol et",
+      "summary": "",
       "actions": [
-        "Apps tablosunda education satırının SRC-education-003 Source bağlantısını aç.",
-        "App = education, Repository = frappe/education ve Branch = version-16 alanlarını kontrol et.",
-        "Teknik uygulama adının education olduğunu ve ERPNext satırının önce geldiğini doğrula; eski educator kaydını bu satırda seçme."
+        "SRC-education-003 aç: App education; repo frappe/education; branch version-16.",
+        "App adını educator olarak değiştirme."
       ],
       "notes": [
         "education repo içindeki gerçek paket adıdır. Title alanının okunabilir olması yanlış bir App teknik adını düzeltmez.",
@@ -858,12 +840,11 @@
     },
     {
       "id": "live-lms-source",
-      "title": "LMS App Source",
-      "summary": "Canlı alanlar: frappe/lms reposu main branch. Required Apps: frappe/payments. Her app branch’i version-16 olmak zorunda değil.",
+      "title": "LMS Source’u kontrol et",
+      "summary": "",
       "actions": [
-        "Apps tablosunda lms satırının SRC-lms-002 Source bağlantısını aç.",
-        "App = lms, Repository = frappe/lms ve Branch = main alanlarını kontrol et; bu kayıtta gözlenen branch main idi.",
-        "Required Apps içindeki frappe ve payments değerlerini kontrol et; ikisinin de Apps tablosunda lms satırından önce bulunduğunu doğrula."
+        "SRC-lms-002 aç: App lms; repo frappe/lms; branch main.",
+        "Required Apps: frappe/payments; ikisi de LMS’ten önce gelmeli."
       ],
       "notes": [
         "Her uygulamaya otomatik olarak version-16 branch yazılmaz. Bu LMS kaynağının main branch uyumluluğu candidate’taki seçilmiş commit üzerinden incelenir.",
@@ -892,12 +873,11 @@
     },
     {
       "id": "live-dashboard-bench",
-      "title": "Dashboard bench listesi",
-      "summary": "Mevcut geniş uygulama grubu Active; rgv1 ve eğitim grubu Awaiting Deploy idi. Bu ekran site oluşturma başarısı değildir.",
+      "title": "Eğitim Bench’ini ayırt et",
+      "summary": "Mevcut Active grubu eğitim grubunun build/deploy sonucu yerine kullanma.",
       "actions": [
-        "Press Dashboard → Benches listesini aç; mevcut Active kaydı ile rgv1 ve egitimxv1 eğitim grubunu ayrı satırlar olarak oku.",
-        "egitimxv1 satırının durumunu kontrol et; bu oturumda Awaiting Deploy görüldü.",
-        "Site oluşturmayı denemeden önce eğitim grubunun kendi build ve deploy sonucunu doğrula; mevcut Active gruba taşınarak sorunu gizleme."
+        "Dashboard → Benches aç; egitimxv1 satırını çalışan diğer gruptan ayır.",
+        "Kendi build/deploy sonucunu doğrula; mevcut Active gruba taşıyarak hatayı gizleme."
       ],
       "notes": [
         "Mevcut başka bir Bench’in Active olması yeni eğitim grubunun hazır olduğu anlamına gelmez.",
@@ -909,12 +889,12 @@
     },
     {
       "id": "live-dashboard-empty",
-      "title": "Dashboard New Bench sürüm seçenekleri boş",
-      "summary": "New Bench ekranında framework version seçenekleri görünmedi. Desk üzerinden doğru grup oluşturma yoluna geçildi.",
+      "title": "Boş sürüm seçimini incele",
+      "summary": "New Bench seçenekleri boşsa Desk → Release Group List yolunu kullan.",
       "actions": [
-        "Dashboard → Benches → New Bench akışını aç ve framework version seçim alanını kontrol et.",
-        "Bu oturumda seçenekler boş görüldü. Seçim varmış gibi ilerleme; Desk aramasından Release Group List açarak doğru egitimxv1 grubunu oluşturma yolunu kullan.",
-        "Desk’teki bench-0027 ve güncel candidate deploy-0027-000002 kaydıyla ilerle (ilk candidate deploy-0027-000001 / kpktsdsd9n Failure ile bitti); Dashboard seçeneklerini build/deploy sonucu sonrasında yeniden kontrol et."
+        "Dashboard → Benches → New Bench sürüm alanını kontrol et.",
+        "Seçenekler boşsa Desk → Release Group List üzerinden egitimxv1 grubunu kullan.",
+        "bench-0027 / deploy-0027-000002 ile ilerle; eski kpktsdsd9n Failure kaydını ayır."
       ],
       "notes": [
         "Boş seçenek listesinin nedeni kesinleştirilmedi. Framework source, Team paylaşımı ve hazır Bench verileri ayrı inceleme gerektirir.",
@@ -926,8 +906,8 @@
     },
     {
       "id": "live-agent-pong",
-      "title": "Agent temel bağlantısı: pong",
-      "summary": "Server → app → Ping → Ping Agent işlemi pong yanıtı verdi. Temel erişim çalışıyor; build protokolü ayrıca doğrulanmalı.",
+      "title": "Ping Agent yanıtını oku",
+      "summary": "pong yanıtını yalnız temel bağlantı kanıtı say; build protokolünü ayrıca doğrula.",
       "actions": [
         "Server List içinde app sunucusunu aç; Ping → Ping Agent işlemini çalıştır ve yanıtı oku."
       ],
@@ -939,8 +919,8 @@
     },
     {
       "id": "live-agent-version",
-      "title": "Agent commit kimliği",
-      "summary": "Server → Actions → Show Agent Version: 2a412bc2b1292176f0b6c8ea51240d743981f283. Bu repo HEAD bilgisidir; çalışan process kodu ayrıca SSH ile doğrulanmalı.",
+      "title": "Agent commit’ini kaydet",
+      "summary": "Show Agent Version çıktısını çalışan process koduyla ayrıca karşılaştır.",
       "actions": [
         "Aynı Server kaydında Actions → Show Agent Version seç ve gösterilen commit kimliğini kaydet."
       ],
@@ -954,8 +934,8 @@
     },
     {
       "id": "live-press-version",
-      "title": "Press yönetim uygulamasının sürümü",
-      "summary": "Help → About: Press 0.7.0 (develop), yönetim Framework 15.101.5 (version-15). Bu yönetim paneli sürümü; hedef eğitim grubunun Frappe v16 sürümünden ayrıdır.",
+      "title": "Panel sürümünü kaydet",
+      "summary": "Help → About’u oku; yönetim Framework v15 ile hedef grubun v16 sürümünü ayır.",
       "actions": [
         "Desk üst menüsünde Help → About aç; Press ve Framework sürümlerini kaydet."
       ],
@@ -967,8 +947,8 @@
     },
     {
       "id": "live-current-failure",
-      "title": "Yeni eğitim build genel sonucu: Failure",
-      "summary": "kpktsdsd9n build genel durumu Failure. Bu kırpım clone satırlarını gösterir; Upload hatasının ayrıntısı bir sonraki kanıttadır.",
+      "title": "Build Failure durumunu oku",
+      "summary": "",
       "actions": [
         "Deploy Candidate Build listesinden kpktsdsd9n kaydını aç; Status alanını ve Build Steps tablosunun başını oku."
       ],
@@ -999,8 +979,8 @@
     },
     {
       "id": "live-upload-row",
-      "title": "Build paketinin yüklenmesi başarısız",
-      "summary": "Build Steps satır 8: Stage Upload, Step Build Context, Status Failure. Beş clone, Pre-build ve Package satırları Success.",
+      "title": "Upload Failure satırını aç",
+      "summary": "",
       "actions": [
         "Build kaydında Build Steps → 8. Upload / Build Context satırını aç."
       ],
@@ -1030,11 +1010,11 @@
     },
     {
       "id": "live-agent-http500",
-      "title": "HTTP 500: agent upload yanıtı",
-      "summary": "Error Log qu5n7pv6pk: POST builder/upload/kpktsdsd9n yanıtı HTTP 500; yanıt JSON olarak çözümlenemedi. Neden sunucuda doğrulandı: Nginx, istek gövdesini geçici dosyaya yazarken disk doluluğu hatası verdi.",
+      "title": "Upload HTTP 500 nedenini incele",
+      "summary": "Error Log, Nginx logu ve disk ölçümünü aynı build ve zamanla eşleştir.",
       "actions": [
-        "Build → Error Log → Deploy Candidate Build Exception kaydını aç; response ve path satırlarını oku.",
-        "Uygulama sunucusunda /var/log/nginx/error.log içinde aynı build kimliğini ve /agent/builder/upload yolunu ara; UTC zaman damgalarını Türkiye saatine (+3) çevirerek Error Log zamanıyla eşleştir."
+        "Build → Error Log → Deploy Candidate Build Exception içinde response ve path’i oku.",
+        "Nginx error.log satırlarını build kimliği ve /agent/builder/upload ile eşleştir; UTC saatini TSİ (+3) ile karşılaştır."
       ],
       "notes": [
         "Nginx error.log: kpktsdsd9n POST /agent/builder/upload isteğinde 08:52:59, 08:58:00 ve 09:03:02 UTC (Türkiye saatiyle 11:52:59, 11:58:00, 12:03:02) pwrite() temporary request body failed (28: No space left on device). Üç kayıt, Press’in üç upload denemesiyle uyumludur.",
@@ -1048,8 +1028,8 @@
     },
     {
       "id": "live-previous-build-detail",
-      "title": "Eski build Pre-build aşamasında durmuş",
-      "summary": "Eski rgv1 grubunda Pre-build Failure gözlendi. İlk egitimxv1 build’i kpktsdsd9n bu aşamayı geçip Upload’da durdu; iki hatayı karıştırma.",
+      "title": "Eski ve yeni Failure’ı ayır",
+      "summary": "",
       "actions": [
         "Eski ve güncel build kayıtlarında ilk Failure satırının Stage/Step değerlerini yan yana karşılaştır."
       ],
@@ -1061,8 +1041,8 @@
     },
     {
       "id": "live-previous-candidate-count",
-      "title": "Eski candidate build sayısı",
-      "summary": "deploy-0026-000001 eski candidate kaydında iki build bağlantısı bulunuyor. Yeni candidate deploy-0027-000001 ayrı kayıttır.",
+      "title": "Candidate buildlerini eşleştir",
+      "summary": "",
       "actions": [
         "Candidate kaydının Connections bölümünde bağlı build sayısını oku; build kimliklerini candidate kimliğiyle eşleştir."
       ],
@@ -1074,8 +1054,8 @@
     },
     {
       "id": "live-previous-candidates",
-      "title": "Eski candidate liste görünümü",
-      "summary": "Eski rgv1 candidate listesi deploy-0026-000001 kaydını gösteriyor; build/site başarısını göstermez.",
+      "title": "Candidate listesini filtrele",
+      "summary": "",
       "actions": [
         "Deploy Candidate listesini Release Group alanına göre filtrele; her candidate’ın hangi gruba ait olduğunu oku."
       ],
@@ -1087,8 +1067,8 @@
     },
     {
       "id": "live-candidate-menu",
-      "title": "Release Group candidate menüsü",
-      "summary": "Kaydedilmiş grupta Actions → Create Deploy Candidate seçeneği görünür. egitimxv1 için aynı işlem deploy-0027-000001 kaydını üretti.",
+      "title": "Doğru candidate eylemini seç",
+      "summary": "",
       "actions": [
         "Kaydedilmiş egitimxv1 / bench-0027 grubunda Actions menüsünü aç; Create Deploy Candidate ile Create Duplicate Deploy Candidate seçeneklerini ayırt et."
       ],
@@ -1118,8 +1098,8 @@
     },
     {
       "id": "live-group-list",
-      "title": "Mevcut grupları ayırt et",
-      "summary": "Release Group listesinde önceki eğitim denemesi ve çalışan geniş uygulama grubu ayrıdır. Eğitim için yeni egitimxv1 / bench-0027 kaydı oluşturuldu.",
+      "title": "Grup adını ve kimliğini kontrol et",
+      "summary": "",
       "actions": [
         "Release Group List aç; Title ve kayıt kimliği sütunlarıyla eski rgv1, çalışan geniş grup ve egitimxv1 satırlarını ayırt et."
       ],
@@ -1132,8 +1112,8 @@
     },
     {
       "id": "live-draft-runtime",
-      "title": "Taslak formda runtime alanları",
-      "summary": "Yeni grup taslağında Dependencies tablosu boştu. Kaydetme sonrası runtime alanları oluştu; live-runtime adımına bak.",
+      "title": "Taslağı kaydet, runtime’ı oku",
+      "summary": "",
       "actions": [
         "Taslak grupta Dependencies tablosunu elle doldurma; önce Save ile kaydet, sonra runtime alanlarını oku."
       ],
@@ -1145,8 +1125,8 @@
     },
     {
       "id": "live-site-form-initial",
-      "title": "Site formunun ilk görünümü",
-      "summary": "Sites → New Site ilk ekranında framework sürüm seçenekleri görünmedi. Dedicated server seçimiyle de ayrıca kontrol edildi; site oluşturulmadı.",
+      "title": "İlk site formunu kontrol et",
+      "summary": "",
       "actions": [
         "Dashboard → Sites → New Site aç; framework sürüm alanını önce varsayılan, sonra Dedicated server seçimiyle kontrol et."
       ],
@@ -1158,8 +1138,8 @@
     },
     {
       "id": "live-old-rgv1",
-      "title": "Eski grup kimliği: rgv1",
-      "summary": "Bu kaydın Title alanı rgv1. Kullanıcı tarafından seçilen yeni ad egitimxv1; eski kayıt yeniden adlandırılmadı.",
+      "title": "Eski rgv1 kaydını koru",
+      "summary": "",
       "actions": [
         "Eski bench-0026 kaydını aç; Title alanını oku ve kaydı yeniden adlandırma."
       ],
@@ -1171,8 +1151,8 @@
     },
     {
       "id": "live-site-header",
-      "title": "Sites ekranında ödeme uyarısı",
-      "summary": "Sites başlığındaki ödeme yöntemi uyarısı görüldü. Bu görevde ödeme yöntemi eklenmedi; build agent hatasının nedeni bu uyarı olarak kabul edilmedi.",
+      "title": "Ödeme uyarısını oku",
+      "summary": "",
       "actions": [
         "Dashboard → Sites başlığındaki uyarıyı oku; ödeme yöntemi ekleme işlemini başlatma."
       ],
@@ -1184,8 +1164,8 @@
     },
     {
       "id": "live-no-error-at-preparing",
-      "title": "Preparing sırasında hata filtresi boştu",
-      "summary": "Build → Error Log bağlantısındaki reference_name=kpktsdsd9n filtresi o anda eşleşen kayıt bulmadı. Daha sonra Failure olduğunda qu5n7pv6pk kaydı oluştu.",
+      "title": "Error Log filtresini kontrol et",
+      "summary": "reference_name filtresini build kimliğiyle eşleştir; boş sonucu kapsamıyla yorumla.",
       "actions": [
         "Build kaydında Connections → Error Log bağlantısını aç; reference_name filtresinin build kimliğiyle eşleştiğini kontrol et."
       ],
@@ -1197,8 +1177,8 @@
     },
     {
       "id": "live-no-job-at-preparing",
-      "title": "Preparing sırasında Agent Job filtresi",
-      "summary": "Build → Agent Job bağlantısındaki reference_name=kpktsdsd9n filtresi o anda boştu. Bu, sistemde hiç Agent Job olmadığı anlamına gelmez.",
+      "title": "Agent Job filtresini kontrol et",
+      "summary": "Boş filtre sonucunu sistemde hiç iş yok diye yorumlama.",
       "actions": [
         "Build kaydında Connections → Agent Job bağlantısını aç; filtreyi kaldırıp Run Remote Builder işlerini tarih ve Server ile ayrıca listele."
       ],
@@ -1210,30 +1190,22 @@
     },
     {
       "id": "hata-tanisi",
-      "title": "Build hatasında nereye bakılır?",
-      "summary": "Preparing veya Failure durumunda uygulama listesine dönmeden önce build aşamasını ve ilgili logu belirle. Bu kurulumda dört farklı hata ayrı kanıtlarla bulundu: Required app not found, Upload HTTP 500, npm aralığı ayrıştırma ve registry’de eksik image deposu (Upload Docker Image).",
+      "title": "Build hatasını adım adım incele",
+      "summary": "",
       "status": "live",
       "actions": [
-        "Release Group → Deploy Candidate → Deploy Candidate Build kaydını aç. Grup, candidate, build kimliğini ve zaman damgasını kaydet; egitimxv1 için bench-0027 / deploy-0027-000001 / kpktsdsd9n.",
-        "Build Steps tablosunda ilk Failure satırını bul. Sonraki Pending satırlar çoğunlukla henüz başlamamış adımlardır; ayrı hata sanma.",
-        "Run Validations → Pre-build Failure ise satırı açıp Output alanını oku. Required app not found çıktısında istenen bağımlılığı gerçek App/Source ve uyumlu branch ile ekle. Eski educator denemesinde eksik app erpnext idi. Output Invalid simple block ise sorun uygulama listesi değil sürüm aralığı ayrıştırmasıdır; live-npm-range-validation adımına bak.",
-        "Upload → Build Context Failure ise build Connections → Error Log bağlantısını aç. Deploy Candidate Build Exception kaydında request method, path ve response koduna bak. Güncel kanıt qu5n7pv6pk: POST builder/upload/kpktsdsd9n → HTTP 500.",
-        "Upload → Docker Image Failure ise satır Output’unun son satırını oku; Agent Job Success sonucunu image push başarısı sayma. Registry’de depo yoksa live-ecr-push-failure adımına bak.",
-        "Traceback sonunda JSONDecodeError varsa daha önceki response satırını oku. HTTP 500 birincil hata; JSONDecodeError yanıtın JSON olarak çözümlenemediğini belirtir. BufferedReader cannot pickle ise traceback değişkenini yazdırırken oluşmuş ikincil hatadır.",
-        "Server List → ilgili Build Server → Ping → Ping Agent ile bağlantıyı kontrol et. pong, temel bağlantıyı doğrular; upload veya build protokolünün doğru olduğunu kanıtlamaz.",
-        "Aynı Server → Actions → Show Agent Version ile agent commit’ini; Help → About ile yönetim paneli Frappe/Press sürümünü kaydet. Hedef grubun v16 uygulama sürümlerini yönetim panelinin v15 Framework sürümüyle karıştırma.",
-        "Agent Job → Run Remote Builder kayıtlarını tarih ve Reference Name ile eşleştir. 5ignfoq0t5 kaydında 6 Ekim tarihli Redis AOF / No space left on device hatası var; bu tarihsel kanıttır, bugünkü upload 500 için sunucuda ayrıca ölçüm yapılır.",
-        "Doğru uygulama sunucusuna bağlandığını doğrula (hostname ve rol); bağlantı bilgilerini, IP’yi ve kimlik bilgilerini rehbere veya bilete yazma. Bu kurulumda ilk denenen IP başka bir altyapı sunucusuydu.",
-        "df -h ile blok alanını oku: kök dosya sistemi Use% ve Avail değerlerine bak. Bu kurulumda 150 GB, 144 GB kullanılmış, 156 MB boş, %100.",
-        "df -i ile inode kullanımını ayrı oku. No space left on device hem blok alanı hem inode tükenmesinde görülebilir; bu kurulumda inode %63, yani neden blok alanı doluluğu.",
-        "İlgili Nginx error.log satırlarını yalnız build kimliği ve /agent/builder/upload yolu ile filtreleyerek oku. Bu kurulumda kpktsdsd9n için 08:52:59, 08:58:00, 09:03:02 UTC (11:52:59, 11:58:00, 12:03:02 TSİ) pwrite() temporary request body failed (28: No space left on device) görüldü.",
-        "docker system df ile yalnız özet kullanımı oku; ayrıntılı (-v) listeyi veya image adlarını rehbere taşıma. Bu kurulumda temizlik öncesi Build Cache 61.2 GB, Images 29 GB geri kazanılabilir; üç aktif container çalışıyor.",
-        "redis-cli INFO persistence ile aof_last_write_status, rdb_last_bgsave_status ve aof_last_bgrewrite_status değerlerini oku. Bu kurulumda üçü de ok; 6 Ekim Redis hatası bugün sürmüyor.",
-        "Ölçümler salt okunurdur. Temizlik yalnız kullanıcının açık silme onayıyla ve yalnız kullanılmayan Docker build cache için yapılır; image, site, veritabanı, container, backup veya Redis dosyası silme. Servis yeniden başlatma veya deploy bu adımın parçası değildir.",
-        "Repo HEAD bilgisi çalışan kodu tek başına kanıtlamaz. Bu sunucuda HEAD aynı, ancak agent/web.py değiştirilmiş ve legacy_builder.py mevcut; disk doluluğu doğrulandığı için protokol uyuşmazlığını çözüm olarak uygulama ve agent kodunu değiştirme.",
-        "Preparing sırasında Error Log veya Agent Job filtreleri boş olabilir. Bu kurulumda üç upload denemesi ve aradaki toplam 600 saniye bekleme Preparing süresini açıkladı. Kayıt oluşmadan tekrar build başlatma.",
-        "Agent Job, RQ Job ve Error Log filtrelerinin kapsamını kontrol et. No matching records yalnız seçili filtrede kayıt olmadığını söyler; sistemde hiçbir iş veya hata yok demek değildir. Scheduler Active de build endpoint sağlığını kanıtlamaz.",
-        "Onaylı build cache temizliği sonrasında df -h ile boş alanı yeniden ölç; ardından tek build ile clone → validation → package → upload → image build/push Success akışını doğrula. Sonra deploy/Bench ve en son egitimxv1 sitesinin HTTPS, giriş ve app ekranlarını doğrula."
+        "Grup, candidate, build kimliği ve zamanını kaydet; doğru build’i aç.",
+        "Build Steps → ilk Failure → Output → Connections/Error Log sırasını izle; Pending satırları ayrı hata sayma.",
+        "Required app not found için gerçek App/Source bağımlılığını; Invalid simple block için npm ayrıştırmasını incele.",
+        "Upload Build Context için method/path/HTTP response; Upload Docker Image için son Output satırı ve registry deposunu kontrol et.",
+        "HTTP 500 nedenini JSONDecodeError ve cannot pickle gibi ikincil hatalardan ayır.",
+        "Ping Agent, Show Agent Version ve Help → About sonuçlarını kaydet; pong/HEAD ile çalışan build kodunu doğrulanmış sayma.",
+        "Hüseyin Cengiz doğru sunucuda df -h, df -i, Nginx error.log, docker system df ve redis-cli INFO persistence okumalarını karşılaştırsın.",
+        "Logları build kimliği ve zamanla eşleştir; boş filtreyi sistemde hiç iş yok diye yorumlama.",
+        "Temizlik için açık onay al; yalnız kullanılmayan build cache silinebilir. Site, image, container, backup, Redis ve veritabanını silme.",
+        "Servis yeniden başlatma veya agent değişikliği yapma; ölçümleri Hüseyin Cengiz’e aktar.",
+        "Onaylı temizlik sonrası boş alanı ölç; tek build ile tüm aşamaları doğrula.",
+        "Build Success → deploy → Bench Active → site/HTTPS/giriş/app ekranları sırasını izle."
       ],
       "notes": [
         "Bu kurulumda Upload HTTP 500’ün kök nedeni doğrulandı: uygulama sunucusunda kök dosya sistemi %100 dolu ve Nginx upload isteğinin gövdesini geçici dosyaya yazamadı. 6 Ekim Redis kanıtından ayrı, bugünkü doğrudan kanıttır.",
@@ -1250,12 +1222,12 @@
     },
     {
       "id": "live-agent-jobs",
-      "title": "Agent Job listesini doğru yorumla",
-      "summary": "Listede hem başarılı backup/build işleri hem de önceki Failure kayıtları var. Kayıtları ilgili build kimliği ve zamanıyla eşleştir.",
+      "title": "Agent Job’u build ile eşleştir",
+      "summary": "",
       "actions": [
         "Agent Job listesini aç.",
-        "Job Type olarak Run Remote Builder seç; Server ve Reference Name alanlarını kontrol et.",
-        "333inegvf4: 7 Ekim 07:27:45–07:28:22, Success; reference 2orrvq4bjk. Bu egitimxv1 işi değil."
+        "Job Type: Run Remote Builder; Server, Reference Name ve zamanı karşılaştır.",
+        "333inegvf4 Success kaydı reference 2orrvq4bjk içindir; egitimxv1 işi sayma."
       ],
       "notes": [
         "İstek gövdesinde registry parolası veya build token bulunabilir. Ham Request Data ekranını public rehbere koyma.",
@@ -1283,8 +1255,8 @@
     },
     {
       "id": "live-builder-success",
-      "title": "Başarılı builder karşı örneği",
-      "summary": "7 Ekim’deki başka bir başarılı builder işi önceki sürüm uyuşmazlığı çıkarımını sınırlar.",
+      "title": "Başarılı karşı örneği incele",
+      "summary": "333inegvf4 işi egitimxv1’e ait değildir; protokol çıkarımını buna göre sınırla.",
       "actions": [
         "333inegvf4 job kaydını aç.",
         "Status, Request Path ve Reference Name bilgilerini birlikte kontrol et."
@@ -1315,12 +1287,12 @@
     },
     {
       "id": "live-redis-enospc",
-      "title": "Önceki hata: Redis AOF için disk alanı yok",
-      "summary": "Tarihsel kanıt: 6 Ekim tarihli 5ignfoq0t5 job traceback’i Redis AOF dosyasına yazımda No space left on device hatasını gösteriyor. Bugünkü upload hatasının kanıtı ayrıdır.",
+      "title": "Redis hatasının tarihini ayır",
+      "summary": "6 Ekim AOF hatasını güncel Redis, Nginx ve disk okumalarıyla karşılaştır.",
       "actions": [
-        "5ignfoq0t5 job kaydında Traceback alanının son satırını oku.",
-        "Redis’in güncel durumunu redis-cli INFO persistence ile salt okunur kontrol et; bu kurulumda aof_last_write_status, rdb_last_bgsave_status ve aof_last_bgrewrite_status ok.",
-        "Bugünkü upload hatası için Nginx error.log ve df -h kanıtını kullan; live-agent-http500 ve hata-tanisi adımlarına bak."
+        "5ignfoq0t5 → Traceback son satırını oku; 6 Ekim kaydını ayrı tut.",
+        "redis-cli INFO persistence ile güncel yazım durumunu kontrol et.",
+        "Bugünkü upload için Nginx error.log ve df -h okumalarını karşılaştır."
       ],
       "notes": [
         "Bu hata 6 Ekim 18:47–18:59 işine ait tarihsel kayıttır. Bugünkü HTTP 500 bu kayda dayanılarak değil, aynı güne ait Nginx log ve df ölçümüyle doğrulandı.",
@@ -1349,13 +1321,13 @@
     },
     {
       "id": "live-cleanup-crm",
-      "title": "Build cache temizliği ve CRM eklenmesi",
-      "summary": "Kullanıcı onayıyla yalnız Docker build cache temizlendi; disk %100’den %48’e indi. Ardından egitimxv1 / bench-0027 Apps tablosuna crm eklendi ve altı satır kaydedildi.",
+      "title": "Onaylı cache temizliğini doğrula",
+      "summary": "Yalnız build cache için açık onay al; disk, container ve Redis durumunu yeniden ölç.",
       "actions": [
-        "Silme işleminden önce kullanıcıdan yalnız Docker build cache için açık onay al. Onaydan sonra docker builder prune --all --force çalıştır ve exit kodunu kontrol et; bu kurulumda exit 0, çıktıdaki Total 96.68 GB.",
-        "df -h ile kök dosya sistemini yeniden ölç. Bu kurulumda 150 GB, 69 GB kullanılmış, 76 GB boş, %48 (önce 156 MB boş, %100).",
-        "Mevcut container’ların yeniden başlamadığını uptime ile, Redis yazımının sürdüğünü redis-cli INFO persistence ile kontrol et. Bu kurulumda üç container aynı uptime ile çalışıyor; bgsave/write ok.",
-        "bench-0027 → Apps → Add Row: App crm, Source SRC-crm-002 (branch main, Version 16, Enabled). Save ile kaydet ve altı satırı tekrar oku."
+        "Silmeden önce yalnız build cache için açık onay al; sonra docker builder prune --all --force sonucunu kontrol et.",
+        "df -h ile disk alanını yeniden ölç; tarihsel sonuç %48 kullanım, 76 GB boş alan.",
+        "Container uptime ve redis-cli INFO persistence durumlarını kontrol et.",
+        "bench-0027 → Apps → Add Row: crm / SRC-crm-002, main, Version 16, Enabled; Save sonrası altı satırı oku."
       ],
       "notes": [
         "Yalnız build cache temizlendi. Image, site, veritabanı, container veya app kaldırılmadı; deploy yapılmadı.",
@@ -1386,13 +1358,13 @@
     },
     {
       "id": "live-candidate-two",
-      "title": "İkinci candidate: deploy-0027-000002",
-      "summary": "CRM eklendikten sonra yeni candidate oluşturuldu; altı uygulama belirli commitlere sabitlendi. İlk build f476t39m7i Pre-build validation’da Failure; hedefli düzeltme sonrası j8vu7j2qnm 27 adımı geçip son adım Upload Docker Image’da Failure ile bitti; eksik ECR deposu oluşturulduktan sonra yeni build qoh3rkif10 28/28 Success; ardından Deploy başlatıldı.",
+      "title": "Altı uygulamalı candidate oluştur",
+      "summary": "",
       "actions": [
-        "bench-0027 → Actions → Create Deploy Candidate ile yeni candidate oluştur; bu kurulumda deploy-0027-000002.",
-        "Apps & Deps içinde altı satırın Source, Release ve Hash alanlarını kontrol et. crm satırı SRC-crm-002, commit deedce73c1eb48577e7f70e95df6bac1dc55c93f.",
-        "crm commit manifestini runtime ile karşılaştır: Frappe >=15,<17 ve Python >=3.10; grup Version 16 ve Python 3.14.",
-        "Build → Complete ile yalnız build başlat. Build Success olmadan Deploy menüsünü kullanma."
+        "bench-0027 → Actions → Create Deploy Candidate; oluşan deploy-0027-000002 kaydını aç.",
+        "Altı App satırında Source, Release ve Hash eşleşmesini kontrol et; CRM kaynağı SRC-crm-002 olmalı.",
+        "CRM release manifestini karşılaştır: Frappe >=15,<17; Python >=3.10; grup Version 16 / Python 3.14.",
+        "Build → Complete seç; Build Success olmadan Deploy kullanma."
       ],
       "notes": [
         "Ekranda hash sütunu kısaltılmış görünür; tam commit kimliği App Release kaydından okunur.",
@@ -1423,16 +1395,15 @@
     },
     {
       "id": "live-npm-range-validation",
-      "title": "Pre-build validation: npm sürüm aralığı ayrıştırma hatası",
-      "summary": "deploy-0027-000002’nin ilk build’i f476t39m7i Pre-build validation aşamasında Failure ile bitti. Neden uygulama listesi değil, Press’in Node npm aralığını yanlış ayrıştırıcıyla okumasıydı. Bu adımın yayımlanmış ekranı yok.",
+      "title": "npm aralığı hatasını ayır",
+      "summary": "Node için NpmSpec, Python için SimpleSpec kullanıldığını doğrula; değişikliği incelet.",
       "actions": [
-        "f476t39m7i build kaydını aç; Build Steps içindeki ilk Failure satırının Pre-build validation olduğunu doğrula.",
-        "Satırı açıp Output alanını oku. Bu kurulumdaki çıktı: Invalid simple block '^20.19.0 || >=22.12.0'. Bu, Required app not found hatasından farklıdır; uygulama veya Source eklemek çözüm değildir.",
-        "Nedeni ayır: ^ ve || npm sürüm aralığı sözdizimidir. semantic-version kütüphanesinde SimpleSpec bu sözdizimini kabul etmez; npm aralıkları NpmSpec ile okunur. Press Node gereksinimini SimpleSpec ile ayrıştırdığı için doğrulama hata verdi.",
-        "Düzeltme hedefli olmalı: yalnız Node gereksinimi kontrolü NpmSpec kullanır; Python gereksinimi SimpleSpec ile kalır. Kurulu sürümlerin NpmSpec desteğini doğrula; bu kurulumda semantic-version 2.10.0 ve Python 3.10.12 destekliyor.",
-        "Uygulamadan önce özgün dosyanın yedeğini al ve SHA değerini kontrol et; düzeltmeyi incelet. Regresyon testlerini gerçek kurulumdan önce ve sonra çalıştır; bu kurulumda altı test her iki seferde geçti.",
-        "Değişikliği yüklemek için yalnız boşta olan build worker’larını yeniden başlat. Bu kurulumda dört boşta build worker yeniden başlatıldı; web ve Redis süreçlerine dokunulmadı.",
-        "Aynı candidate için tek yeni build başlat ve sonucunu izle. Bu kurulumda j8vu7j2qnm 13:39:11 TSİ’de başladı ve Pre-build validation Success oldu (live-prebuild-upload-success); build daha sonra farklı bir nedenle, son adım Upload Docker Image’da Failure ile bitti (live-ecr-push-failure). Sonuç görülmeden yeni build açma."
+        "f476t39m7i → ilk Failure → Pre-build validation → Output aç.",
+        "Invalid simple block çıktısını npm aralığı hatası olarak ayır; App/Source ekleyerek çözmeye çalışma.",
+        "Node kontrolünde NpmSpec desteğini doğrula; Python kontrolünü SimpleSpec ile bırak.",
+        "Özgün dosya yedeği ve SHA doğrulamasını yap; düzeltmeyi incelet, regresyon testlerini çalıştır.",
+        "Hüseyin Cengiz yalnız boşta build worker’larını yeniden başlatsın; web ve Redis’e dokunmasın.",
+        "Aynı candidate için tek build başlat; Pre-build Success’i tüm build’in başarısı sayma."
       ],
       "notes": [
         "Doğrulamayı atlama: Pre-build validation’ı kapatma, Node gereksinimini silme ve uygulamanın sürüm aralığını değiştirme. Hata ayrıştırıcıdaydı; çözüm aralığın doğru ayrıştırıcıyla okunmasıdır.",
@@ -1445,13 +1416,13 @@
     },
     {
       "id": "live-prebuild-upload-success",
-      "title": "j8vu7j2qnm: Pre-build, Package ve Upload geçti (tarihsel ekran)",
-      "summary": "Tarihsel çekim: j8vu7j2qnm Running iken altı clone, Pre-build validation, Package Build Context ve Upload Build Context (satır 7–9) Success görüldü. Özgün Upload HTTP 500 ve Node npm aralığı engelleri geçildi. Build daha sonra son adım Upload Docker Image’da Failure ile bitti; live-ecr-push-failure adımına bak.",
+      "title": "Ara aşamaları son sonuçla karşılaştır",
+      "summary": "j8vu7j2qnm ara aşamaları geçti, son Upload Docker Image adımında Failure oldu; deploy başlatma.",
       "actions": [
-        "deploy-0027-000002 → Deploy Candidate Build → j8vu7j2qnm kaydını aç; güncel durum FINISHED / Failure. Bu ekran Running anına aittir.",
-        "Build Steps tablosunda 7. Run Validations / Pre-build, 8. Package / Build Context ve 9. Upload / Build Context satırlarının Success olduğunu kontrol et.",
-        "Running veya Pending satırlar hata değildir; ilk Failure görüldüğünde yalnız o satırın Output alanını ve Error Log bağlantısını aç. Bu build’de ilk ve tek Failure son adım Upload Docker Image.",
-        "Build Success olmadan Deploy menüsünü kullanma; sonuç görülmeden yeni build başlatma."
+        "j8vu7j2qnm kaydını aç; tarihsel Running görüntüsünü son FINISHED / Failure sonucundan ayır.",
+        "7. Pre-build, 8. Package Build Context, 9. Upload Build Context satırlarını kontrol et.",
+        "Son Failure: Upload Docker Image → Output ve Error Log aç.",
+        "Build Success olmadan Deploy başlatma; sonuç görülmeden yeni build açma."
       ],
       "notes": [
         "Görselde ilk dokuz adım Success, 10. satır Setup Prerequisites / Install Essential Packages Running, sonraki satırlar Pending. Bu, çekim anının tarihsel görüntüsüdür; güncel durum değildir.",
@@ -1482,15 +1453,15 @@
     },
     {
       "id": "live-ecr-push-failure",
-      "title": "Upload Docker Image Failure: registry deposu eksik",
-      "summary": "j8vu7j2qnm build’i 27 adımı Success geçtikten sonra son adım Upload Docker Image’da Failure ile bitti: image’ın gönderileceği ECR deposu yoktu. Bu adımın yayımlanmış ekranı yok.",
+      "title": "Eksik ECR deposunu doğrula",
+      "summary": "Hedef hesap, region ve namespace’i kontrol et; yalnız eksik hedef depoyu oluştur.",
       "actions": [
-        "Build kaydında son Failure satırını (Upload / Docker Image) aç ve Output alanının son satırını oku. Bu kurulumda: repository 'frappe/metaframer.net/bench-0027' does not exist in registry.",
-        "Agent Job sonucunu image push sonucuyla karıştırma. Bu kurulumda ji7trk4c6d Success ve data.build_failed=false; bu yalnız uzak işin döndüğünü gösterir. Push sonucu Build Steps satırındadır.",
-        "Önce hedefi doğrula: Press sunucusundaki mevcut AWS kimlik bilgisinin hesabı yapılandırılmış registry hesabıyla eşleşmeli; region ve namespace (frappe/<domain>/bench-XXXX) registry adresiyle aynı olmalı. Secret değerlerini yazdırma.",
-        "Tam hedef adla describe_repository çalıştır. RepositoryNotFoundException dönerse yalnız bu hedef depoyu oluştur; şifreleme, tarama ve tag mutability ayarlarını mevcut bir bench deposuyla (bu kurulumda bench-0022) aynı tut ve oluşturma sonrası tekrar describe ile doğrula.",
-        "Mevcut depoları değiştirme veya silme; AWS hesap ayarlarına dokunma.",
-        "Aynı candidate için normal cache ile tek yeni build başlat. Bu kurulumda qoh3rkif10 13:51:58 TSİ’de başladı (o anda Preparing) ve sonradan 28/28 Success ile bitti (live-build-success). Sonuç görülmeden yeni build açma."
+        "Upload / Docker Image → Output son satırını oku; hedef deponun eksikliğini doğrula.",
+        "Agent Job Success veya build_failed=false değerini image push başarısı sayma.",
+        "Hüseyin Cengiz registry hesabı, region ve namespace eşleşmesini kontrol etsin; secret yazdırmasın.",
+        "describe_repository ile hedefi doğrula; yalnız RepositoryNotFoundException varsa eksik depoyu oluştur.",
+        "Şifreleme, tarama ve tag mutability ayarlarını bench-0022 ile eşleştir; describe ile tekrar doğrula.",
+        "Mevcut depoları ve AWS hesap ayarlarını değiştirme; normal cache ile tek yeni build başlat."
       ],
       "notes": [
         "Push adımını atlama, Upload Docker Image’ı devre dışı bırakma ve Failure build’i elle Success olarak işaretleme; deploy, image’ın registry’de bulunmasına bağlıdır.",
@@ -1503,14 +1474,14 @@
     },
     {
       "id": "live-build-success",
-      "title": "qoh3rkif10: build Success ve image ECR’de",
-      "summary": "deploy-0027-000002 için qoh3rkif10 build’i 28/28 adım Success ile bitti; image ECR’de tam tag ile doğrulandı. Deploy bu başarılı build’den bir kez başlatıldı. Build başarısı, Bench veya site hazır olduğu anlamına gelmez.",
+      "title": "Build ve image sonucunu doğrula",
+      "summary": "qoh3rkif10: 28/28 Success ve tam image tag’ini doğrula; ardından tek deploy başlat.",
       "actions": [
-        "deploy-0027-000002 → Deploy Candidate Build → qoh3rkif10 kaydını aç; başlıktaki durum etiketini ve Status alanını oku. Bu kurulumda ikisi de Success.",
-        "Build Steps tablosunda tüm satırları kontrol et; bu kurulumda 28/28 adım Success, son adım Upload Docker Image dahil.",
-        "Image’ı registry’de ayrıca doğrula: ECR describe_images’ı tam depo adı ve tam tag ile çalıştır; digest ve boyutu kaydet. Bu kurulumda digest sha256:31977a473a878d2de8e966f10954bbf699d804d5ae4d8128eb3061cce9ef9abf, imageSizeInBytes 1723501363. Mevcut aynı AWS hesap kimliğini kullan; kimlik bilgisini yazdırma.",
-        "Ancak bundan sonra aynı build sayfasında Deploy → Deploy seçeneğini bir kez kullan. Bu kurulumda Deploy deploy-0027-000002 oluştu, kuyruk kaydı sutd4rm1um Started, yeni bench bench-0027-000002-apphtznr o anda Installing.",
-        "Deploy’u tekrar başlatma; Bench Active olana kadar bekle ve logları izle. Bu kurulumda bench sonradan Active oldu; live-bench-active adımına bak. Site oluşturma ancak Active Bench doğrulandıktan sonra yapılır."
+        "qoh3rkif10 kaydında başlık ve Status değerlerinin Success olduğunu kontrol et.",
+        "Build Steps içindeki 28/28 satırı, son Upload Docker Image dahil, kontrol et.",
+        "ECR describe_images ile tam depo ve tag’i doğrula; digest/boyutu kaydet, kimlik bilgisi yazdırma.",
+        "Success sonrası aynı build’de Deploy → Deploy işlemini bir kez başlat.",
+        "Tekrar deploy başlatma; Bench Active ve Agent Job sonucunu doğrulamadan site oluşturma."
       ],
       "notes": [
         "Görsel yalnız build kaydını gösterir: başlık Success, Status Success ve Build Steps’in ilk altı clone satırı. 28/28 sonucu, ECR doğrulaması ve deploy/bench durumu ekranın dışındaki ayrı canlı okumalardır.",
@@ -1549,13 +1520,13 @@
     },
     {
       "id": "live-bench-active",
-      "title": "Yeni bench Active: bench-0027-000002-apphtznr",
-      "summary": "qoh3rkif10 build’inden yapılan deploy sonrası yeni bench Installing durumundan Active durumuna geçti; New Bench Agent Job tgajt4obnu Success. Görsel Dashboard bench sayfasıdır: bench Active, egitimxv1.metaframer.net site satırı Installing. Active Bench site oluşturmanın ön koşuludur, site başarısı değildir.",
+      "title": "Bench Active durumunu doğrula",
+      "summary": "",
       "actions": [
-        "Dashboard → Benches → egitimxv1 (bench-0027) → bench-0027-000002-apphtznr sayfasını aç; başlıktaki durum etiketini oku. Bu kurulumda Active.",
-        "Bench’in Release Group = bench-0027, Deploy Candidate = deploy-0027-000002 ve Build = qoh3rkif10 ile eşleştiğini kontrol et; altı uygulama listesi grup ve candidate kayıtlarından okunur (live-cleanup-crm, live-candidate-two).",
-        "New Bench Agent Job sonucunu ayrıca oku; bu kurulumda tgajt4obnu Success.",
-        "Site formunu grubun kendi sayfasından aç (site adımı). Gönderimden sonra aynı bench sayfasının Sites sekmesinde site satırının Status değerini izle; bu kurulumda Installing."
+        "Dashboard → Benches → egitimxv1 aç; bench-0027-000002-apphtznr Active olmalı.",
+        "Deploy deploy-0027-000002 ve Build qoh3rkif10 bağlantılarını karşılaştır.",
+        "New Bench Agent Job tgajt4obnu sonucunu ayrıca oku.",
+        "Siteyi grubun Sites formundan gönder; Bench Active durumunu site başarısı sayma."
       ],
       "notes": [
         "Üç durum ayrı okunur. Build durumu (qoh3rkif10 Success) image’ın üretilip registry’ye gönderildiğini gösterir. Bench durumu (Active) bu image’dan bench’in sunucuda hazırlandığını gösterir. Site durumu (Installing) site kaydının bu bench üzerinde oluştuğunu ve uygulama kurulumunun sürdüğünü gösterir. Biri diğerinin başarısı değildir.",
@@ -1594,13 +1565,13 @@
     },
     {
       "id": "live-site-active-apps",
-      "title": "Site Active: altı uygulama kurulu",
-      "summary": "Site Installing durumundan Active durumuna geçti. Dashboard site sayfasının Apps sekmesinde altı uygulama görünür: frappe, erpnext, payments, Education, lms, crm. Active site, ilk kurulumun bittiği anlamına gelmez.",
+      "title": "Site durumunu ve app listesini oku",
+      "summary": "Active etiketini ve altı uygulamayı kontrol et; ilk kurulum sonucunu ayrıca doğrula.",
       "actions": [
-        "Dashboard → Sites → egitimxv1.metaframer.net sayfasını aç; başlıktaki durum etiketini oku. Bu kurulumda Active.",
-        "Apps sekmesinde App ve Branch sütunlarını oku; altı uygulamanın grup ve candidate kayıtlarıyla (live-cleanup-crm, live-candidate-two) eşleştiğini kontrol et.",
-        "Agent Job sonuçlarını ayrıca oku: New Site Agent Job 2sdhhleqvr (uzak iş 4435) çalıştırılan tüm adımlarda Success; Add Site to Upstream 2secikpbrg Success.",
-        "Kurulu sürümleri uzak sunucuda bench list-apps ile salt okunur oku; ekrandaki commit mesajındaki sürüm metnini sürüm kanıtı sayma."
+        "Dashboard → Sites → egitimxv1.metaframer.net aç; durum etiketini oku.",
+        "Apps sekmesinde altı App/Branch satırını grup ve candidate ile karşılaştır.",
+        "New Site Agent Job 2sdhhleqvr ve Add Site to Upstream 2secikpbrg sonuçlarını ayrı oku.",
+        "Kurulu sürümleri bench list-apps ile salt okunur doğrula; commit mesajını sürüm kanıtı sayma."
       ],
       "notes": [
         "Görsel yalnız başlıktaki Active etiketini ve Apps tablosundaki altı uygulama adı ile branch değerlerini gösterir: frappe, erpnext, payments ve Education version-16; lms ve crm main.",
@@ -1641,15 +1612,15 @@
     },
     {
       "id": "live-site-https-login",
-      "title": "HTTPS ve giriş ekranı",
-      "summary": "TLS doğrulaması atlanmadan yapılan HTTPS isteği HTTP/2 200 döndü ve sertifika geçerli; tarayıcıda Sign In ekranı açıldı. Ardından Press Setup Site ile ilk kurulum sihirbazına geçildi ve kurulum tamamlandı (setup_complete=1).",
+      "title": "HTTPS’i kontrol et, kurulumu tamamla",
+      "summary": "",
       "actions": [
-        "HTTPS yanıtını sertifika doğrulamasını kapatmadan kontrol et (örneğin curl için insecure seçeneği kullanma). Bu kurulumda yanıt HTTP/2 200 ve TLS doğrulaması geçerli.",
-        "Siteyi tarayıcıda aç ve giriş ekranının yüklendiğini kontrol et.",
-        "İlk kurulum için Dashboard site sayfasında Setup Site düğmesini kullan; bu kurulumda otomatik giriş başarılı oldu ve oturum açılmış Desk kurulum sihirbazı açıldı.",
-        "Kişisel hesap alanlarını ve parolayı site sahibi kendisi girer; bu değerleri rehbere, bilete veya ekran görüntüsüne aktarma.",
-        "Bölge ve şirket alanlarını doldur. Bu kurulumda: dil Türkçe, ülke Türkiye, saat dilimi Europe/Istanbul, para birimi TRY; şirket EgitimXV1, kısaltma EXV1, Turkey varsayılan hesap planı, mali yıl başlangıcı 2026-01-01; ERP kurulumundaki demo veri kutusu kapalı.",
-        "Kurulum işlenirken sayfayı yeniden gönderme. Bitince Desk ekranının açıldığını ve setup_complete değerini ayrıca doğrula; bu kurulumda veritabanı okuması 1 döndü."
+        "HTTPS yanıtını TLS/sertifika doğrulaması açıkken kontrol et; insecure kullanma.",
+        "Siteyi aç; giriş ekranının yüklendiğini kontrol et.",
+        "Dashboard site sayfasında Setup Site seç.",
+        "Kişisel alanları ve parolayı site sahibi girsin; rehbere, bilete veya görsele aktarma.",
+        "Türkçe, Türkiye, Europe/Istanbul, TRY; şirket EgitimXV1 / EXV1; Turkey hesap planı; mali yıl 2026-01-01; demo veri kapalı.",
+        "Kurulum işlenirken tekrar gönderme; Desk ve setup_complete=1 sonucunu ayrıca doğrula."
       ],
       "notes": [
         "Görsel yalnız giriş ekranının yüklendiğini gösterir; e-posta alanında yalnız örnek yer tutucu vardır, gerçek hesap verisi yoktur. HTTP/2 200 ve TLS geçerliliği görselde değil, ayrı curl okumasıdır.",
@@ -1679,13 +1650,13 @@
     },
     {
       "id": "live-site-desk",
-      "title": "İlk kurulum tamamlandı: Desk ana ekranı",
-      "summary": "Kurulum sihirbazı tamamlandı; veritabanından okunan setup_complete değeri 1. /desk ana ekranında beş uygulama kutusu görünür: ERPNext, Eğitim, Learning, Müşteri Yönetimi, Çerçeve.",
+      "title": "Desk ve kurulum sonucunu doğrula",
+      "summary": "",
       "actions": [
-        "Kurulum sihirbazı bittikten sonra https://egitimxv1.metaframer.net/desk adresini aç.",
-        "Uygulama kutularını oku. Bu kurulumda beş kutu: ERPNext, Eğitim (Education), Learning (LMS), Müşteri Yönetimi (CRM; ekranda kısaltılmış görünür) ve Çerçeve (Frappe).",
-        "İlk kurulumun bittiğini yalnız ekrana bakarak kabul etme; setup_complete değerini site veritabanından salt okunur oku. Bu kurulumda 1.",
-        "Her kutunun açıldığını ayrıca kontrol et: Eğitim → /desk/education, Learning → /lms/, Müşteri Yönetimi → /crm/, ERPNext → /desk/setup/home. Bu kurulumda dördü de açıldı."
+        "Kurulum sonrası https://egitimxv1.metaframer.net/desk adresini aç.",
+        "ERPNext, Eğitim, Learning, Müşteri Yönetimi ve Çerçeve kutularını kontrol et.",
+        "setup_complete değerini veritabanından salt okunur doğrula; yalnız ekrana bakarak kabul etme.",
+        "/desk/education, /lms/, /crm/ ve /desk/setup/home adreslerini ayrı aç."
       ],
       "notes": [
         "Görsel yalnız Desk ana ekranını ve beş uygulama kutusunu gösterir. setup_complete=1 ve diğer ekranların açılması ayrı okumalardır.",
@@ -1717,12 +1688,12 @@
     },
     {
       "id": "live-site-education",
-      "title": "Eğitim çalışma alanı: /desk/education",
-      "summary": "Desk’te Eğitim kutusu /desk/education çalışma alanını açar. Kısayollar ve Raporlar & Kayıtlar bölümleri görünür.",
+      "title": "Eğitim ekranını aç",
+      "summary": "",
       "actions": [
-        "Desk ana ekranında Eğitim kutusuna tıkla veya /desk/education adresini aç.",
-        "Başlığın Eğitim olduğunu ve Kısayollar bölümünün yüklendiğini kontrol et: Öğrenci, Eğitmen, Program, Kurs, Satış Faturası, Student Monthly Attendance, Course Scheduling, Student Attendance.",
-        "Raporlar & Kayıtlar altındaki grupları (Student Management, Academics, Admissions, Fee Management, Attendance vb.) yalnız gezinme için oku; bu adımda kayıt oluşturma."
+        "Desk → Eğitim veya /desk/education adresini aç.",
+        "Eğitim başlığı, Kısayollar ve Raporlar & Kayıtlar bölümlerini kontrol et.",
+        "Yalnız gezin; öğrenci, ücret veya devamsızlık kaydı oluşturma."
       ],
       "notes": [
         "Görsel çalışma alanının o anki arayüzünü gösterir; kısayollardaki sayaçlar (örneğin 0 Active) çekim anındaki okumadır, iş akışı sonucu değildir.",
@@ -1751,12 +1722,12 @@
     },
     {
       "id": "live-site-lms",
-      "title": "LMS ana sayfası: /lms/",
-      "summary": "Desk’te Learning kutusu /lms/ ana sayfasını açar. Kenar çubuğunda Kurs menüsü ve sağda Getting started paneli görünür.",
+      "title": "LMS ekranını aç",
+      "summary": "",
       "actions": [
-        "Desk ana ekranında Learning kutusuna tıkla veya /lms/ adresini aç.",
-        "Kenar çubuğunda Kurs, Programs, Sınıflar gibi menülerin ve sağdaki Getting started panelinin yüklendiğini kontrol et.",
-        "Getting started adımlarını bu doğrulamanın parçası olarak çalıştırma; kurs, ders veya sınıf oluşturma ayrı bir iş akışıdır."
+        "Desk → Learning veya /lms/ adresini aç.",
+        "Kurs, Programs, Sınıflar menülerini ve Getting started panelini kontrol et.",
+        "Getting started adımlarını çalıştırma; kurs, ders veya sınıf oluşturma."
       ],
       "notes": [
         "Görsel LMS ana sayfasının o anki arayüzünü gösterir. Ana sayfada bir kurs kartı ve 0/8 adımlık Getting started paneli görünür; bu, rehberin oluşturduğu içerik veya tamamlanmış bir iş akışı olarak sunulmaz. Hiçbir kayıt silinmedi.",
@@ -1784,15 +1755,15 @@
     },
     {
       "id": "live-analytics-daily-usage",
-      "title": "Dashboard Daily Usage: InternalServerError düzeltildi, log server yok",
-      "summary": "Log server yapılandırılmamışken Press Dashboard Daily Usage grafiği InternalServerError veriyordu. Hedefli düzeltme sonrası grafik No data gösteriyor. Metrik yokluğu çözülmemiş bir yetenek eksikliğidir, sıfır kullanım değildir. Bu adımın yayımlanmış ekranı yok.",
+      "title": "Daily Usage ve log server’ı kontrol et",
+      "summary": "Log server yok; No data sonucunu sıfır kullanım sayma. Metrikler henüz yok.",
       "actions": [
-        "Press Desk → Error Log listesini aç; traceback içinde daily_usage ve get_usage geçen kayıtları ara. Bu kurulumda son satır str nesnesinde max çağrısından gelen AttributeError idi.",
-        "Press Settings → log_server alanını kontrol et. Bu kurulumda log server yapılandırılmamış.",
-        "Nedeni ayır: log server yokken veya aggregations boş dönerken get_usage boş sözlük döndürüyordu. Bu değeri liste bekleyen üç tüketici sözlüğün anahtarları (str) üzerinde dolaşıyor ve max çağrısı hata veriyordu.",
-        "Düzeltme hedefli olmalı: yalnız bu iki boş dönüş [] yapılır. Hata yakalama, maskeleme veya sahte sıfır veri ekleme yapılmaz.",
-        "Kurmadan önce özgün dosyanın yedeğini al ve SHA değerini kontrol et; düzeltmeyi incelet. Kodu yüklemek için yalnız Press web sürecini yeniden başlat; müşteri bench’lerine dokunma.",
-        "Sonucu canlıda doğrula: daily_usage yanıtı boş data listesi ve plan limiti döndürmeli; Dashboard Daily Usage grafiği InternalServerError yerine No data göstermeli."
+        "Error Log içinde daily_usage/get_usage traceback’ini oku.",
+        "Press Settings → log_server alanını kontrol et; kayıtlı kurulumda yapılandırılmamış.",
+        "Boş log server/aggregations dönüşünü ayır; yalnız bu iki dönüş [] olmalı.",
+        "Hata maskeleme veya sahte sıfır veri ekleme; yedek/SHA ve bağımsız inceleme ile düzeltmeyi doğrula.",
+        "Hüseyin Cengiz yalnız Press web sürecini yeniden başlatsın; müşteri bench’lerine dokunmasın.",
+        "daily_usage boş data ve plan limiti; grafik No data olmalı. Metrik yokluğunu sıfır kullanım sayma."
       ],
       "notes": [
         "Bu kurulumda: düzeltme öncesi testler RED (2 fail / 1 pass), düzeltme sonrası GREEN (3/3). Bağımsız inceleme, sınırlı kaynak erişimiyle, uygulanabilir bulgu bildirmedi. Yedek ve SHA doğrulandı.",

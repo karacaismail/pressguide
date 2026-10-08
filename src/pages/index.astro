@@ -32,6 +32,22 @@ try {
     throw error;
 }
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const primaryIds = [
+  'team',
+  'server',
+  'apps',
+  'source-form',
+  'candidate',
+  'schedule',
+  'site',
+  'hata-tanisi',
+];
+const primarySteps = primaryIds.flatMap((id) =>
+  guide.steps.filter((step) => step.id === id),
+);
+const remainingSteps = guide.steps.filter(
+  (step) => !primaryIds.includes(step.id),
+);
 const statuses = {
   historical: 'Tarihsel ekran kaydı',
   live: 'Canlı oturumda doğrulandı',
@@ -99,7 +115,7 @@ const statuses = {
         <nav class="toc" aria-label="Rehber bölümleri">
           <h2>İzlenecek yol</h2>
           <ol>
-            {guide.steps.map((step) => (
+            {primarySteps.map((step) => (
               <li>
                 <a href={`#${step.id}`}>{step.title}</a>
               </li>
@@ -113,7 +129,7 @@ const statuses = {
           )}
         </nav>
         <section class="steps" id="adimlar" aria-label="Uygulama adımları">
-          {guide.steps.map((step, index) => (
+          {primarySteps.map((step, index) => (
             <article class="step" id={step.id}>
               <div class="step-heading">
                 <span class="step-number" aria-hidden="true">
@@ -125,24 +141,24 @@ const statuses = {
               <span class="step-status">{statuses[step.status]}</span>
               <div class="step-content">
                 <div class="step-copy">
-                  <h3>Yapılacak işlem</h3>
+                  <h3>Uygula</h3>
                   <ol>
                     {step.actions.map((action) => (
                       <li>{action}</li>
                     ))}
                   </ol>
                   {step.notes.length > 0 && (
-                    <aside class="notes">
-                      <h3>Somut notlar</h3>
+                    <details class="notes">
+                      <summary>Gerekli notlar</summary>
                       <ul>
                         {step.notes.map((note) => (
                           <li>{note}</li>
                         ))}
                       </ul>
-                    </aside>
+                    </details>
                   )}
                   <div class="verification">
-                    <h3>Başarı nasıl anlaşılır?</h3>
+                    <h3>Kontrol et</h3>
                     <p>{step.verification}</p>
                   </div>
                 </div>
@@ -153,6 +169,29 @@ const statuses = {
             </article>
           ))}
         </section>
+        <details class="history">
+          <summary>Ayrıntılar ve önceki kontroller</summary>
+          {remainingSteps.map((step) => (
+            <details id={step.id}>
+              <summary>{step.title}</summary>
+              <p>{statuses[step.status]}</p>
+              <ol>
+                {step.actions.map((action) => (
+                  <li>{action}</li>
+                ))}
+              </ol>
+              <ul>
+                {step.notes.map((note) => (
+                  <li>{note}</li>
+                ))}
+              </ul>
+              <p>Kontrol: {step.verification}</p>
+              {step.screenshot && (
+                <a href={`${base}/steps/${step.id}/`}>Ekran kanıtını aç</a>
+              )}
+            </details>
+          ))}
+        </details>
       </div>
       {guide.questions.length > 0 && (
         <section class="faq" id="sorular">
@@ -193,10 +232,25 @@ const statuses = {
       id="checklist-data"
       type="application/json"
       set:html={JSON.stringify(
-        guide.steps.map(({ id, title }) => ({ id, title })),
+        primarySteps.map(({ id, title }) => ({ id, title })),
       ).replace(/</g, '\\u003c')}
     />
     <script>
+      function revealAnchor() {
+        let id: string;
+        try {
+          id = decodeURIComponent(location.hash.slice(1));
+        } catch {
+          return;
+        }
+        let node = document.getElementById(id);
+        while (node) {
+          if (node instanceof HTMLDetailsElement) node.open = true;
+          node = node.parentElement;
+        }
+      }
+      revealAnchor();
+      window.addEventListener('hashchange', revealAnchor);
       import mantineStyles from '@mantine/core/styles.css?url';
       let stylesReady: Promise<void> | undefined;
       function loadChecklistStyles() {
@@ -240,3 +294,26 @@ const statuses = {
     </script>
   </body>
 </html>
+
+<style>
+  .notes > summary,
+  .history summary {
+    min-block-size: var(--target-size);
+    padding-block: var(--space-sm);
+    cursor: pointer;
+    color: var(--color-accent);
+    font-weight: 700;
+  }
+  .history {
+    margin-block: var(--space-lg);
+    overflow-wrap: break-word;
+  }
+  .history > details {
+    padding-block: var(--space-sm);
+  }
+  .history a {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: var(--target-size);
+  }
+</style>

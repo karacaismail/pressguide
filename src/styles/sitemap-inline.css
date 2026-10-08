@@ -1,0 +1,32 @@
+.sitemap-inline-paging {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-block: var(--space-md);
+}
+.sitemap-inline-paging[hidden] {
+  display: none;
+}
+[data-selected] {
+  margin-block-start: var(--space-lg);
+}
+[data-selected] pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font: var(--text-body) var(--font-mono);
+}
+[data-selected] dl {
+  display: grid;
+  gap: var(--space-xs);
+}
+[data-selected] dt {
+  font-weight: 700;
+}
+[data-selected] h3 {
+  overflow-wrap: break-word;
+}
+/* The shared .button display overrides UA [hidden]; hide at the source scope. */
+[data-explorer] [hidden] {
+  display: none;
+}

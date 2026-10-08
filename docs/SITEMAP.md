@@ -3,148 +3,95 @@
 Static, read-only map of Press Dashboard/Desk screens. Built from one reviewed
 snapshot; the browser never contacts Press.
 
-## Files
+## Single-page architecture (current)
 
-- `src/data/press-sitemap.json` — root/audit only. Reviewed public snapshot;
-  other agents never write it.
-- `src/sitemap.ts` — types, runtime validator, Turkish labels, loader.
-- `src/sitemap-views.ts` — pure ownership split (`buildSitemapViews`,
-  `detailPath`): anchors and the nodes each anchor owns. No file system,
-  browser or network access. Its count semantics are unchanged.
-- `src/sitemap-partitions.ts` — pure bounded partition helper on top of
-  `buildSitemapViews` (see "Partition API"). No file system, browser or
-  network access.
-- `src/pages/sitemap.astro`, `src/pages/sitemap/` routes and the `Sitemap*`
-  components (`SitemapDetailPage`, `SitemapIndexPage`, `SitemapPagination`,
-  `SitemapBranch`, `SitemapNavigation`, `SitemapControls`) — static documents
-  with native `details` trees. No hydration.
-- `src/sitemap-search.ts` — vanilla search/filter enhancement for the current
-  view/part; no React or Mantine. Compiled at build time to ES2022 by the
-  project's TypeScript 6 helper (`src/sitemap-script.ts`) and inlined; the
-  browser never receives TypeScript or a hashed script file.
-- `src/pages/[dataset].json.ts` — `/pressguide/press-sitemap.json`, the same
-  validated snapshot. Explicit download only.
-- `src/styles/sitemap.css` — page-only styles on `tokens.css` tokens.
-  Standalone links keep `--target-size` in both axes.
-- Tests (run after `npm run build`): `tests/sitemap.spec.ts`,
-  `tests/sitemap-contract.spec.ts`, `tests/sitemap-static-delivery.spec.ts`,
-  `tests/sitemap-partition.spec.ts`, `tests/sitemap-bounded.spec.ts`,
-  `tests/sitemap-budget.spec.ts`, `tests/sitemap-known-action.spec.ts`,
-  `tests/sitemap-entry.spec.ts` (root entry critical journey: early index
-  CTA, tree order, native coverage disclosure).
-- `src/sitemap-budgets.ts` — pure measured budget constants (see "Budget").
+The user requested one clickable map, compact wording and complete records.
+Only `/sitemap/` is generated: no per-node, global-index, child-index or
+metadata HTML routes. The historical QA entries below describe the earlier
+partitioned architecture and do not certify this change.
 
-## Static views and delivery
+- `src/sitemap.ts` still validates every source record at build time. No source
+  metadata is removed, renamed or reclassified by this UI change.
+- `src/sitemap-views.ts` identifies the lean SSR entry; `detailPath` returns
+  the same `/sitemap/#node=<encoded ID>` for every node.
+- `src/sitemap-partitions.ts` now exports only `buildSitemapEntry`: top-level
+  anchors and unowned navigation context. No partitions are generated.
+- `src/pages/sitemap.astro` and `SitemapNavigation.astro` render the entry,
+  UTC timestamp, warnings, native coverage disclosure containing every scope
+  and exclusion, full-data counts and status definitions.
+- `src/sitemap-search.ts` is vanilla browser enhancement, transformed and
+  minified by Astro's existing esbuild dependency to inline ES2022 JavaScript
+  through `src/sitemap-script.ts`. No React/Mantine, source maps or extra
+  script requests are delivered for the map.
+- Initial navigation requests only its HTML and linked CSS. Explicit “Tüm
+  öğeleri aç”, node selection or a node deep-link loads the same-origin
+  validated `/press-sitemap.json` once; concurrent requests share one promise.
+  Failures allow retry. A lightweight browser boundary rejects malformed
+  records, duplicate/missing parent IDs, cycles, invalid classifications and
+  unsafe live paths before rendering; comprehensive publication validation
+  remains the build-time validator.
+- Search reads all record fields and labels, including notes/options and IDs.
+  Results and direct children are independently paginated inline, 30 at a
+  time. Every node is listed in the global result sequence. Selection shows
+  its classification, evidence status, ancestor navigation and complete raw
+  metadata in a native disclosure. All data uses textContent, never innerHTML.
+- Selection changes only the selected region. Hash history, entered search
+  text and search focus persist on Back/Forward and viewport changes. Own
+  Press links use livePath; otherwise the nearest linked ancestor is named.
+  A route template is metadata and never becomes an invented Press link.
+- JavaScript disabled: root navigation, scopes, full counts, definitions and
+  same-origin JSON download remain readable. Interactive search/selection
+  requires JavaScript; the entire detailed map is available as JSON rather
+  than thousands of HTML pages. This baseline limitation is shown explicitly.
+- `src/styles/sitemap-inline.css` adds only scoped styles using the existing
+  semantic tokens. Shared minimum fonts and one-control focus are preserved.
 
-- `/sitemap/` — only top-level anchors (no strict ancestor that is itself an
-  anchor) plus necessary unowned navigation context, with status/source
-  badges, Press links, one canonical detail link per anchor and a link to the
-  first global index part. No eager children, no field metadata. Kind,
-  page-by-source, status, source and risk counts on root are explicitly
-  computed from the FULL dataset; view counts describe only rendered items.
-  Entry order: exactly one early global index CTA (within the first two
-  568 px viewports at 320 CSS px), then the panel tree, then a closed native
-  `details` coverage summary. Opened, it shows every `coverageScope` and
-  `exclusions` string of the current snapshot (count derived from those
-  arrays, never fixed here), FULL kind/source/status/risk counts with their
-  caveats and the explicit JSON download link. Without JavaScript it
-  opens/closes natively with every current `coverageScope`/`exclusions`
-  string visible (43-string figures below are historical measurements of
-  earlier snapshots); the download is
-  reachable only after opening it. The prominent warnings stay before the
-  panel tree and the status definitions stay after the disclosure, both
-  outside it and accessible without opening it.
-- Root `lastUpdated` is shown as `YYYY-MM-DD HH:mm UTC` through the existing
-  `formatObservation` helper at build time (same convention as node
-  observations); `<time datetime>` keeps the raw JSON timestamp. No browser
-  locale or timezone dependency; the JSON value is unchanged.
-- `/sitemap/index/<part>/` — global anchor index, 50 entries per part, flat:
-  kind, source, status and canonical detail link, no full metadata. Fixed
-  previous/next anchors (`rel="prev"`/`rel="next"`), never a list of all parts.
-  Gives a complete linear route to every anchor.
-- `/sitemap/<anchor>/` — metadata part 1 (canonical detail).
-  `/sitemap/<anchor>/components/<part>/` — later parts. Each part repeats the
-  full anchor (`data-metadata-primary`), then up to 32 owned nodes in input
-  order, plus required ancestor context inside that anchor rendered lean
-  (`data-metadata-context`, link to its home part, no notes/options). Every
-  owned node has full metadata exactly in its home part.
-- `/sitemap/<anchor>/pages/<part>/` — immediate child-anchor index, 50 per
-  part. The canonical detail links to its first part only; fixed prev/next
-  make every child reachable. Child anchors are not rendered eagerly in
-  metadata documents.
-- Every document links to the map and actual ancestor anchors. Page-less
-  section anchors remain sections; no relabelling, no dropped orphan
-  navigation.
-- Every node id is reachable in HTML by BFS over local sitemap document links
-  from `/sitemap/` (ignoring Press, JSON and hash-only links). A union of
-  files in `dist` is not sufficient proof.
-- Search (`Bu görünümde ara`) and filters reveal only when the script runs and
-  cover only the current view/part; the scope text names the part and states
-  that other parts are excluded. Source filters render only where the view
-  has a real choice. On a metadata part every rendered row is searchable:
-  primary rows by their full own metadata, lean context rows only by their
-  visible own label, status, source, kind and surface (their hidden notes,
-  options and paths are not emitted or indexed). Source filters match both
-  by their own source; unmatched rendered ancestors stay open as context.
-  The view count (`N eşleşen öğe, bu görünümde M öğe.`) totals all rendered
-  rows, lean context included, and is separate from the FULL-dataset and
-  primary metadata counts. No automatic JSON, other-part or document prefetch.
-- Navigation uses static anchors and native browser Back. No Back-state
-  guarantee is made beyond what tests actually show.
-- The publication boundary is a manual pattern screen plus public review. It
-  rejects known key, token (including realistic `github_pat_` with a suffix of
-  20+ characters and Stripe key shapes), email and amount shapes; it is not
-  absolute and does not guarantee that every possible secret is caught.
+## Budgets and regressions
 
-## Partition API (`src/sitemap-partitions.ts`)
+One budget set in `src/sitemap-budgets.ts`: initial raw UTF-8 HTML ≤32 KiB and
+parsed DOM ≤512, unchanged. After explicit interaction, the entire document
+must remain ≤2,048 elements and selected metadata uses the existing 128 KiB
+view allowance. The full JSON is an honest separate explicit-use cost: current
+built file 6,476,806 raw bytes, cap 6.5 MiB. These are decoded/raw sizes, not
+compressed transfer claims. No JSON is requested before interaction unless
+navigation itself explicitly includes a node hash.
 
-- Exports `INDEX_LIMIT = 50`, `METADATA_LIMIT = 32`, and BASE_URL-aware
-  `metadataPath(anchorId, part, base)` (part 1 equals `detailPath`),
-  `globalIndexPath(part, base)`, `childIndexPath(anchorId, part, base)`.
-- `buildSitemapPartitions(nodes)` returns `{ views, rootNodes,
-globalIndexParts, childIndexParts, metadataParts, homeById,
-metadataFor(anchorId, part), childrenFor(anchorId) }`.
-- MetadataPart `{ anchor, part, totalParts, nodes, primaryIds, contextIds }`;
-  at least one per anchor. IndexPart `{ ownerId (null for global), part,
-totalParts, nodes }`; no empty index parts. `homeById` maps every anchor
-  (part 1) and owned node to `{ anchorId, part }`. `metadataFor` throws on an
-  unknown anchor or invalid part.
-- Limits are starting algorithm limits, not proof of a budget; the measured
-  budget below is the guard.
+The obsolete five multi-document suites (partition/BFS/detail/index/old scoped
+search) are replaced, not skipped: `sitemap-single-page.spec.ts` checks one
+HTML route, all-node inline enumeration, published JSON equality to validated
+source, conditional network delivery, bounded DOM, complete selected metadata,
+action/unknown evidence fidelity, genuine ancestor links, retry/invalid-load
+handling, text-only metadata, history/focus/resize and full count groups.
+`sitemap-entry.spec.ts` preserves the early CTA and complete native coverage,
+UTC timestamp and JS-off download. `sitemap-budget.spec.ts` preserves the
+initial budget and bounds explicit-use DOM/JSON. The existing coverage focus
+regression keeps its assertions; only its preceding control changes to the
+new explorer button. Pure source-contract suites remain unchanged.
 
-## Budget (`src/sitemap-budgets.ts`)
+Actual RED: the one-page assertion found 1,195 sitemap HTML documents instead
+of one. Initial focused GREEN: 11/11 on Chromium at 320 CSS px, after fixing
+an actual hidden-button CSS override and updating the focus regression's
+preceding-control seed. Build and Astro check were run locally; final combined
+source and browser matrix verification belongs to the root delivery record.
+Real Safari/devices, screen reader, approved visual baselines, CI and production
+are not claimed by this focused run.
 
-One measured budget set for the project; no other sitemap budget applies.
+## Compact delivery verification — 8 October 2026
 
-| Document                             | Raw UTF-8 HTML | Parsed DOM elements |
-| ------------------------------------ | -------------- | ------------------- |
-| Root `/sitemap/`                     | 32 KiB         | 512                 |
-| Every global/child index or metadata | 128 KiB        | 2,048               |
+Home instructions were shortened by 55%; eight primary steps replace the default
+67-step dump. All 67 IDs, statuses, notes, verification and screenshot evidence remain
+available. The map retains all 11,724 records in one HTML route. Outfit is locally
+bundled for body/headings; code retains monospace and upstream font OFL is preserved.
 
-- Measurement (historical calibration of this unchanged budget set, not the
-  current dataset): frozen 8,095-node snapshot, source SHA256
-  `92d5d9c3bec9f62cb11dea6bc88b32acb9c452870c8e6042f6e94643fe4350c6`; raw
-  built file bytes; element count of `DOMParser` output without script
-  execution. Post-CTA build: 950 total HTML pages built in 1m57s (all guide
-  pages included); 914 of them are sitemap documents (root + 913
-  detail/index parts).
-- Actual (post-CTA, `postcta8095-built-views.json`): root 20,671 bytes /
-  245 parsed DOM / 2 rendered nodes. MAX of the 913 others:
-  `desk-root/components/31`, 85,123 bytes / 1,357 parsed DOM / 63 rendered
-  nodes = 33 primary (32 owned + the repeated anchor) + 30 lean context.
-- Rationale (historical calibration, unchanged budget set): roughly 1.5x
-  headroom over the measured MAX index/metadata part (131,072 / 85,123 bytes
-  ≈ 1.54; 2,048 / 1,357 parsed DOM ≈ 1.51) while staying far below the
-  historical eager documents. The factor describes that MAX part, not root
-  headroom on any snapshot. Control size, font size and hit areas are
-  preserved; the budget is never met by shrinking them.
-- Guard: `tests/sitemap-budget.spec.ts` reads every `dist/sitemap` HTML file,
-  parses in batches of up to 200 and reports bounded failures (count + first
-  20). It also requires root without own metadata and at most 33 primary
-  nodes per document; context is reported separately, not counted as
-  primary. Runs once on `chromium-320`; other projects skip it intentionally.
-  After `npm run build`:
-  `npx playwright test tests/sitemap*.spec.ts --project=chromium-320`.
+Final frozen-build checks: 31/31 at Chromium320; relevant 33-project matrix 801 passed,
+222 conditional skips, zero failures. Astro check, build and formatting passed.
+Map HTML 32,712 raw bytes; JSON 6,476,806; two variable font subsets 46,988.
+Actual RED/GREEN covers one-route generation, compact home, Outfit and pagination/
+retry/date handling. WebKit limited Tab mode and full-control Alt+Shift+Tab are
+reported separately. Independent bounded review found no remaining actionable
+finding after two pagination-focus corrections and inspected final home screenshots.
+Physical devices/Safari, screen reader, sitemap pixel review and approved visual
+baselines remain not_run. CI and live publication are separate delivery evidence.
 
 ## Contract (schemaVersion 1)
 
@@ -182,9 +129,8 @@ Fix the data; never loosen the validator. A missing file renders an explicit
 - `livePath` must be a plain path under `/dashboard` or `/app` on
   `https://press.metaframer.net`: no host, query, fragment, `@`, `:` or dot
   segments. Only the own public sample site `egitimxv1` may appear in paths.
-- Nodes without `livePath` link to the nearest ancestor that has one, labelled
-  "En yakın üst sayfa". Every Press link has `data-live-link`,
-  `target="_blank"` and `rel="noopener"`, and requires a Press login.
+- Nodes without `livePath` link to the nearest ancestor that has one, explicitly labelled as an upper page. Every Press link has
+  `target="_blank"` and `rel="noopener noreferrer"`, and requires a Press login.
 
 ## Meaning of the data
 

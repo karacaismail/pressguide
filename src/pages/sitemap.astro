@@ -1,14 +1,12 @@
 ---
-import SitemapControls from '../components/SitemapControls.astro';
 import SitemapNavigation from '../components/SitemapNavigation.astro';
 import { compiledSitemapScript } from '../sitemap-script';
-import { buildSitemapPartitions, globalIndexPath } from '../sitemap-partitions';
+import { buildSitemapEntry } from '../sitemap-partitions';
 import {
   formatObservation,
   kindLabels,
   loadSitemap,
   riskLabels,
-  sourceDefinitions,
   sourceLabels,
   statusDefinitions,
   statusLabels,
@@ -20,13 +18,14 @@ import {
 } from '../sitemap';
 import '../styles/global.css';
 import '../styles/sitemap.css';
+import '../styles/sitemap-inline.css';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const sitemap = await loadSitemap();
 const nodes = sitemap?.nodes ?? [];
-const partitions = buildSitemapPartitions(nodes);
-const { views } = partitions;
+const entry = buildSitemapEntry(nodes);
+const { views } = entry;
 // Top-level anchors plus unowned navigation context only.
-const viewNodes = partitions.rootNodes;
+const viewNodes = entry.rootNodes;
 const viewIds = new Set(viewNodes.map((node) => node.id));
 const childrenOf = new Map<string, SitemapNode[]>();
 for (const node of viewNodes)
@@ -38,8 +37,7 @@ for (const node of viewNodes)
 const roots = viewNodes.filter(
   (node) => node.parentId === null || !viewIds.has(node.parentId),
 );
-const globalIndexHref =
-  partitions.globalIndexParts.length > 0 ? globalIndexPath(1, base) : '';
+const globalIndexHref = '#tum-ogeler';
 // Counts always describe the full dataset, not this navigation view.
 const countBy = <T extends string>(
   labels: Record<T, string>,
@@ -59,10 +57,7 @@ const countGroups: {
 }[] = [
   {
     title: 'Öğe türüne göre',
-    notes: [
-      'Sayfa, sekme ve bileşen sayıları ayrı gösterilir.',
-      'Sayfası olmayan bölümler bölüm olarak sayılır.',
-    ],
+    notes: ['Sayfası olmayan bölümler bölüm olarak sayılır.'],
     items: countBy<Kind>(kindLabels, (node) => node.kind).filter(
       (item) => item.count > 0,
     ),
@@ -127,13 +122,13 @@ const inProgress = !sitemap || sitemap.auditPhase === 'in_progress';
         <h1 id="sitemap-title">Press panel haritası</h1>
         <p class="sitemap-lead">
           {inProgress
-            ? `Press panelinde bağlantı ya da kaynakta keşfedilen yollar burada listelenir. Henüz açılmayanlar “${statusLabels.discovered}” durumuyla açıkça işaretlenir. Liste tarama ilerledikçe güncellenir.`
+            ? `Açılmayan yollar “${statusLabels.discovered}” durumundadır.`
             : 'Aşağıda yazılı kapsamın taraması bitti. Bu, kapsam dışındaki dinamik kayıtların açıldığı ya da yazma işlemlerinin denendiği anlamına gelmez.'}
         </p>
         {globalIndexHref && (
           <p>
             <a class="sitemap-link" href={globalIndexHref} data-global-index>
-              Tüm sayfa ve bölümlerin listesi
+              Tüm öğeleri ara
             </a>
           </p>
         )}
@@ -141,8 +136,8 @@ const inProgress = !sitemap || sitemap.auditPhase === 'in_progress';
           <p>İnceleme, işlev testi değildir.</p>
           <p>Press bağlantıları oturum açmayı gerektirir.</p>
           <p>
-            Hiçbir kaydetme, değiştirme veya silme işlemi çalıştırılmadı. Yazma
-            ve yıkıcı eylemler yalnızca görüldükleri için listelenir.
+            Kaydetme, değiştirme ve silme çalıştırılmadı. Eylemler yalnızca
+            gözlem kaydıdır.
           </p>
         </aside>
       </section>
@@ -155,28 +150,7 @@ const inProgress = !sitemap || sitemap.auditPhase === 'in_progress';
         <h2 id="agac-baslik">Panel ağacı</h2>
         {roots.length > 0 ? (
           <>
-            <p>
-              Her satırda durum ve gözlem kaynağı görünür. Gözlem kaynağı,
-              öğenin nereden okunduğunu söyler:
-            </p>
-            <dl class="sitemap-definitions">
-              {(Object.keys(sourceDefinitions) as Source[]).map((source) => (
-                <div>
-                  <dt>{sourceLabels[source]}</dt>
-                  <dd>{sourceDefinitions[source]}</dd>
-                </div>
-              ))}
-            </dl>
-            <p>
-              Bu görünüm yalnızca üst düzey modül ve bölümleri ve bunların
-              gezinme bağlamını gösterir; tüm sekmeler ve alt sayfalar burada
-              görünmez. Alt sayfalar, alanlar, eylemler ve notlar “Bileşenleri
-              incele” bağlantısıyla açılan ayrıntı sayfalarındadır.
-            </p>
-            <SitemapControls
-              nodes={viewNodes}
-              scope="Arama yalnızca bu görünümdeki üst düzey öğelerin adını, türünü, kaynağını, durumunu, yüzeyini ve yolunu okur; alt sayfaları, liste parçalarını ve bileşen ayrıntılarını aramaz."
-            />
+            <p>Sayfa, alan ve eylemleri burada açın.</p>
             <ul class="sitemap-tree" data-sitemap>
               {roots.map((node) => (
                 <SitemapNavigation
@@ -191,6 +165,50 @@ const inProgress = !sitemap || sitemap.auditPhase === 'in_progress';
         ) : (
           <p>Henüz harita öğesi yok. Tarama sürüyor.</p>
         )}
+      </section>
+
+      <section
+        class="sitemap-section"
+        id="tum-ogeler"
+        aria-labelledby="tum-baslik"
+        data-explorer
+        data-url={`${base}/press-sitemap.json`}
+      >
+        <h2 id="tum-baslik">Tüm öğeler</h2>
+        <button class="button" data-load hidden>
+          Tüm öğeleri aç
+        </button>
+        <div class="sitemap-controls" data-controls hidden>
+          <label for="sitemap-search">Tüm kayıtlarda ara</label>
+          <input
+            id="sitemap-search"
+            type="search"
+            placeholder="Ad, kimlik, yol veya not"
+          />
+        </div>
+        <p data-result-count role="status" aria-live="polite"></p>
+        <ul class="sitemap-tree" data-results></ul>
+        <nav
+          class="sitemap-inline-paging"
+          aria-label="Sonuç sayfaları"
+          data-paging
+          hidden
+        >
+          <button class="button secondary" data-prev>
+            Önceki
+          </button>
+          <span data-page></span>
+          <button class="button secondary" data-next>
+            Sonraki
+          </button>
+        </nav>
+        <section data-selected aria-label="Seçili öğe"></section>
+        <noscript>
+          <p>
+            Ayrıntıları ve tüm kayıtları aşağıdaki JSON bağlantısından
+            okuyabilirsiniz. Etkileşimli arama JavaScript gerektirir.
+          </p>
+        </noscript>
       </section>
 
       <section class="sitemap-section" aria-labelledby="kapsam">
@@ -211,10 +229,9 @@ const inProgress = !sitemap || sitemap.auditPhase === 'in_progress';
             </ul>
             <h3>Öğe sayıları</h3>
             <p>
-              Toplam {nodes.length} öğe kaydedildi. Her öğe bir ekran değildir;
-              sekme, alan ve eylemler de öğe olarak sayılır. Toplam Press ekranı
-              sayısı bilinmediği için yüzde verilmez. Bu sayılar tüm veriyi
-              kapsar; yukarıdaki ağaç yalnızca üst düzey bölümleri gösterir.
+              Toplam {nodes.length} öğe: ekran, sekme, alan ve eylemler. Sayılar
+              tüm veriyi kapsar. Toplam Press ekranı sayısı bilinmediği için
+              yüzde verilmez.
             </p>
             {countGroups.map((group) => (
               <>
@@ -242,8 +259,8 @@ const inProgress = !sitemap || sitemap.auditPhase === 'in_progress';
               </a>
             </p>
             <p>
-              Dosya yalnızca bu bağlantıyla indirilir. Kayıtlar tarama
-              kapsamıyla sınırlıdır ve öğelerin işlevi doğrulanmamıştır.
+              Arama dosyayı bir kez yükler. JSON bağlantısı JavaScript olmadan
+              çalışır. İşlev doğrulanmamıştır.
             </p>
           </details>
         ) : (
@@ -270,9 +287,8 @@ const inProgress = !sitemap || sitemap.auditPhase === 'in_progress';
         </dl>
         <h3>İşlev testi</h3>
         <p>
-          “İncelendi” yalnızca öğenin kaydedilen gözlem kaynağında okunduğunu
-          belirtir. Bir düğmenin ya da formun çalıştığını göstermez; bunun için
-          ayrı işlev testi gerekir ve her öğede “İşlev testi” satırında yazar.
+          “İncelendi” gözlem kaydıdır. Çalışma doğrulaması her öğenin “İşlev
+          testi” satırında ayrıca belirtilir.
         </p>
       </section>
     </main>

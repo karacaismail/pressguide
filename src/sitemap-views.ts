@@ -15,7 +15,7 @@ export interface SitemapViews {
 
 /** Canonical static detail URL for an anchor. */
 export function detailPath(id: string, base: string) {
-  return `${base.replace(/\/+$/, '')}/sitemap/${encodeURIComponent(id)}/`;
+  return `${base.replace(/\/+$/, '')}/sitemap/#node=${encodeURIComponent(id)}`;
 }
 
 /**

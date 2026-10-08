@@ -208,7 +208,7 @@ test('reading needs no JavaScript and optional checklist is not fetched before a
   ).toBe(false);
   const context = await browser.newContext({ javaScriptEnabled: false });
   const baseline = await context.newPage();
-  await baseline.goto('http://127.0.0.1:47321/pressguide/');
+  await baseline.goto(page.url());
   await expect(baseline.getByRole('heading', { level: 1 })).toBeVisible();
   await expect(baseline.locator('#adimlar')).toBeVisible();
   await context.close();

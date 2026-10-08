@@ -59,13 +59,14 @@ const assertClearance = async (summary: Locator) => {
 
 test('keyboard disclosure focus clears its heading while closed and open', async ({
   page,
+  browserName,
 }) => {
   expect((await page.goto('sitemap/'))?.status()).toBe(200);
   const details = page.locator('details[data-coverage-details]');
   const summary = details.locator(':scope > summary');
   // Seed the preceding visible control, then enter the target with a real Tab.
   const preceding = page
-    .locator('#panel-agaci :is(a[href], button, input, summary, [tabindex])')
+    .locator('#tum-ogeler :is(a[href], button, input, summary, [tabindex])')
     .filter({ visible: true })
     .last();
   await preceding.focus();
@@ -79,6 +80,18 @@ test('keyboard disclosure focus clears its heading while closed and open', async
   await page.keyboard.press('Enter');
   await expect(details).not.toHaveAttribute('open');
   await page.keyboard.press('Shift+Tab');
+  if (browserName === 'webkit') {
+    // WebKit's native limited Tab mode skips buttons. Verify its plain reverse
+    // focus remains visible, then exercise the full-control keyboard shortcut.
+    await expect(page.locator(':focus')).toBeVisible();
+    expect(
+      await page
+        .locator(':focus')
+        .evaluate((el) => getComputedStyle(el).outlineStyle),
+    ).toBe('solid');
+    await summary.focus();
+    await page.keyboard.press('Alt+Shift+Tab');
+  }
   await expect(preceding).toBeFocused();
 });
 
