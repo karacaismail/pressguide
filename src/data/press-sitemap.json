@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-08T10:25:53.765167+00:00",
+  "lastUpdated": "2026-10-08T12:03:01.237539+00:00",
   "auditPhase": "in_progress",
   "reviewedForPublic": true,
   "coverageScope": [
@@ -47,7 +47,9 @@
     "Release/Database/Team/Invoice/Role:17 expanded parent.field/64 kontrol;18 grid/47 header. Dependency editor unknown. Bağlam sayısı unique113 artışı değil; normal form artışı yok.",
     "Jobs/Storage/Dependencies:20 parent.field grid/19 açık editor/76 kontrol/50 named header. Bench Update.apps0kontrol; Support editor unknown. Eski canonical form durumları korunur; actual normal196/uniquechild113 mutabakatı ROOT ledger sorumluluğu.",
     "Further UI:10 expanded parent.field/49 kontrol/28 grid header;6 ayrı koşullu parent(5 heading doğrulanmış,Account Request unknown). Eski canonical durumlar korunur; normal196/uniquechild113 mutabakatı ROOT ledger sorumluluğu.",
-    "Backup/migration/proxy/autoscale/trial."
+    "Backup/migration/proxy/autoscale/trial.",
+    "Settings child metadata.",
+    "Conditional child metadata."
   ],
   "exclusions": [
     "Müşteri kayıtları,alan değerleri,e-posta/iletişim/credentials,mali tutarlar/özel kayıt kimlikleri yayımlanmaz.",
@@ -180411,6 +180413,1759 @@
         "Observed control type: Small Text.",
         "Required: true.",
         "Actual empty unsaved row; no help contents or values exported."
+      ]
+    },
+    {
+      "id": "desk-live-root-settings-saas-apps",
+      "parentId": "desk-admin-live-saas-settings-unsaved-tab-0-field-5",
+      "label": "Apps — later row checkpoint",
+      "kind": "section",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T10:30:08.224230+00:00",
+      "notes": [
+        "Later observed table context; earlier table/header/row evidence remains historical.",
+        "Control metadata only; no selected values, record identities or setting contents.",
+        "Unsaved local row metadata; no Save/function/persisted mutation proof; images not_saved.",
+        "Native New unsaved full form verified; earlier helper empty table result is not absence."
+      ]
+    },
+    {
+      "id": "desk-live-root-settings-saas-apps-column-0",
+      "parentId": "desk-live-root-settings-saas-apps",
+      "label": "App",
+      "kind": "section",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T10:30:08.224230+00:00",
+      "notes": [
+        "Observed named grid header; repeated label does not increase unique child-type coverage.",
+        "Grid header only; no expanded control label/type inferred."
+      ]
+    },
+    {
+      "id": "desk-live-root-settings-saas-apps-row",
+      "parentId": "desk-live-root-settings-saas-apps",
+      "label": "Expanded unsaved row",
+      "kind": "section",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T10:30:08.224230+00:00",
+      "notes": [
+        "Actual visible expanded row editor; no record or field values exported.",
+        "Source checkpoint only; no saved, persisted or functional proof."
+      ]
+    },
+    {
+      "id": "desk-live-root-settings-saas-apps-row-field-app",
+      "parentId": "desk-live-root-settings-saas-apps-row",
+      "label": "App",
+      "kind": "field",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T10:30:08.224230+00:00",
+      "notes": [
+        "Observed control type: Link.",
+        "Required: true.",
+        "Actual empty unsaved row; no selected linked value exported."
+      ]
+    },
+    {
+      "id": "desk-live-root-settings-saas-whitelisted-apps",
+      "parentId": "desk-admin-live-saas-settings-unsaved-tab-0-field-7",
+      "label": "Whitelisted Apps — later row checkpoint",
+      "kind": "section",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T10:30:08.224230+00:00",
+      "notes": [
+        "Later observed table context; earlier table/header/row evidence remains historical.",
+        "Control metadata only; no selected values, record identities or setting contents.",
+        "Unsaved local row metadata; no Save/function/persisted mutation proof; images not_saved.",
+        "Native New unsaved full form verified; earlier helper empty table result is not absence."
+      ]
+    },
+    {
+      "id": "desk-live-root-settings-saas-whitelisted-apps-column-0",
+      "parentId": "desk-live-root-settings-saas-whitelisted-apps",
+      "label": "App",
+      "kind": "section",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T10:30:08.224230+00:00",
+      "notes": [
+        "Observed named grid header; repeated label does not increase unique child-type coverage.",
+        "Grid header only; no expanded control label/type inferred."
+      ]
+    },
+    {
+      "id": "desk-live-root-settings-saas-whitelisted-apps-row",
+      "parentId": "desk-live-root-settings-saas-whitelisted-apps",
+      "label": "Expanded row scope unknown",
+      "kind": "section",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "discovered",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T10:30:08.224230+00:00",
+      "notes": [
+        "Expanded editor unverified; empty fields array is unknown, not absence.",
+        "Add Row and row-open control observed; click did not verify a visible expanded control.",
+        "No editor fields, unsupported status or absence inferred."
+      ]
+    },
+    {
+      "id": "desk-live-root-settings-press-default-apps",
+      "parentId": "desk-live-press-settings-tab-feature-flags-field-default_apps",
+      "label": "Default Apps — later row checkpoint",
+      "kind": "section",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T10:39:17.029223+00:00",
+      "notes": [
+        "Later observed table context; earlier table/header/row evidence remains historical.",
+        "Control metadata only; no selected values, record identities or setting contents.",
+        "Unsaved local row metadata; no Save/function/persisted mutation proof; images not_saved.",
+        "Actual existing Single form; Feature Flags tab opened.",
+        "Menu/Reload returned 0 local rows and no Not Saved; no Save or persisted setting/site/app mutation."
+      ]
+    },
+    {
+      "id": "desk-live-root-settings-press-default-apps-column-0",
+      "parentId": "desk-live-root-settings-press-default-apps",
+      "label": "App",
+      "kind": "section",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T10:39:17.029223+00:00",
+      "notes": [
+        "Observed named grid header; repeated label does not increase unique child-type coverage.",
+        "Grid header only; no expanded control label/type inferred."
+      ]
+    },
+    {
+      "id": "desk-live-root-settings-press-default-apps-column-1",
+      "parentId": "desk-live-root-settings-press-default-apps",
+      "label": "App Title",
+      "kind": "section",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T10:39:17.029223+00:00",
+      "notes": [
+        "Observed named grid header; repeated label does not increase unique child-type coverage.",
+        "Grid header only; no expanded control label/type inferred."
+      ]
+    },
+    {
+      "id": "desk-live-root-settings-press-default-apps-row",
+      "parentId": "desk-live-root-settings-press-default-apps",
+      "label": "Expanded unsaved row",
+      "kind": "section",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T10:39:17.029223+00:00",
+      "notes": [
+        "Actual visible expanded row editor; no record or field values exported.",
+        "Source checkpoint only; no saved, persisted or functional proof."
+      ]
+    },
+    {
+      "id": "desk-live-root-settings-press-default-apps-row-field-app",
+      "parentId": "desk-live-root-settings-press-default-apps-row",
+      "label": "App",
+      "kind": "field",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T10:39:17.029223+00:00",
+      "notes": [
+        "Observed control type: Link.",
+        "Required: true.",
+        "Actual empty unsaved row; no selected linked value exported."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-agent-update-form",
+      "parentId": "desk-live-form-agent-update",
+      "label": "Agent Update — later unsaved checkpoint",
+      "kind": "section",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:38:27.028616+00:00",
+      "notes": [
+        "Actual later New unsaved full form checkpoint; earlier canonical/form evidence remains historical.",
+        "Parent source checkpoint shared by controls; not independent per-control timestamp.",
+        "Value-free metadata; no Save/final operation/function proof; images not_saved.",
+        "Earlier immediate heading check was unverified; later native New form was verified. Grid Start/Agent Status/Update Ansible Play are not invented editor controls."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-agent-update-servers",
+      "parentId": "desk-live-root-cond-agent-update-form",
+      "label": "servers",
+      "kind": "table",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:38:27.028616+00:00",
+      "notes": [
+        "Technical table fieldname: servers; normalized context label is not a guessed human control label.",
+        "Only this current unsaved context; prior nodes and populated/saved unknowns remain unchanged."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-agent-update-servers-column-0",
+      "parentId": "desk-live-root-cond-agent-update-servers",
+      "label": "Server",
+      "kind": "section",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:38:27.028616+00:00",
+      "notes": [
+        "Actual named grid header; no expanded control label/type inferred from this label.",
+        "Repeated/parent-specific header occurrence is not a new global unique child type."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-agent-update-servers-column-1",
+      "parentId": "desk-live-root-cond-agent-update-servers",
+      "label": "Status",
+      "kind": "section",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:38:27.028616+00:00",
+      "notes": [
+        "Actual named grid header; no expanded control label/type inferred from this label.",
+        "Repeated/parent-specific header occurrence is not a new global unique child type."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-agent-update-servers-column-2",
+      "parentId": "desk-live-root-cond-agent-update-servers",
+      "label": "Start",
+      "kind": "section",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:38:27.028616+00:00",
+      "notes": [
+        "Actual named grid header; no expanded control label/type inferred from this label.",
+        "Repeated/parent-specific header occurrence is not a new global unique child type."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-agent-update-servers-column-3",
+      "parentId": "desk-live-root-cond-agent-update-servers",
+      "label": "Agent Status",
+      "kind": "section",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:38:27.028616+00:00",
+      "notes": [
+        "Actual named grid header; no expanded control label/type inferred from this label.",
+        "Repeated/parent-specific header occurrence is not a new global unique child type."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-agent-update-servers-column-4",
+      "parentId": "desk-live-root-cond-agent-update-servers",
+      "label": "Update Ansible Play",
+      "kind": "section",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:38:27.028616+00:00",
+      "notes": [
+        "Actual named grid header; no expanded control label/type inferred from this label.",
+        "Repeated/parent-specific header occurrence is not a new global unique child type."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-agent-update-servers-row",
+      "parentId": "desk-live-root-cond-agent-update-servers",
+      "label": "Expanded row context",
+      "kind": "section",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:38:27.028616+00:00",
+      "notes": [
+        "Actual visible expanded row editor; no selected values or record identities exported."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-agent-update-servers-row-field-server",
+      "parentId": "desk-live-root-cond-agent-update-servers-row",
+      "label": "Server",
+      "kind": "field",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:38:27.028616+00:00",
+      "notes": [
+        "Observed control type: Dynamic Link.",
+        "Required: true.",
+        "Control metadata only; no values, linked identities or text/log contents."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-agent-update-servers-row-field-status",
+      "parentId": "desk-live-root-cond-agent-update-servers-row",
+      "label": "Status",
+      "kind": "field",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:38:27.028616+00:00",
+      "notes": [
+        "Observed control type: Select.",
+        "Required: false.",
+        "Control metadata only; no values, linked identities or text/log contents."
+      ],
+      "options": [
+        "Draft",
+        "Pending",
+        "Running",
+        "Success",
+        "Failure",
+        "Fatal",
+        "Skipped",
+        "Rolling Back",
+        "Rolled Back"
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-agent-update-servers-row-field-server_type",
+      "parentId": "desk-live-root-cond-agent-update-servers-row",
+      "label": "Server Type",
+      "kind": "field",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:38:27.028616+00:00",
+      "notes": [
+        "Observed control type: Select.",
+        "Required: true.",
+        "Control metadata only; no values, linked identities or text/log contents."
+      ],
+      "options": ["Server", "Database Server", "Proxy Server"]
+    },
+    {
+      "id": "desk-live-root-cond-team-deletion-request-form",
+      "parentId": "desk-live-form-team-deletion-request",
+      "label": "Team Deletion Request — later unsaved checkpoint",
+      "kind": "section",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:06:34.630407+00:00",
+      "notes": [
+        "Actual later New unsaved full form checkpoint; earlier canonical/form evidence remains historical.",
+        "Parent source checkpoint shared by controls; not independent per-control timestamp.",
+        "Value-free metadata; no Save/final operation/function proof; images not_saved."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-team-deletion-request-users-anonymized",
+      "parentId": "desk-live-root-cond-team-deletion-request-form",
+      "label": "users_anonymized",
+      "kind": "table",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:06:34.630407+00:00",
+      "notes": [
+        "Technical table fieldname: users_anonymized; normalized context label is not a guessed human control label.",
+        "Only this current unsaved context; prior nodes and populated/saved unknowns remain unchanged."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-team-deletion-request-users-anonymized-column-0",
+      "parentId": "desk-live-root-cond-team-deletion-request-users-anonymized",
+      "label": "Team Member",
+      "kind": "section",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:06:34.630407+00:00",
+      "notes": [
+        "Actual named grid header; no expanded control label/type inferred from this label.",
+        "Repeated/parent-specific header occurrence is not a new global unique child type."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-team-deletion-request-users-anonymized-column-1",
+      "parentId": "desk-live-root-cond-team-deletion-request-users-anonymized",
+      "label": "Anonymized Link",
+      "kind": "section",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:06:34.630407+00:00",
+      "notes": [
+        "Actual named grid header; no expanded control label/type inferred from this label.",
+        "Repeated/parent-specific header occurrence is not a new global unique child type."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-team-deletion-request-users-anonymized-column-2",
+      "parentId": "desk-live-root-cond-team-deletion-request-users-anonymized",
+      "label": "Deletion Status",
+      "kind": "section",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:06:34.630407+00:00",
+      "notes": [
+        "Actual named grid header; no expanded control label/type inferred from this label.",
+        "Repeated/parent-specific header occurrence is not a new global unique child type."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-team-deletion-request-users-anonymized-row",
+      "parentId": "desk-live-root-cond-team-deletion-request-users-anonymized",
+      "label": "Expanded row scope unknown",
+      "kind": "section",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "discovered",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:06:34.630407+00:00",
+      "notes": [
+        "Expanded editor unverified in this context; empty fields array is unknown, not absence."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-team-deletion-request-users-anonymized-inline",
+      "parentId": "desk-live-root-cond-team-deletion-request-users-anonymized",
+      "label": "Inline controls — expanded editor unverified",
+      "kind": "section",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:06:34.630407+00:00",
+      "notes": [
+        "Actual inline controls observed; no expanded-row coverage inferred.",
+        "Grid headers remain separate; human labels and required flags unknown."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-team-deletion-request-users-anonymized-inline-field-team_member",
+      "parentId": "desk-live-root-cond-team-deletion-request-users-anonymized-inline",
+      "label": "Inline control: team_member",
+      "kind": "field",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:06:34.630407+00:00",
+      "notes": [
+        "Observed control type: Link.",
+        "Required: unknown.",
+        "Control metadata only; no values, linked identities or text/log contents.",
+        "Actual inline control; not expanded-editor evidence.",
+        "Human label: unknown; grid header is not a control label."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-team-deletion-request-users-anonymized-inline-field-anon_team_member",
+      "parentId": "desk-live-root-cond-team-deletion-request-users-anonymized-inline",
+      "label": "Inline control: anon_team_member",
+      "kind": "field",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:06:34.630407+00:00",
+      "notes": [
+        "Observed control type: Data.",
+        "Required: unknown.",
+        "Control metadata only; no values, linked identities or text/log contents.",
+        "Actual inline control; not expanded-editor evidence.",
+        "Human label: unknown; grid header is not a control label."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-team-deletion-request-users-anonymized-inline-field-deletion_status",
+      "parentId": "desk-live-root-cond-team-deletion-request-users-anonymized-inline",
+      "label": "Inline control: deletion_status",
+      "kind": "field",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:06:34.630407+00:00",
+      "notes": [
+        "Observed control type: Select.",
+        "Required: unknown.",
+        "Control metadata only; no values, linked identities or text/log contents.",
+        "Actual inline control; not expanded-editor evidence.",
+        "Human label: unknown; grid header is not a control label."
+      ],
+      "options": ["Pending", "Deleted"]
+    },
+    {
+      "id": "desk-live-root-cond-team-deletion-request-deletion-steps",
+      "parentId": "desk-live-root-cond-team-deletion-request-form",
+      "label": "deletion_steps",
+      "kind": "table",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:06:34.630407+00:00",
+      "notes": [
+        "Technical table fieldname: deletion_steps; normalized context label is not a guessed human control label.",
+        "Only this current unsaved context; prior nodes and populated/saved unknowns remain unchanged."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-team-deletion-request-deletion-steps-column-0",
+      "parentId": "desk-live-root-cond-team-deletion-request-deletion-steps",
+      "label": "Document Type",
+      "kind": "section",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:06:34.630407+00:00",
+      "notes": [
+        "Actual named grid header; no expanded control label/type inferred from this label.",
+        "Repeated/parent-specific header occurrence is not a new global unique child type."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-team-deletion-request-deletion-steps-column-1",
+      "parentId": "desk-live-root-cond-team-deletion-request-deletion-steps",
+      "label": "Status",
+      "kind": "section",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:06:34.630407+00:00",
+      "notes": [
+        "Actual named grid header; no expanded control label/type inferred from this label.",
+        "Repeated/parent-specific header occurrence is not a new global unique child type."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-team-deletion-request-deletion-steps-row",
+      "parentId": "desk-live-root-cond-team-deletion-request-deletion-steps",
+      "label": "Expanded row scope unknown",
+      "kind": "section",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "discovered",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:06:34.630407+00:00",
+      "notes": [
+        "Expanded editor unverified in this context; empty fields array is unknown, not absence."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-self-hosted-server-form",
+      "parentId": "desk-live-form-self-hosted-server",
+      "label": "Self Hosted Server — later unsaved checkpoint",
+      "kind": "section",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:06:34.630407+00:00",
+      "notes": [
+        "Actual later New unsaved full form checkpoint; earlier canonical/form evidence remains historical.",
+        "Parent source checkpoint shared by controls; not independent per-control timestamp.",
+        "Value-free metadata; no Save/final operation/function proof; images not_saved."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-self-hosted-server-condition-existing-bench-present",
+      "parentId": "desk-live-root-cond-self-hosted-server-form",
+      "label": "Existing Bench Present — conditional observation",
+      "kind": "section",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:06:34.630407+00:00",
+      "notes": [
+        "Local Existing Bench Present false→true; no Save or server operation.",
+        "Native Existing Bench tab and Apps/Sites Add Row became visible; no global conditional completeness inferred."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-self-hosted-server-apps",
+      "parentId": "desk-live-root-cond-self-hosted-server-form",
+      "label": "apps",
+      "kind": "table",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:06:34.630407+00:00",
+      "notes": [
+        "Technical table fieldname: apps; normalized context label is not a guessed human control label.",
+        "Only this current unsaved context; prior nodes and populated/saved unknowns remain unchanged."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-self-hosted-server-apps-column-0",
+      "parentId": "desk-live-root-cond-self-hosted-server-apps",
+      "label": "App Name",
+      "kind": "section",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:06:34.630407+00:00",
+      "notes": [
+        "Actual named grid header; no expanded control label/type inferred from this label.",
+        "Repeated/parent-specific header occurrence is not a new global unique child type."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-self-hosted-server-apps-column-1",
+      "parentId": "desk-live-root-cond-self-hosted-server-apps",
+      "label": "Version",
+      "kind": "section",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:06:34.630407+00:00",
+      "notes": [
+        "Actual named grid header; no expanded control label/type inferred from this label.",
+        "Repeated/parent-specific header occurrence is not a new global unique child type."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-self-hosted-server-apps-column-2",
+      "parentId": "desk-live-root-cond-self-hosted-server-apps",
+      "label": "Branch",
+      "kind": "section",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:06:34.630407+00:00",
+      "notes": [
+        "Actual named grid header; no expanded control label/type inferred from this label.",
+        "Repeated/parent-specific header occurrence is not a new global unique child type."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-self-hosted-server-apps-row",
+      "parentId": "desk-live-root-cond-self-hosted-server-apps",
+      "label": "Expanded row scope unknown",
+      "kind": "section",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "discovered",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:06:34.630407+00:00",
+      "notes": [
+        "Expanded editor unverified in this context; empty fields array is unknown, not absence."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-self-hosted-server-sites",
+      "parentId": "desk-live-root-cond-self-hosted-server-form",
+      "label": "sites",
+      "kind": "table",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:06:34.630407+00:00",
+      "notes": [
+        "Technical table fieldname: sites; normalized context label is not a guessed human control label.",
+        "Only this current unsaved context; prior nodes and populated/saved unknowns remain unchanged."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-self-hosted-server-sites-row",
+      "parentId": "desk-live-root-cond-self-hosted-server-sites",
+      "label": "Expanded row scope unknown",
+      "kind": "section",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "discovered",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:06:34.630407+00:00",
+      "notes": [
+        "Expanded editor unverified in this context; empty fields array is unknown, not absence.",
+        "A grid-form modal appeared, but no visible editor controls were verified; scope remains unknown."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-bench-form",
+      "parentId": "desk-live-form-bench",
+      "label": "Bench — later unsaved checkpoint",
+      "kind": "section",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:46:35.921800+00:00",
+      "notes": [
+        "Actual later New unsaved full form checkpoint; earlier canonical/form evidence remains historical.",
+        "Parent source checkpoint shared by controls; not independent per-control timestamp.",
+        "Value-free metadata; no Save/final operation/function proof; images not_saved."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-bench-environment-variables",
+      "parentId": "desk-live-root-cond-bench-form",
+      "label": "environment_variables",
+      "kind": "table",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:46:35.921800+00:00",
+      "notes": [
+        "Technical table fieldname: environment_variables; normalized context label is not a guessed human control label.",
+        "Only this current unsaved context; prior nodes and populated/saved unknowns remain unchanged.",
+        "Feature Flags section opened; later environment_variables grid/editor verified. Initial collapsed-section state remains historical; Key grid-only."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-bench-environment-variables-column-0",
+      "parentId": "desk-live-root-cond-bench-environment-variables",
+      "label": "Key",
+      "kind": "section",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:46:35.921800+00:00",
+      "notes": [
+        "Actual named grid header; no expanded control label/type inferred from this label.",
+        "Repeated/parent-specific header occurrence is not a new global unique child type."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-bench-environment-variables-column-1",
+      "parentId": "desk-live-root-cond-bench-environment-variables",
+      "label": "Value",
+      "kind": "section",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:46:35.921800+00:00",
+      "notes": [
+        "Actual named grid header; no expanded control label/type inferred from this label.",
+        "Repeated/parent-specific header occurrence is not a new global unique child type."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-bench-environment-variables-row",
+      "parentId": "desk-live-root-cond-bench-environment-variables",
+      "label": "Expanded row context",
+      "kind": "section",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:46:35.921800+00:00",
+      "notes": [
+        "Actual visible expanded row editor; no selected values or record identities exported."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-bench-environment-variables-row-field-value",
+      "parentId": "desk-live-root-cond-bench-environment-variables-row",
+      "label": "Value",
+      "kind": "field",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:46:35.921800+00:00",
+      "notes": [
+        "Observed control type: Text.",
+        "Required: true.",
+        "Control metadata only; no values, linked identities or text/log contents."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-bench-apps",
+      "parentId": "desk-live-root-cond-bench-form",
+      "label": "apps",
+      "kind": "table",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "discovered",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:46:35.921800+00:00",
+      "notes": [
+        "Technical table fieldname: apps; normalized context label is not a guessed human control label.",
+        "Only this current unsaved context; prior nodes and populated/saved unknowns remain unchanged.",
+        "Apps wrapper display:none in empty Apps section; saved/populated context unknown, no absence inferred."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-bench-apps-row",
+      "parentId": "desk-live-root-cond-bench-apps",
+      "label": "Expanded row scope unknown",
+      "kind": "section",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "discovered",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:46:35.921800+00:00",
+      "notes": [
+        "Expanded editor unverified in this context; empty fields array is unknown, not absence.",
+        "Hidden table wrapper provides no visible grid/editor control proof; no status of not_applicable inferred."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-site-action-form",
+      "parentId": "desk-live-form-site-action",
+      "label": "Site Action — later unsaved checkpoint",
+      "kind": "section",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:50:38.795068+00:00",
+      "notes": [
+        "Actual later New unsaved full form checkpoint; earlier canonical/form evidence remains historical.",
+        "Parent source checkpoint shared by controls; not independent per-control timestamp.",
+        "Value-free metadata; no Save/final operation/function proof; images not_saved."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-site-action-steps",
+      "parentId": "desk-live-root-cond-site-action-form",
+      "label": "steps",
+      "kind": "table",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:50:38.795068+00:00",
+      "notes": [
+        "Technical table fieldname: steps; normalized context label is not a guessed human control label.",
+        "Only this current unsaved context; prior nodes and populated/saved unknowns remain unchanged."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-site-action-steps-column-0",
+      "parentId": "desk-live-root-cond-site-action-steps",
+      "label": "Step",
+      "kind": "section",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:50:38.795068+00:00",
+      "notes": [
+        "Actual named grid header; no expanded control label/type inferred from this label.",
+        "Repeated/parent-specific header occurrence is not a new global unique child type."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-site-action-steps-column-1",
+      "parentId": "desk-live-root-cond-site-action-steps",
+      "label": "Status",
+      "kind": "section",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:50:38.795068+00:00",
+      "notes": [
+        "Actual named grid header; no expanded control label/type inferred from this label.",
+        "Repeated/parent-specific header occurrence is not a new global unique child type."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-site-action-steps-column-2",
+      "parentId": "desk-live-root-cond-site-action-steps",
+      "label": "Reference Name",
+      "kind": "section",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:50:38.795068+00:00",
+      "notes": [
+        "Actual named grid header; no expanded control label/type inferred from this label.",
+        "Repeated/parent-specific header occurrence is not a new global unique child type."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-site-action-steps-column-3",
+      "parentId": "desk-live-root-cond-site-action-steps",
+      "label": "Step Type",
+      "kind": "section",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:50:38.795068+00:00",
+      "notes": [
+        "Actual named grid header; no expanded control label/type inferred from this label.",
+        "Repeated/parent-specific header occurrence is not a new global unique child type."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-site-action-steps-row",
+      "parentId": "desk-live-root-cond-site-action-steps",
+      "label": "Expanded row context",
+      "kind": "section",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:50:38.795068+00:00",
+      "notes": [
+        "Actual visible expanded row editor; no selected values or record identities exported."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-site-action-steps-row-field-step",
+      "parentId": "desk-live-root-cond-site-action-steps-row",
+      "label": "Step",
+      "kind": "field",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:50:38.795068+00:00",
+      "notes": [
+        "Observed control type: Data.",
+        "Required: true.",
+        "Control metadata only; no values, linked identities or text/log contents."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-site-action-steps-row-field-status",
+      "parentId": "desk-live-root-cond-site-action-steps-row",
+      "label": "Status",
+      "kind": "field",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:50:38.795068+00:00",
+      "notes": [
+        "Observed control type: Select.",
+        "Required: true.",
+        "Control metadata only; no values, linked identities or text/log contents."
+      ],
+      "options": [
+        "Pending",
+        "Scheduled",
+        "Running",
+        "Skipped",
+        "Success",
+        "Failure"
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-site-action-steps-row-field-method",
+      "parentId": "desk-live-root-cond-site-action-steps-row",
+      "label": "Method",
+      "kind": "field",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:50:38.795068+00:00",
+      "notes": [
+        "Observed control type: Data.",
+        "Required: true.",
+        "Control metadata only; no values, linked identities or text/log contents."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-site-action-steps-row-field-reference_doctype",
+      "parentId": "desk-live-root-cond-site-action-steps-row",
+      "label": "Reference Doctype",
+      "kind": "field",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:50:38.795068+00:00",
+      "notes": [
+        "Observed control type: Link.",
+        "Required: false.",
+        "Control metadata only; no values, linked identities or text/log contents."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-site-action-steps-row-field-reference_name",
+      "parentId": "desk-live-root-cond-site-action-steps-row",
+      "label": "Reference Name",
+      "kind": "field",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:50:38.795068+00:00",
+      "notes": [
+        "Observed control type: Dynamic Link.",
+        "Required: false.",
+        "Control metadata only; no values, linked identities or text/log contents."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-site-action-steps-row-field-start",
+      "parentId": "desk-live-root-cond-site-action-steps-row",
+      "label": "Start",
+      "kind": "field",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:50:38.795068+00:00",
+      "notes": [
+        "Observed control type: Datetime.",
+        "Required: false.",
+        "Control metadata only; no values, linked identities or text/log contents."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-site-action-steps-row-field-end",
+      "parentId": "desk-live-root-cond-site-action-steps-row",
+      "label": "End",
+      "kind": "field",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:50:38.795068+00:00",
+      "notes": [
+        "Observed control type: Datetime.",
+        "Required: false.",
+        "Control metadata only; no values, linked identities or text/log contents."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-site-action-steps-row-field-duration",
+      "parentId": "desk-live-root-cond-site-action-steps-row",
+      "label": "Duration",
+      "kind": "field",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:50:38.795068+00:00",
+      "notes": [
+        "Observed control type: Duration.",
+        "Required: false.",
+        "Control metadata only; no values, linked identities or text/log contents."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-site-action-steps-row-field-step_type",
+      "parentId": "desk-live-root-cond-site-action-steps-row",
+      "label": "Step Type",
+      "kind": "field",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:50:38.795068+00:00",
+      "notes": [
+        "Observed control type: Select.",
+        "Required: false.",
+        "Control metadata only; no values, linked identities or text/log contents."
+      ],
+      "options": ["Preparation", "Main", "Cleanup"]
+    },
+    {
+      "id": "desk-live-root-cond-site-action-steps-row-field-attempts",
+      "parentId": "desk-live-root-cond-site-action-steps-row",
+      "label": "Attempts",
+      "kind": "field",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:50:38.795068+00:00",
+      "notes": [
+        "Observed control type: Int.",
+        "Required: false.",
+        "Control metadata only; no values, linked identities or text/log contents."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-site-action-steps-row-field-traceback",
+      "parentId": "desk-live-root-cond-site-action-steps-row",
+      "label": "Traceback",
+      "kind": "field",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:50:38.795068+00:00",
+      "notes": [
+        "Observed control type: Text.",
+        "Required: false.",
+        "Control metadata only; no values, linked identities or text/log contents."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-site-action-steps-row-field-error_message",
+      "parentId": "desk-live-root-cond-site-action-steps-row",
+      "label": "Error Message",
+      "kind": "field",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:50:38.795068+00:00",
+      "notes": [
+        "Observed control type: Small Text.",
+        "Required: false.",
+        "Control metadata only; no values, linked identities or text/log contents."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-deploy-candidate-form",
+      "parentId": "desk-live-form-deploy-candidate",
+      "label": "Deploy Candidate — later unsaved checkpoint",
+      "kind": "section",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:54:02.392745+00:00",
+      "notes": [
+        "Actual later New unsaved full form checkpoint; earlier canonical/form evidence remains historical.",
+        "Parent source checkpoint shared by controls; not independent per-control timestamp.",
+        "Value-free metadata; no Save/final operation/function proof; images not_saved.",
+        "Actual Apps & Deps tab selected; later zero-control editor/hidden-ancestor checks update only this new checkpoint, preserving earlier failed checks."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-deploy-candidate-apps",
+      "parentId": "desk-live-root-cond-deploy-candidate-form",
+      "label": "apps",
+      "kind": "table",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:54:02.392745+00:00",
+      "notes": [
+        "Technical table fieldname: apps; normalized context label is not a guessed human control label.",
+        "Only this current unsaved context; prior nodes and populated/saved unknowns remain unchanged."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-deploy-candidate-apps-column-0",
+      "parentId": "desk-live-root-cond-deploy-candidate-apps",
+      "label": "App",
+      "kind": "section",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:54:02.392745+00:00",
+      "notes": [
+        "Actual named grid header; no expanded control label/type inferred from this label.",
+        "Repeated/parent-specific header occurrence is not a new global unique child type."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-deploy-candidate-apps-column-1",
+      "parentId": "desk-live-root-cond-deploy-candidate-apps",
+      "label": "Source",
+      "kind": "section",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:54:02.392745+00:00",
+      "notes": [
+        "Actual named grid header; no expanded control label/type inferred from this label.",
+        "Repeated/parent-specific header occurrence is not a new global unique child type."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-deploy-candidate-apps-column-2",
+      "parentId": "desk-live-root-cond-deploy-candidate-apps",
+      "label": "Release",
+      "kind": "section",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:54:02.392745+00:00",
+      "notes": [
+        "Actual named grid header; no expanded control label/type inferred from this label.",
+        "Repeated/parent-specific header occurrence is not a new global unique child type."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-deploy-candidate-apps-column-3",
+      "parentId": "desk-live-root-cond-deploy-candidate-apps",
+      "label": "Hash",
+      "kind": "section",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:54:02.392745+00:00",
+      "notes": [
+        "Actual named grid header; no expanded control label/type inferred from this label.",
+        "Repeated/parent-specific header occurrence is not a new global unique child type."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-deploy-candidate-apps-row",
+      "parentId": "desk-live-root-cond-deploy-candidate-apps",
+      "label": "Expanded row scope unknown",
+      "kind": "section",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "discovered",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:54:02.392745+00:00",
+      "notes": [
+        "Expanded editor unverified in this context; empty fields array is unknown, not absence."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-deploy-candidate-dependencies",
+      "parentId": "desk-live-root-cond-deploy-candidate-form",
+      "label": "dependencies",
+      "kind": "table",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:54:02.392745+00:00",
+      "notes": [
+        "Technical table fieldname: dependencies; normalized context label is not a guessed human control label.",
+        "Only this current unsaved context; prior nodes and populated/saved unknowns remain unchanged."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-deploy-candidate-dependencies-column-0",
+      "parentId": "desk-live-root-cond-deploy-candidate-dependencies",
+      "label": "Dependency",
+      "kind": "section",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:54:02.392745+00:00",
+      "notes": [
+        "Actual named grid header; no expanded control label/type inferred from this label.",
+        "Repeated/parent-specific header occurrence is not a new global unique child type."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-deploy-candidate-dependencies-column-1",
+      "parentId": "desk-live-root-cond-deploy-candidate-dependencies",
+      "label": "Version",
+      "kind": "section",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:54:02.392745+00:00",
+      "notes": [
+        "Actual named grid header; no expanded control label/type inferred from this label.",
+        "Repeated/parent-specific header occurrence is not a new global unique child type."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-deploy-candidate-dependencies-row",
+      "parentId": "desk-live-root-cond-deploy-candidate-dependencies",
+      "label": "Expanded row context",
+      "kind": "section",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:54:02.392745+00:00",
+      "notes": [
+        "Actual expanded editor verified with 0 visible label-bearing controls; no field proof or absence inferred."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-deploy-candidate-packages",
+      "parentId": "desk-live-root-cond-deploy-candidate-form",
+      "label": "packages",
+      "kind": "table",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "discovered",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:54:02.392745+00:00",
+      "notes": [
+        "Technical table fieldname: packages; normalized context label is not a guessed human control label.",
+        "Only this current unsaved context; prior nodes and populated/saved unknowns remain unchanged.",
+        "Later ancestor inspection verified hide-control display:none in selected Apps & Deps; no global absence inferred."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-deploy-candidate-packages-row",
+      "parentId": "desk-live-root-cond-deploy-candidate-packages",
+      "label": "Expanded row scope unknown",
+      "kind": "section",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "discovered",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:54:02.392745+00:00",
+      "notes": [
+        "Expanded editor unverified in this context; empty fields array is unknown, not absence.",
+        "Hidden table wrapper provides no visible grid/editor control proof; no status of not_applicable inferred."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-deploy-candidate-environment-variables",
+      "parentId": "desk-live-root-cond-deploy-candidate-form",
+      "label": "environment_variables",
+      "kind": "table",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "discovered",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:54:02.392745+00:00",
+      "notes": [
+        "Technical table fieldname: environment_variables; normalized context label is not a guessed human control label.",
+        "Only this current unsaved context; prior nodes and populated/saved unknowns remain unchanged.",
+        "Later ancestor inspection verified hide-control display:none in selected Apps & Deps; no global absence inferred."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-deploy-candidate-environment-variables-row",
+      "parentId": "desk-live-root-cond-deploy-candidate-environment-variables",
+      "label": "Expanded row scope unknown",
+      "kind": "section",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "discovered",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T11:54:02.392745+00:00",
+      "notes": [
+        "Expanded editor unverified in this context; empty fields array is unknown, not absence.",
+        "Hidden table wrapper provides no visible grid/editor control proof; no status of not_applicable inferred."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-support-access-form",
+      "parentId": "desk-live-form-support-access",
+      "label": "Support Access — later unsaved checkpoint",
+      "kind": "section",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T12:01:38.195296+00:00",
+      "notes": [
+        "Actual later New unsaved full form checkpoint; earlier canonical/form evidence remains historical.",
+        "Parent source checkpoint shared by controls; not independent per-control timestamp.",
+        "Value-free metadata; no Save/final operation/function proof; images not_saved."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-support-access-resources",
+      "parentId": "desk-live-root-cond-support-access-form",
+      "label": "resources",
+      "kind": "table",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T12:01:38.195296+00:00",
+      "notes": [
+        "Technical table fieldname: resources; normalized context label is not a guessed human control label.",
+        "Only this current unsaved context; prior nodes and populated/saved unknowns remain unchanged."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-support-access-resources-column-0",
+      "parentId": "desk-live-root-cond-support-access-resources",
+      "label": "Document Type",
+      "kind": "section",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T12:01:38.195296+00:00",
+      "notes": [
+        "Actual named grid header; no expanded control label/type inferred from this label.",
+        "Repeated/parent-specific header occurrence is not a new global unique child type."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-support-access-resources-column-1",
+      "parentId": "desk-live-root-cond-support-access-resources",
+      "label": "Document Name",
+      "kind": "section",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T12:01:38.195296+00:00",
+      "notes": [
+        "Actual named grid header; no expanded control label/type inferred from this label.",
+        "Repeated/parent-specific header occurrence is not a new global unique child type."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-support-access-resources-row",
+      "parentId": "desk-live-root-cond-support-access-resources",
+      "label": "Expanded row context",
+      "kind": "section",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T12:01:38.195296+00:00",
+      "notes": [
+        "Actual visible expanded row editor; no selected values or record identities exported."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-support-access-resources-row-field-document_type",
+      "parentId": "desk-live-root-cond-support-access-resources-row",
+      "label": "Document Type",
+      "kind": "field",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T12:01:38.195296+00:00",
+      "notes": [
+        "Observed control type: Link.",
+        "Required: false.",
+        "Control metadata only; no values, linked identities or text/log contents."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-support-access-resources-row-field-document_name",
+      "parentId": "desk-live-root-cond-support-access-resources-row",
+      "label": "Document Name",
+      "kind": "field",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T12:01:38.195296+00:00",
+      "notes": [
+        "Observed control type: Dynamic Link.",
+        "Required: false.",
+        "Control metadata only; no values, linked identities or text/log contents."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-account-request-form",
+      "parentId": "desk-live-form-account-request",
+      "label": "Account Request — later unsaved checkpoint",
+      "kind": "section",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T12:02:23.702984+00:00",
+      "notes": [
+        "Actual later New unsaved full form checkpoint; earlier canonical/form evidence remains historical.",
+        "Parent source checkpoint shared by controls; not independent per-control timestamp.",
+        "Value-free metadata; no Save/final operation/function proof; images not_saved."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-account-request-control-press-roles",
+      "parentId": "desk-live-root-cond-account-request-form",
+      "label": "Press Roles",
+      "kind": "field",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T12:02:23.702984+00:00",
+      "notes": [
+        "Observed control type: Table MultiSelect.",
+        "Required: false.",
+        "Enabled text combobox observed; grid-body was not observed; no grid/header/editor coverage inferred.",
+        "No query, selection, Save, invitation, access grant or reaction executed."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-prometheus-alert-rule-form",
+      "parentId": "desk-live-form-prometheus-alert-rule",
+      "label": "Prometheus Alert Rule — later unsaved checkpoint",
+      "kind": "section",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T12:03:01.237539+00:00",
+      "notes": [
+        "Actual later New unsaved full form checkpoint; earlier canonical/form evidence remains historical.",
+        "Parent source checkpoint shared by controls; not independent per-control timestamp.",
+        "Value-free metadata; no Save/final operation/function proof; images not_saved.",
+        "Actual Reaction tab selected; Details hidden state is a separate earlier context."
+      ]
+    },
+    {
+      "id": "desk-live-root-cond-prometheus-alert-rule-control-ignore-on-clusters",
+      "parentId": "desk-live-root-cond-prometheus-alert-rule-form",
+      "label": "Ignore on Clusters",
+      "kind": "field",
+      "surface": "desk",
+      "source": "live_ui",
+      "status": "visited",
+      "risk": "read",
+      "executed": false,
+      "functionalTest": "not_run",
+      "observedAt": "2026-10-08T12:03:01.237539+00:00",
+      "notes": [
+        "Observed control type: Table MultiSelect.",
+        "Required: false.",
+        "Enabled text combobox observed; grid-body was not observed; no grid/header/editor coverage inferred.",
+        "No query, selection, Save, invitation, access grant or reaction executed."
       ]
     }
   ]
