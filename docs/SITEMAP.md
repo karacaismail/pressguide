@@ -636,3 +636,13 @@ minimum Node 22.12, approved visual references, field INP and current
 CI/Pages remain unverified at this pre-publication checkpoint. The source
 still has `auditPhase: in_progress`; guide publication never certifies
 Press functionality or production upgrade readiness.
+
+## 8 Ekim 2026: 10.976 öğelik ek gözlem
+
+Bu veri güncellemesi 10.513 öğelik yayına 463 öğe ekler, 29 mevcut öğenin kanıtlı metadata durumunu günceller; hiçbir öğe kaldırılmaz. Kaynak SHA256: `7eeaae7689631eea40014647b19337c041dfa35953e31088ecc00087537bab7a`. `auditPhase` hâlâ `in_progress`; gözlem zamanı yayın veya tamamlanma zamanı değildir.
+
+Gerçek tam form defteri 189/196, kalan 7 formdur. Genel haritadaki 109 visited/87 discovered form sınıfları ayrı ölçümdür; eski gözlemler topluca yeniden sınıflandırılmadı. Bu paket Communication/Jobs, beş yeni tam form ve native Incident/child satır bağlamlarını içerir. Sonraki Hybrid Saas Pool, Incident Settings ve Marketplace App Plan incelemeleri bu sabit kaynağa dahil değildir.
+
+Bağımsız metadata incelemesinde engelleyici veya büyük bulgu bulunmadı. Bir özel kaynak açıklaması için ayrı düzeltme kaydı tutuldu; yayımlanan düğümler etkilenmedi. Gerçek Claude çalıştırması kullanım limitinde, dosya okuması başlamadan durdu: 0/26 Read, inceleme sonucu yok. Bu yayın için Claude onayı veya tüm panelin tamamlandığı iddiası yoktur.
+
+TDD: yeni tam formların kaydedilmemiş bağlamını ve sonraki Incident satır gözleminin önceki Monitor Server hatasını silmemesini koruyan iki regresyon, entegrasyondan önce başarısız, sonra başarılı oldu. Operasyonlar çalıştırılmadı; güncelleme, ödeme, silme ve diğer işlevlerin sonuçları `not_run` kalır. Ekran görüntüsü, gerçek cihaz, sunucu güncellemesi ve üretim kabulü bu metadata testleriyle doğrulanmaz. CI ve canlı yayın sonucu ayrıca doğrulanır.
