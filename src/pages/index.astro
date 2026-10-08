@@ -7,6 +7,7 @@ import {
   TreeStructureIcon,
 } from '@phosphor-icons/react/ssr';
 import Screenshot from '../components/Screenshot.astro';
+import GuideWorkspace from '../components/GuideWorkspace.astro';
 import type { Guide } from '../types';
 import '../styles/global.css';
 let guide: Guide = {
@@ -112,22 +113,7 @@ const statuses = {
           <h2>Bu rehberin durumu</h2>
           <p>{guide.liveStatus}</p>
         </aside>
-        <nav class="toc" aria-label="Rehber bölümleri">
-          <h2>İzlenecek yol</h2>
-          <ol>
-            {primarySteps.map((step) => (
-              <li>
-                <a href={`#${step.id}`}>{step.title}</a>
-              </li>
-            ))}
-          </ol>
-          {guide.steps.length === 0 && (
-            <p>
-              Ekran kanıtları inceleniyor. Adımlar doğrulandıkça burada
-              yayımlanacak.
-            </p>
-          )}
-        </nav>
+        <GuideWorkspace steps={primarySteps} />
         <section class="steps" id="adimlar" aria-label="Uygulama adımları">
           {primarySteps.map((step, index) => (
             <article class="step" id={step.id}>

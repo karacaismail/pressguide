@@ -66,6 +66,9 @@
   --line-field: 1px solid var(--color-muted);
   --line-functional: 1px solid var(--color-accent-soft);
   --shadow-panel: 0 1rem 3rem #18312e26;
+  --workspace-panel-width: 36rem;
+  --workspace-panel-max-height: 90dvh;
+  --workspace-backdrop: #18312e66;
   --motion-duration-short: 0.15s;
 }
 @media (any-pointer: coarse) {

@@ -1,0 +1,377 @@
+---
+import type { Step } from '../types';
+interface Props {
+  steps: Pick<Step, 'id' | 'title' | 'actions' | 'verification' | 'status'>[];
+}
+const { steps } = Astro.props;
+---
+
+<div id="guide-workspace">
+  <nav class="toc" aria-label="Rehber bölümleri">
+    <div class="workspace-heading">
+      <h2>İzlenecek yol</h2>
+      <div class="workspace-actions" hidden>
+        <button class="button secondary" type="button" data-workspace-search>
+          Adım ara
+        </button>
+        <button class="button secondary" type="button" data-workspace-context>
+          Adım bağlamı
+        </button>
+      </div>
+    </div>
+    <ol>
+      {steps.map((step) => (
+        <li>
+          <a href={`#${step.id}`}>{step.title}</a>
+        </li>
+      ))}
+    </ol>
+    {steps.length === 0 && <p>Adımlar doğrulandıkça burada yayımlanacak.</p>}
+  </nav>
+  <dialog aria-labelledby="workspace-dialog-title">
+    <div class="workspace-dialog-header">
+      <h2 id="workspace-dialog-title">Adım ara</h2>
+      <button class="button secondary" type="button" data-workspace-close>
+        Kapat
+      </button>
+    </div>
+    <div data-workspace-search-view>
+      <label for="workspace-query">Adım adı veya içerik</label>
+      <input
+        id="workspace-query"
+        type="text"
+        role="combobox"
+        aria-autocomplete="list"
+        aria-expanded="true"
+        autocomplete="off"
+        aria-controls="workspace-results"
+      />
+      <p class="workspace-hint">
+        ↑ ↓ ile seç, Enter ile adıma git. Kısayol: Ctrl / Cmd + K.
+      </p>
+      <ul id="workspace-results" role="listbox" aria-label="Adımlar"></ul>
+      <p data-workspace-empty role="status" hidden>
+        Eşleşen adım yok.
+      </p>
+    </div>
+    <section
+      data-workspace-context-view
+      hidden
+      aria-labelledby="workspace-step-title"
+    >
+      <p data-workspace-context-note hidden>
+        Sekiz ana adımdan birini seçin. İlk adımın bağlamı gösteriliyor.
+      </p>
+      <h3 id="workspace-step-title"></h3>
+      <p data-workspace-status></p>
+      <h3>Uygula</h3>
+      <ol data-workspace-instructions></ol>
+      <h3>Kontrol et</h3>
+      <p data-workspace-verification></p>
+      <a class="button" data-workspace-go>
+        Adıma git
+      </a>
+    </section>
+  </dialog>
+  <script
+    type="application/json"
+    id="workspace-data"
+    set:html={JSON.stringify(steps).replace(/</g, '\\u003c')}
+  />
+</div>
+
+<script>
+  import type { Step } from '../types';
+  const root = document.querySelector<HTMLElement>('#guide-workspace');
+  if (root) {
+    const dialog = root.querySelector<HTMLDialogElement>('dialog')!;
+    const steps: Pick<
+      Step,
+      'id' | 'title' | 'actions' | 'verification' | 'status'
+    >[] = JSON.parse(
+      root.querySelector('#workspace-data')!.textContent || '[]',
+    );
+    const input = root.querySelector<HTMLInputElement>('#workspace-query')!;
+    const results = root.querySelector<HTMLUListElement>('#workspace-results')!;
+    const searchView = root.querySelector<HTMLElement>(
+      '[data-workspace-search-view]',
+    )!;
+    const contextView = root.querySelector<HTMLElement>(
+      '[data-workspace-context-view]',
+    )!;
+    const searchButton = root.querySelector<HTMLButtonElement>(
+      '[data-workspace-search]',
+    )!;
+    const contextButton = root.querySelector<HTMLButtonElement>(
+      '[data-workspace-context]',
+    )!;
+    const closeButton = root.querySelector<HTMLButtonElement>(
+      '[data-workspace-close]',
+    )!;
+    let selected = steps[0];
+    let matches = steps;
+    let active = 0;
+    let mode: 'search' | 'context' = 'search';
+    let returnFocus: HTMLElement | null = null;
+    let navigating = false;
+    const status = {
+      historical: 'Tarihsel ekran kaydı',
+      live: 'Canlı oturumda doğrulandı',
+      pending: 'Doğrulama bekliyor',
+    };
+    const syncHash = () => {
+      let id = '';
+      try {
+        id = decodeURIComponent(location.hash.slice(1));
+      } catch {
+        selected = steps[0];
+        root.querySelector<HTMLElement>(
+          '[data-workspace-context-note]',
+        )!.hidden = false;
+        return;
+      }
+      const found = steps.find((step) => step.id === id);
+      selected = found || steps[0];
+      root.querySelector<HTMLElement>('[data-workspace-context-note]')!.hidden =
+        Boolean(found) || !location.hash;
+    };
+    const render = () => {
+      results.replaceChildren();
+      matches.forEach((step, index) => {
+        const item = document.createElement('li');
+        item.setAttribute('role', 'presentation');
+        const link = document.createElement('a');
+        link.href = `#${step.id}`;
+        link.id = `workspace-result-${index}`;
+        link.setAttribute('role', 'option');
+        link.setAttribute('aria-selected', String(index === active));
+        link.textContent = step.title;
+        link.addEventListener('click', (event) => {
+          event.preventDefault();
+          go(step);
+        });
+        item.append(link);
+        results.append(item);
+      });
+      input.toggleAttribute('aria-activedescendant', matches.length > 0);
+      if (matches.length)
+        input.setAttribute(
+          'aria-activedescendant',
+          `workspace-result-${active}`,
+        );
+      root.querySelector<HTMLElement>('[data-workspace-empty]')!.hidden =
+        matches.length > 0;
+    };
+    const go = (step: typeof selected) => {
+      if (!step) return;
+      selected = step;
+      navigating = true;
+      dialog.close();
+      location.hash = step.id;
+      const heading = document.getElementById(step.id)?.querySelector('h2');
+      if (heading) {
+        heading.tabIndex = -1;
+        heading.focus({ preventScroll: true });
+        heading.addEventListener(
+          'blur',
+          () => heading.removeAttribute('tabindex'),
+          { once: true },
+        );
+      }
+    };
+    const open = (nextMode: typeof mode) => {
+      syncHash();
+      if (!dialog.open)
+        returnFocus =
+          document.activeElement instanceof HTMLElement
+            ? document.activeElement
+            : null;
+      mode = nextMode;
+      navigating = false;
+      root.querySelector('#workspace-dialog-title')!.textContent =
+        mode === 'search' ? 'Adım ara' : 'Adım bağlamı';
+      searchView.hidden = mode !== 'search';
+      contextView.hidden = mode !== 'context';
+      if (mode === 'search') render();
+      else if (selected) {
+        const contextStep = selected;
+        root.querySelector('#workspace-step-title')!.textContent =
+          contextStep.title;
+        root.querySelector('[data-workspace-status]')!.textContent =
+          status[contextStep.status];
+        root.querySelector('[data-workspace-verification]')!.textContent =
+          contextStep.verification;
+        const actions = root.querySelector('[data-workspace-instructions]')!;
+        actions.replaceChildren(
+          ...contextStep.actions.map((action) => {
+            const item = document.createElement('li');
+            item.textContent = action;
+            return item;
+          }),
+        );
+        const link = root.querySelector<HTMLAnchorElement>(
+          '[data-workspace-go]',
+        )!;
+        link.href = `#${contextStep.id}`;
+        link.onclick = (event) => {
+          event.preventDefault();
+          go(contextStep);
+        };
+      }
+      if (!dialog.open) dialog.showModal();
+      (mode === 'search' ? input : closeButton).focus();
+    };
+    input.addEventListener('input', () => {
+      const query = input.value.trim().toLocaleLowerCase('tr-TR');
+      matches = steps.filter((step) =>
+        [step.title, ...step.actions, step.verification]
+          .join(' ')
+          .toLocaleLowerCase('tr-TR')
+          .includes(query),
+      );
+      active = 0;
+      render();
+    });
+    dialog.addEventListener('keydown', (event) => {
+      if (
+        mode !== 'search' ||
+        !matches.length ||
+        !(
+          event.target === input ||
+          (event.target instanceof HTMLElement &&
+            event.target.getAttribute('role') === 'option')
+        )
+      )
+        return;
+      if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+        event.preventDefault();
+        active =
+          (active + (event.key === 'ArrowDown' ? 1 : -1) + matches.length) %
+          matches.length;
+        input.focus();
+        render();
+        document
+          .getElementById(`workspace-result-${active}`)
+          ?.scrollIntoView({ block: 'nearest' });
+      } else if (event.key === 'Enter') {
+        event.preventDefault();
+        const optionIndex =
+          event.target instanceof HTMLElement &&
+          event.target.getAttribute('role') === 'option'
+            ? Number(event.target.id.replace('workspace-result-', ''))
+            : active;
+        go(matches[optionIndex]);
+      }
+    });
+    closeButton.addEventListener('click', () => dialog.close());
+    dialog.addEventListener('close', () => {
+      if (!navigating) returnFocus?.focus();
+    });
+    searchButton.addEventListener('click', () => open('search'));
+    contextButton.addEventListener('click', () => open('context'));
+    window.addEventListener('hashchange', syncHash);
+    document.addEventListener('keydown', (event) => {
+      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') {
+        if (
+          Array.from(
+            document.querySelectorAll(
+              'dialog[open], [role="dialog"][aria-modal="true"]',
+            ),
+          ).some((openDialog) => openDialog !== dialog)
+        )
+          return;
+        event.preventDefault();
+        open('search');
+      }
+    });
+    if (typeof dialog.showModal === 'function')
+      root.querySelector<HTMLElement>('.workspace-actions')!.hidden = false;
+  }
+</script>
+
+<style>
+  .workspace-heading,
+  .workspace-actions,
+  .workspace-dialog-header {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+  }
+  .workspace-heading,
+  .workspace-dialog-header {
+    justify-content: space-between;
+  }
+  .workspace-actions[hidden],
+  [hidden] {
+    display: none;
+  }
+  dialog {
+    color: var(--color-ink);
+    background: var(--color-surface);
+    border: none;
+    border-radius: var(--radius-image);
+    box-shadow: var(--shadow-panel);
+    padding: var(--space-md);
+    width: min(
+      var(--workspace-panel-width),
+      calc(100% - var(--page-gutter) * 2)
+    );
+    max-height: var(--workspace-panel-max-height);
+    overflow-y: auto;
+    font-family: var(--font-body);
+    font-size: var(--text-body);
+  }
+  dialog::backdrop {
+    background: var(--workspace-backdrop);
+  }
+  .workspace-dialog-header {
+    margin-bottom: var(--space-lg);
+  }
+  label {
+    display: block;
+    margin-bottom: var(--space-xs);
+  }
+  input {
+    width: 100%;
+    min-height: var(--target-size);
+    padding: var(--control-padding);
+    border: var(--line-field);
+    border-radius: var(--radius-control);
+    color: var(--color-ink);
+    background: var(--color-surface);
+  }
+  .workspace-hint {
+    color: var(--color-muted);
+    margin-top: var(--space-sm);
+  }
+  #workspace-results {
+    list-style: none;
+    padding: 0;
+    margin-block: var(--space-md);
+  }
+  #workspace-results :global(a) {
+    display: flex;
+    align-items: center;
+    min-height: var(--target-size);
+    padding: var(--control-padding);
+    border-radius: var(--radius-control);
+    text-decoration: none;
+  }
+  #workspace-results :global(a[aria-selected='true']) {
+    background: var(--color-accent-soft);
+  }
+  [data-workspace-context-view] > * + * {
+    margin-top: var(--space-md);
+  }
+  @media (min-width: 64rem) {
+    dialog {
+      margin-inline-end: var(--page-gutter);
+    }
+  }
+  @media print {
+    .workspace-actions {
+      display: none;
+    }
+  }
+</style>

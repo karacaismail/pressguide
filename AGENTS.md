@@ -30,3 +30,5 @@ Sitemap kaynağı 11.724 öğeye çıkarıldı: önceki 11.625 öğenin nesneler
 Yeni regresyon testleri mevcut kaynakta iki beklenen assertion hatası verdi; 11.724 kaynakla dört test geçti. Bağımsız kaynak/veri/test incelemesinde eyleme dönük bulgu çıkmadı. Üretim derleme, tarayıcı ve CI sonuçları yayın kanıtında ayrıca raporlanır; bu metin bütün panelin tamamlandığını söylemez.
 
 - Default typography: Outfit first for body and headings; locally bundled variable WOFF2 Latin/Latin-ext with font-display swap and upstream OFL. Monospace is reserved for code/record identifiers. Google Fonts is not contacted by the running guide.
+
+- Research application: compact guide navigation, command search and step inspector share reviewed guide data. No AI backend, tenant session, live tool execution or fabricated notifications. Keep native modal semantics and source evidence statuses; no production request occurs from these controls. See `docs/RESEARCH-APPLICATION.md` for remaining server requirements.
