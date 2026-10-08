@@ -80,7 +80,10 @@ test('keyboard disclosure focus clears its heading while closed and open', async
   await page.keyboard.press('Enter');
   await expect(details).not.toHaveAttribute('open');
   await page.keyboard.press('Shift+Tab');
-  if (browserName === 'webkit') {
+  if (
+    browserName === 'webkit' &&
+    !(await preceding.evaluate((el) => document.activeElement === el))
+  ) {
     // WebKit's native limited Tab mode skips buttons. Verify its plain reverse
     // focus remains visible, then exercise the full-control keyboard shortcut.
     await expect(page.locator(':focus')).toBeVisible();
