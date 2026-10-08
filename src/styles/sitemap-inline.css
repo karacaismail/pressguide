@@ -21,7 +21,7 @@
   gap: var(--space-xs);
 }
 [data-selected] dt {
-  font-weight: 700;
+  font-weight: var(--weight-label);
 }
 [data-selected] h3 {
   overflow-wrap: break-word;

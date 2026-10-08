@@ -13,7 +13,7 @@
   border-radius: var(--radius-control);
   background: var(--color-accent-soft);
   color: var(--color-accent);
-  font-weight: 700;
+  font-weight: var(--weight-label);
 }
 .sitemap-lead {
   max-width: var(--measure-lead);
@@ -49,12 +49,12 @@
   display: list-item;
   min-block-size: var(--target-size);
   padding-block: var(--space-xs);
-  font-weight: 700;
+  font-weight: var(--weight-label);
   cursor: pointer;
 }
 .sitemap-count-title {
   margin-top: var(--space-md);
-  font-weight: 700;
+  font-weight: var(--weight-label);
 }
 .sitemap-counts {
   display: grid;
@@ -127,7 +127,7 @@ main nav ol {
 }
 .sitemap-controls label,
 .sitemap-controls legend {
-  font-weight: 700;
+  font-weight: var(--weight-label);
 }
 .sitemap-controls input {
   width: 100%;
@@ -167,7 +167,7 @@ main nav ol {
 }
 .sitemap-empty {
   color: var(--color-caution);
-  font-weight: 700;
+  font-weight: var(--weight-label);
 }
 
 /* Tree: spacing and one functional rule per level carry the hierarchy. */
@@ -219,7 +219,7 @@ main nav ol {
   transform: rotate(90deg);
 }
 .sitemap-label {
-  font-weight: 700;
+  font-weight: var(--weight-label);
   min-width: 0;
 }
 .sitemap-node > summary .sitemap-status,
@@ -234,7 +234,7 @@ main nav ol {
 }
 .sitemap-item[data-context] > details > summary .sitemap-label {
   color: var(--color-muted);
-  font-weight: 400;
+  font-weight: var(--weight-body);
 }
 .sitemap-body > :not(.sitemap-tree) {
   margin-inline-start: calc(var(--tree-marker-size) + var(--space-xs));
@@ -273,18 +273,18 @@ main nav ol {
 }
 [data-risk='write'] {
   color: var(--color-caution);
-  font-weight: 700;
+  font-weight: var(--weight-label);
 }
 [data-risk='destructive'] {
   color: var(--color-annotation);
-  font-weight: 700;
+  font-weight: var(--weight-label);
 }
 .sitemap-definitions {
   display: grid;
   gap: var(--space-md);
 }
 .sitemap-definitions dt {
-  font-weight: 700;
+  font-weight: var(--weight-label);
 }
 @media (hover: hover) {
   .sitemap-node > summary:hover .sitemap-label {

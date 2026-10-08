@@ -24,6 +24,17 @@ Bunlar rehber özelliği değildir; ayrı sunucu uygulaması gerektirir. Mevcut 
 5. Gerçek işlem durumlarını kaydet; iptal, hata, kısmi başarı ve rollback yolunu göster. Bildirimi kalıcı işlem kaydıyla destekle.
 6. Hüseyin Cengiz: servis/auth kurulumu, yedek ve geri yükleme testi, staging, CI/CD ve rollback doğrulaması. Kabul: tenant izolasyonu, yetkisiz çağrı reddi ve geri dönüş testi geçer.
 
-Mantine AppShell/CopilotKit, canlı yönetim uygulamasında değerlendirilecek seçeneklerdir; statik rehbere sırf raporda geçtiği için yeni framework veya sahte AI eklenmez. Yeni grid, bildirim, impersonation ve kişiselleştirme yalnız ilgili gerçek iş akışı oluştuğunda uygulanır.
+## Kesin mimari kararları
 
-Referanslar: [Mantine AppShell](https://mantine.dev/core/app-shell/), [HTML dialog](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/dialog).
+`font.md` ve `ai-first-master-page.md` öneri değil, kullanıcı kararıdır.
+
+- AI yönetim platformu: **Ant Design / ProComponents + Ant Design X + X Card**. Mevcut statik Pressguide bu canlı platformun uygulandığı iddiasını taşımaz.
+- Ana akış: kullanıcı niyeti → semantik UI modeli → politika/şema doğrulaması → capability registry → runtime → deterministik bileşen.
+- Ana üretim yöntemi declarative UI; kritik CRUD ve onaylar controlled UI. Serbest HTML/JS yalnız izole artifact sandbox; harici yüzeyler MCP Apps.
+- OpenUI ve A2UI renderer adaptörleri; AG-UI agent olay/durum/onay omurgası. Tambo MVP alternatifi; araştırmada geçen tüm paketler birlikte kurulmaz.
+- Frappe REST/RPC doğrudan modele açılmaz; typed domain adapter ve semantik MCP araçları kullanılır. DocType/report metadata'sı form/rapor sözleşmesine çevrilir.
+- Çalışma alanı kimliği, kararlı gezinme, iş sekmeleri, kapsam, niyet, canvas, inspector ve run strip ana shell parçalarıdır. Gerçek görev özeti, kaynak manifesti, plan/fark incelemesi, karar kuyruğu, kanıt, işlem çizelgesi ve kalıcı artifactlar ortak sözleşmelerdir.
+- Outfit Latin Extended; gövde 400, etiket 500, başlık 600; gövde satır yüksekliği 1.5. En az 1rem; uzun çeviride font küçültülmez. 200% büyütme, metin aralığı ve font yüklenmeme durumu test edilir.
+- WCAG 2.2 AA kabul tabanıdır. WCAG 3'ün güvenli, uyumlu açık dil ve bağlam/odak sürekliliği konuları önceliklidir; taslak standarda uygunluk ilan edilmez.
+
+Birincil kaynaklar: [Ant Design X](https://x.ant.design/components/introduce/), [X Card](https://x.ant.design/x-cards/introduce/), [ProComponents](https://github.com/ant-design/pro-components), [WCAG 2.2](https://www.w3.org/TR/WCAG22/), [WCAG 3 taslağı](https://www.w3.org/TR/wcag-3.0/).
