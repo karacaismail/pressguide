@@ -532,3 +532,107 @@ At this checkpoint, physical Safari/iOS/Android, screen readers, Node 22.12,
 approved visual references, current CI/Pages, field INP and live Press
 functional/write/upgrade checks remain not_run. General UI audit remains
 in_progress; publication of this guide is separate from production readiness.
+
+## Following source integration (2026-10-08, 10,513 nodes)
+
+Source SHA256 `106176bf6a9cbf11a1a39db653e702de42e8303dc02dec0489c88f093e247255`.
+The source has 32 scope and 42 exclusion strings; `auditPhase` remains
+`in_progress`. `lastUpdated` is `2026-10-07T20:51:55.110Z`, the latest source
+observation, not the build, review or publication time. The later private
+observation packets are not part of this snapshot.
+
+Four actual read-only Claude delta reviews covered 1,098 changed nodes
+(1,012 added, 86 promoted). All 253 returned numbered Read ranges matched
+their immutable public-safe inputs exactly, without outside reads, errors
+or missing ranges. This was a delta review, not a full 10,513-node re-review.
+The resulting correction changes 113 fields across 98 nodes: empty-row
+unknown status, generic route caveats, exact menu labels and page-header
+action context. A separate read-only reviewer found no actionable findings
+within that correction and proposed-test scope. The final public data equals
+the corrected private candidate semantically except for root's deliberate
+`reviewedForPublic: true`; formatting changes no meaning.
+
+The durable observation-contract spec now covers all 45 observed unsaved
+forms. Its real pre-integration RED had 32 failed and 17 passed assertions,
+with zero setup errors; its post-integration GREEN passed all 49 tests.
+This pure-data run used no browser fixtures. Format check passed, Astro
+checked 38 files with zero errors, warnings or hints, and build generated
+1,161 static pages in 3m 29s. Dependencies, lockfile, UI implementation,
+fonts, targets, focus rules and budgets are unchanged.
+
+An independent QA worker froze 1,197 built files on its owned 47322 server.
+The 320-first Chromium/Firefox/WebKit run passed 171 tests, skipped 138
+deliberately and had zero failed/flaky tests. An expanded relevant subset
+over 33 engine/viewport projects passed 408, skipped 120 deliberately and
+had zero failed/flaky tests. Some targeted entry and landscape tests use
+their own fixed viewport; project names do not imply a full width/input
+cross-product. The shared 47321 process was not operated on; root's build
+can refresh its served dist content, which is not an immutable QA snapshot.
+
+All 1,125 sitemap documents fit the unchanged budget set. Root: 28,941
+raw UTF-8 bytes / 276 parsed DOM elements; maximum detail: 85,123 bytes /
+1,357 parsed elements. Inline script remains 4,597 bytes. Cold local
+root/index/MAX requested only their document and two linked stylesheets
+(12,881 decoded CSS bytes), with no failed/unexpected/external, JS, JSON or
+image requests. The JSON download was inspected and never clicked.
+Keyboard, coarse touch, no-JS entry, minimum font and network assertions
+are measured emulation results, not physical Safari/device acceptance.
+
+Final screenshot inspection, capture-correction history, server shutdown
+and publication are separate closure evidence. Physical macOS/iOS Safari,
+Android, screen readers, minimum Node 22.12, approved visual references,
+field INP and live Press functional/write/upgrade acceptance remain not_run.
+
+## Coverage focus clearance closure (2026-10-08, same 10,513-node source)
+
+The preceding integration and QA record describes the pre-fix UI snapshot.
+Independent pixel inspection subsequently found a pre-existing MINOR defect:
+the coverage summary's keyboard outline overlapped the preceding heading at 320. Its prior QA evidence was frozen with that finding open; no old result,
+image or approved visual reference was relabelled.
+
+The new `sitemap-coverage-focus-clearance.spec.ts` produced genuine RED on
+the old immutable build: three keyboard failures and three pointer passes,
+with zero setup failures. Real Tab reached the disclosure, and computed
+clearance was -5.125 px Chromium, -7.066711 px Firefox and -6.197266 px
+WebKit. Root then added only `.sitemap-coverage` normal-flow
+`margin-block-start: var(--space-sm)` using the existing central token.
+Text, hit areas, native disclosure behavior and the single keyboard outline
+remain intact. The test bytes stayed unchanged between RED and GREEN.
+
+Root format/check passed (39 checked files, zero diagnostics); the new
+build completed 1,161 pages in 3m 31s. Its original complete terminal log
+was not saved. Independent QA froze a fresh build manifest
+`fbdad80a4cd816fe43be8069101f19dad286bba4ad735d1fda689dfc32bf22e2`.
+GREEN passed 6/6 first at 320, then 66/66 focus checks over the 33 configured
+engine/viewport projects, without skips, failures or flakiness. A bounded
+existing entry/readability/network/budget subset passed 310 and skipped
+152 under unchanged conditional rules, with no failed/flaky cases. This
+is a selected subset, not a full width/input cross-product or suite rerun.
+
+All 1,125 sitemap documents remain within the unchanged budgets: root
+28,941 raw bytes / 276 parsed elements; maximum detail 85,123 / 1,357.
+Linked CSS totals 12,934 decoded bytes, 53 bytes above the predecessor.
+Cold local root/index/MAX profiles request only their document and two
+stylesheets, with zero failed/unexpected/external, JS, JSON or image
+requests. Local 4x CPU synchronous input/layout timing is not field INP.
+All 1,528 RED/GREEN response hashes and sizes match their own manifests.
+All seven new owned server PIDs were absent and port 47322 refused a
+connection after shutdown; no graceful-handler claim is made. The shared
+47321 process was not operated on; its served content is not immutable.
+
+Twelve separate before/after closed/open 320 PNGs were independently
+opened by both the QA worker and the read-only standards reviewer.
+GREEN clearance in both states is +6.875 px Chromium, +4.933334 px Firefox
+and +5.802734 px WebKit; ancestors have no outline/shadow, minimum text
+is preserved and there is no horizontal overflow. The reviewer found no
+actionable findings within the three-line CSS and new-test scope; public
+data changes and production operations were outside that review.
+
+Artifacts: `work/qa/10513-focus-clearance/` and
+`outputs/press-sitemap-qa/10513-focus-clearance/`. Prior QA/capture
+correction history remains separate in `10513-public-browser-qa`.
+Physical Safari/devices, screen readers, fresh touch/zoom acceptance,
+minimum Node 22.12, approved visual references, field INP and current
+CI/Pages remain unverified at this pre-publication checkpoint. The source
+still has `auditPhase: in_progress`; guide publication never certifies
+Press functionality or production upgrade readiness.

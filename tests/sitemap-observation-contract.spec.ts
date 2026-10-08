@@ -29,6 +29,86 @@ const observedUnsavedForms = [
     'desk-live-resources-server-snapshot-recovery-form',
     '/app/server-snapshot-recovery',
   ],
+  ['desk-live-services-log-server-form', '/app/log-server'],
+  ['desk-live-services-nfs-server-form', '/app/nfs-server'],
+  ['desk-live-services-bastion-server-form', '/app/bastion-server'],
+  ['desk-live-services-trace-server-form', '/app/trace-server'],
+  ['desk-live-services-analytics-server-form', '/app/analytics-server'],
+  ['desk-live-services-self-hosted-server-form', '/app/self-hosted-server'],
+  ['desk-live-services-code-server-form', '/app/code-server'],
+  ['desk-live-services-backup-bucket-form', '/app/backup-bucket'],
+  ['desk-live-cloud-storage-cloud-provider-form', '/app/cloud-provider'],
+  ['desk-live-cloud-storage-cloud-region-form', '/app/cloud-region'],
+  ['desk-live-cloud-storage-region-form', '/app/region'],
+  ['desk-live-cloud-storage-cluster-plan-form', '/app/cluster-plan'],
+  ['desk-live-cloud-storage-server-plan-type-form', '/app/server-plan-type'],
+  [
+    'desk-live-cloud-storage-server-storage-plan-form',
+    '/app/server-storage-plan',
+  ],
+  [
+    'desk-live-cloud-storage-nfs-volume-attachment-form',
+    '/app/nfs-volume-attachment',
+  ],
+  [
+    'desk-live-cloud-storage-nfs-volume-detachment-form',
+    '/app/nfs-volume-detachment',
+  ],
+  ['desk-live-security-access-press-role-form', '/app/press-role'],
+  [
+    'desk-live-security-access-press-role-permission-form',
+    '/app/press-role-permission',
+  ],
+  [
+    'desk-live-security-access-press-method-permission-form',
+    '/app/press-method-permission',
+  ],
+  [
+    'desk-live-security-access-security-update-check-form',
+    '/app/security-update-check',
+  ],
+  ['desk-live-security-access-frappe-version-form', '/app/frappe-version'],
+  [
+    'desk-live-security-access-certificate-authority-form',
+    '/app/certificate-authority',
+  ],
+  ['desk-live-security-access-server-firewall-form', '/app/server-firewall'],
+  [
+    'desk-live-security-access-prometheus-alert-rule-form',
+    '/app/prometheus-alert-rule',
+  ],
+  [
+    'desk-live-marketplace-commercial-marketplace-app-category-form',
+    '/app/marketplace-app-category',
+  ],
+  [
+    'desk-live-marketplace-commercial-marketplace-app-feedback-form',
+    '/app/marketplace-app-feedback',
+  ],
+  [
+    'desk-live-marketplace-commercial-marketplace-app-payment-form',
+    '/app/marketplace-app-payment',
+  ],
+  [
+    'desk-live-marketplace-commercial-marketplace-promotional-banner-form',
+    '/app/marketplace-promotional-banner',
+  ],
+  [
+    'desk-live-marketplace-commercial-marketplace-publisher-profile-form',
+    '/app/marketplace-publisher-profile',
+  ],
+  [
+    'desk-live-marketplace-commercial-developer-review-reply-form',
+    '/app/developer-review-reply',
+  ],
+  [
+    'desk-live-marketplace-commercial-app-user-review-form',
+    '/app/app-user-review',
+  ],
+  [
+    'desk-live-marketplace-commercial-app-release-approval-request-form',
+    '/app/app-release-approval-request',
+  ],
 ] as const;
 
 test.beforeEach(({}, testInfo) => {
@@ -43,7 +123,7 @@ for (const [id, prefix] of observedUnsavedForms) {
     const sitemap = await loadSnapshot();
     const node = sitemap.nodes.find((candidate) => candidate.id === id);
     expect(node, `${id} remains in the public snapshot`).toBeDefined();
-    expect(node!.label).toContain('Kaydedilmemiş Yeni Form');
+    expect(node!.label).toMatch(/Kaydedilmemiş Yeni (?:Tam )?Form/);
     expect(node!.routeTemplate).toBe(`${prefix}/{record-or-unsaved}`);
   });
 }

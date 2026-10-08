@@ -42,6 +42,9 @@
   margin: 0;
 }
 /* Long coverage stays in a native disclosure below the tree. */
+.sitemap-coverage {
+  margin-block-start: var(--space-sm);
+}
 .sitemap-coverage > summary {
   display: list-item;
   min-block-size: var(--target-size);
