@@ -44,10 +44,13 @@ snapshot; the browser never contacts Press.
   computed from the FULL dataset; view counts describe only rendered items.
   Entry order: exactly one early global index CTA (within the first two
   568 px viewports at 320 CSS px), then the panel tree, then a closed native
-  `details` coverage summary. Opened, it shows all 18 `coverageScope` and 25
-  `exclusions` strings (43), FULL kind/source/status/risk counts with their
+  `details` coverage summary. Opened, it shows every `coverageScope` and
+  `exclusions` string of the current snapshot (count derived from those
+  arrays, never fixed here), FULL kind/source/status/risk counts with their
   caveats and the explicit JSON download link. Without JavaScript it
-  opens/closes natively with all 43 strings visible; the download is
+  opens/closes natively with every current `coverageScope`/`exclusions`
+  string visible (43-string figures below are historical measurements of
+  earlier snapshots); the download is
   reachable only after opening it. The prominent warnings stay before the
   panel tree and the status definitions stay after the disclosure, both
   outside it and accessible without opening it.
@@ -118,7 +121,8 @@ One measured budget set for the project; no other sitemap budget applies.
 | Root `/sitemap/`                     | 32 KiB         | 512                 |
 | Every global/child index or metadata | 128 KiB        | 2,048               |
 
-- Measurement: frozen 8,095-node snapshot, source SHA256
+- Measurement (historical calibration of this unchanged budget set, not the
+  current dataset): frozen 8,095-node snapshot, source SHA256
   `92d5d9c3bec9f62cb11dea6bc88b32acb9c452870c8e6042f6e94643fe4350c6`; raw
   built file bytes; element count of `DOMParser` output without script
   execution. Post-CTA build: 950 total HTML pages built in 1m57s (all guide
@@ -128,8 +132,11 @@ One measured budget set for the project; no other sitemap budget applies.
   245 parsed DOM / 2 rendered nodes. MAX of the 913 others:
   `desk-root/components/31`, 85,123 bytes / 1,357 parsed DOM / 63 rendered
   nodes = 33 primary (32 owned + the repeated anchor) + 30 lean context.
-- Rationale: roughly 1.5x headroom over actual MAX while staying far below
-  the historical eager documents. Control size, font size and hit areas are
+- Rationale (historical calibration, unchanged budget set): roughly 1.5x
+  headroom over the measured MAX index/metadata part (131,072 / 85,123 bytes
+  ≈ 1.54; 2,048 / 1,357 parsed DOM ≈ 1.51) while staying far below the
+  historical eager documents. The factor describes that MAX part, not root
+  headroom on any snapshot. Control size, font size and hit areas are
   preserved; the budget is never met by shrinking them.
 - Guard: `tests/sitemap-budget.spec.ts` reads every `dist/sitemap` HTML file,
   parses in batches of up to 200 and reports bounded failures (count + first
@@ -144,6 +151,9 @@ One measured budget set for the project; no other sitemap budget applies.
 Top level: `schemaVersion: 1`, `lastUpdated` (ISO), `auditPhase`
 (`in_progress` | `complete`), `reviewedForPublic: true`, non-empty
 `coverageScope[]` and `exclusions[]`, `nodes[]`. No other keys.
+`lastUpdated` is the latest source observation checkpoint represented in the
+snapshot, not the file's last edit or finalization time; no separate edit
+timestamp is recorded.
 
 Node: `id`, `parentId` (`null` or an existing id), `label`, `surface`
 (`dashboard` | `desk`), `kind` (`page` `tab` `section` `field` `table` `menu`
@@ -186,7 +196,31 @@ Fix the data; never loosen the validator. A missing file renders an explicit
   `not_run` unless a separate test ran.
 - `status: discovered` ("Keşfedildi, açılmadı") nodes are listed on purpose
   with their not-opened status explicit.
-- `risk` describes what the control would do; `executed` is always `false`.
+- `risk` is a recorded, coarse label; it is not a functional or runtime
+  check of what the control does. `executed` is always `false`, and
+  `functionalTest` stays `not_run` unless a separate test ran. Where the
+  operations, lifecycle and resources UI batches assign `risk` to an action
+  control through their `action_risk` label keyword heuristic (destructive
+  keywords first, then write keywords, otherwise `unknown`), the value is
+  only a keyword match. Not every node in those batches, and no older
+  retained node, is shown to have passed through that heuristic; other
+  recorded values keep their existing origin. Nodes built without an
+  explicit value default to `read`, an inspection convention, not proof of
+  runtime safety. Keyword matches are coarse: the same `Toggle Sidebar`
+  label is recorded as `write` on some nodes and `read` or `unknown` on
+  others, without proof of a server change. The label is not an impact
+  scale: `destructive` does not mark every critical operation
+  (`Reset Root Password`, `Reboot with serial console`, `Stop MariaDB` and
+  `Suspend Sites` are recorded as `write` yet need critical-operation
+  review), and `unknown` is not safe. No risk label grants permission to
+  run an operation; never execute one automatically from its label.
+  Recorded source classifications stay unchanged; no complete risk
+  normalization is claimed.
+- `observedAt` in the added UI batches is a source-recorded checkpoint for
+  observing a type; list and form nodes of the same type may share it. It is
+  not an independently verified per-page event time with millisecond
+  precision. Raw values and their display through `formatObservation` stay
+  unchanged; later metadata export timestamps are a separate concept.
 - `complete` means only the stated `coverageScope` finished. Counts are
   absolute; no percentage is shown because the total is unknown. A node is not
   a screen; only `kind: page` approximates a screen.
@@ -244,7 +278,8 @@ Fix the data; never loosen the validator. A missing file renders an explicit
 ## Post-CTA status (7 October 2026, historical `92d5…` snapshot)
 
 Commands and reports below were run by root orchestration; files are in
-`work/qa/sitemap-review-fixes/`. Current results are under "Closure".
+`work/qa/sitemap-review-fixes/`. Later results for the `08382aea…` snapshot are under "Closure"; neither
+section is a run on any later snapshot.
 
 - `npm run check` (`postcta-source-check.txt`): 37 files, 0 errors,
   0 warnings, 0 hints. `npm run build` (`cta-build.txt`): 950 pages in 1m57s.
@@ -290,7 +325,7 @@ The figures above were measured on the historical snapshot
 `08382…` snapshot. Root changed only 2 public scope strings and then
 formatted the JSON; nodes, other fields and audit dates stayed identical.
 
-## Closure (7 October 2026, current `08382aea…aba9a0b` snapshot)
+## Closure (7 October 2026, `08382aea…aba9a0b` snapshot)
 
 Run by root orchestration; files are in `work/qa/sitemap-review-fixes/closure/`.
 Snapshot SHA256
@@ -398,3 +433,102 @@ Snapshot SHA256
   full Press UI or function audit.
 
 Not run is not passed. Update this list only with evidence from root.
+
+## Pre-correction measurement (frozen `ad1ae1d2…` snapshot, 9,501 nodes)
+
+Recorded from root orchestration's built-view measurement and the actual
+independent read-only review of this snapshot. Snapshot SHA256
+`ad1ae1d2855950c07b4706ad97ec385c2cb9f20ee687143aff8d3036601da87d`.
+These figures were measured before the four MINOR corrections (unsaved-form
+`routeTemplate`, `lastUpdated` meaning, consolidated scope/exclusion strings,
+budget wording); they are not post-correction or post-consolidation results.
+
+- Built views (`work/qa/next-public-browser-qa/runner/built-views.json`,
+  measured 2026-10-07T21:13:29.792Z, Chromium 153.0.8010.12, darwin 25.5.0):
+  1,020 sitemap documents (root + 1,019 others). Root 25,737 raw UTF-8 bytes
+  / 264 parsed DOM / 2 rendered nodes, ≈1.27x byte headroom
+  (32,768 / 25,737). MAX of the others unchanged: `desk-root/components/31`,
+  85,123 bytes / 1,357 parsed DOM / 63 rendered = 33 primary + 30 context.
+  Largest added `desk-live` part, as cited by the review:
+  `desk-live-infrastructure-database-server-form/components/2`, 59,028 bytes
+  / 1,073 parsed DOM. Inline script 4,597 bytes, no external scripts.
+  `violations: []` across all 1,020 documents.
+- This is a source build measurement only, not CI, release, Pages, server or
+  production approval. The budget set is unchanged: nothing raised, no
+  control, font or hit area shrunk. No risk normalization is implied.
+- Gaps left open by the review: the existing server and `dist` reused by the
+  320 retry are not identified; no screenshot shows any of the 1,406 added or
+  63 promoted nodes; the Node 22.12 minimum was not run. Actual CI, physical
+  Safari, iOS/Android devices, screen readers, approved visual references,
+  live Press functions, writes and publication: not_run.
+- Post-correction build, re-measurement and tests: pending, owned by root.
+  Append them as a separate entry with their own evidence; do not overwrite
+  these pre-correction figures.
+
+## Post-correction closure (2026-10-08, 9,501 nodes)
+
+Root applied the actual Claude author's exact proposals, then formatted the
+data and new observation-contract spec. Data SHA256
+`45e439d2d85eb60844f558342695f486bdbe466aa161154eea6fdd07d7135251`.
+The 13 newly observed unsaved forms now use `{record-or-unsaved}`; the
+latest-source-observation meaning, representative-form wording and public
+Version Upgrade note are corrected. All 8,032 previously unchanged nodes,
+the older five unsaved forms, and scope indices 7/17 remain unchanged.
+Scope/exclusions now have 22/30 strings; counts remain data-derived.
+
+- Regression evidence: before correction, the new durable pure-data spec
+  recorded 1 pass / 16 failures / 0 setup errors. After correction, eight
+  separate private preservation/meaning guards passed. The durable spec is
+  included in the fresh 320 run below; its older source failure is preserved.
+- `format:check` passed; `astro check` inspected 38 files with 0 errors,
+  warnings or hints; build generated 1,056 pages in 1m 51s. Node v24.21.0,
+  Playwright 1.63.0; dependencies, lockfile and core UI are unchanged.
+- Fresh build provenance: root copied the build to an immutable local
+  snapshot (1,092 files) and started an owned server on 127.0.0.1:47322.
+  Every one of 1,382 served response records matched that manifest's exact
+  SHA256 and byte count; the original `dist`, snapshot and source stayed
+  unchanged. Its JSON output equals the validated source semantically.
+  Tests did not reuse the existing 47321 server. The owned server was stopped
+  after measurements; the existing server was untouched.
+- 320-first, Chromium/Firefox/WebKit: 139 passed / 74 intentionally skipped
+  / 0 failed / 0 flaky. Relevant subset over 33 engine/viewport projects:
+  210 passed / 120 intentionally skipped / 0 failed / 0 flaky. This is not
+  the full suite or a width × input cross-product. Entry journeys explicitly
+  use 320×568; other existing project dimensions are preserved.
+- All 1,020 sitemap documents remain within the unchanged budgets. Root:
+  24,984 raw UTF-8 bytes / 254 parsed DOM / 2 rendered nodes. MAX remains
+  85,123 bytes / 1,357 parsed DOM. Inline script remains 4,597 bytes.
+  Consolidation reduced root by 753 bytes and 10 DOM elements compared with
+  the frozen pre-correction measurement above; no threshold was raised.
+- Cold local root/index/MAX each requested only the document + two linked
+  stylesheets (12,881 decoded stylesheet bytes). No failed, unexpected,
+  external, JS, JSON or image requests. The explicit JSON download was
+  inspected but not clicked. Local response bytes are distinct from
+  Navigation Timing transfer sizes; handler/layout timing is not field INP.
+- Actual keyboard summary focus and native Enter open/close passed in fine
+  Chromium, coarse Chromium, Firefox and WebKit emulation. Coarse Chromium
+  touchscreen tap is separately verified. Computed focus is one 3px outline
+  on the control; parent outline/shadow are absent. Visible fonts are at
+  least the root 16px in the measured profiles; landscape retains search
+  input and focus without page overflow. These are measured profiles,
+  not claims for every physical input/device combination.
+- 26 fresh local guide screenshots include eight new views of an added
+  unsaved form template, a promoted unsaved ledger, the corrected Version
+  Upgrade note and the still-discovered Press Job form, at 320 and 1280.
+  They are unapproved QA evidence, not live Press screenshot exports.
+
+Evidence is under `work/qa/9501-review-closure/`: build/test outputs,
+`snapshot-manifest.json`, `served-responses.jsonl`, `closure-summary.json`
+and the runner's five measurement/capture results. The original independent
+Claude review applies to the pre-correction snapshot; root self-reviewed the
+narrow correction and new test. Additional independent pixel QA is recorded
+separately and does not imply source approval or computed-style verification.
+That additional reviewer opened all 26 PNGs at original resolution and found
+no actionable visible defect. It was pixel-only: source/skills/lock/test text
+could not be independently read with its available read-only tools; root
+self-review and the earlier actual Claude source review remain distinct.
+
+At this checkpoint, physical Safari/iOS/Android, screen readers, Node 22.12,
+approved visual references, current CI/Pages, field INP and live Press
+functional/write/upgrade checks remain not_run. General UI audit remains
+in_progress; publication of this guide is separate from production readiness.
